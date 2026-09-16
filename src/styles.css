@@ -1,0 +1,185 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+
+  --color-bg: #f4f1ea;
+  --color-surface: #fffcf7;
+  --color-fg: #1c1917;
+  --color-muted: #6b645c;
+  --color-subtle: #8a837a;
+  --color-primary: #0f766e;
+  --color-primary-fg: #f4f1ea;
+  --color-border: #e4dfd6;
+  --color-ink: #1c1917;
+
+  --color-safety-1: #c45c4a;
+  --color-safety-2: #d07a3f;
+  --color-safety-3: #d4a017;
+  --color-safety-4: #8ba85a;
+  --color-safety-5: #3b7d58;
+  --color-housing-low: #d6e2ea;
+  --color-housing-high: #2c4a5e;
+  --color-families-low: #ede6d9;
+  --color-families-high: #6b5344;
+  --color-born-low: #d7edea;
+  --color-born-high: #0f5f59;
+  --color-pin-hospital: #b56a5c;
+  --color-pin-school: #3d7a72;
+  --color-pin-station: #4a5560;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-border:
+    0px 0px 0px 1px rgba(28, 25, 23, 0.06), 0px 1px 2px -1px rgba(28, 25, 23, 0.06),
+    0px 2px 8px 0px rgba(28, 25, 23, 0.05);
+  --shadow-border-hover:
+    0px 0px 0px 1px rgba(28, 25, 23, 0.08), 0px 1px 2px -1px rgba(28, 25, 23, 0.08),
+    0px 2px 10px 0px rgba(28, 25, 23, 0.07);
+  --shadow-sheet:
+    0 -8px 32px rgba(28, 25, 23, 0.1), 0 0 0 1px rgba(28, 25, 23, 0.05);
+  --shadow-drawer:
+    -8px 0 32px rgba(28, 25, 23, 0.1), 0 0 0 1px rgba(28, 25, 23, 0.05);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.suburb-poly {
+  cursor: pointer;
+  fill-opacity: 0.55;
+  stroke: var(--color-surface);
+  stroke-width: 1.35;
+  transition:
+    fill-opacity 180ms var(--ease-out),
+    stroke-width 180ms var(--ease-out),
+    filter 180ms var(--ease-out),
+    transform 180ms var(--ease-out);
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: none;
+}
+
+.suburb-poly.is-dim {
+  fill-opacity: 0.2;
+}
+
+.suburb-poly.is-hover,
+.suburb-poly.is-selected {
+  fill-opacity: 0.88;
+  stroke: var(--color-fg);
+  stroke-width: 2.35;
+  filter: drop-shadow(0 8px 16px rgba(28, 25, 23, 0.18));
+  transform: scale(1.025);
+}
+
+.suburb-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+  animation: suburb-tip-in 180ms var(--ease-out);
+}
+
+@keyframes suburb-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .suburb-poly {
+    transition: none;
+    transform: none;
+  }
+  .suburb-tooltip {
+    animation: none;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.maplibregl-ctrl-group {
+  background: var(--color-surface) !important;
+  box-shadow: var(--shadow-border) !important;
+  border: none !important;
+  overflow: hidden;
+  border-radius: var(--radius-sm) !important;
+}
+
+.maplibregl-ctrl-group button {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.maplibregl-ctrl-attrib {
+  font-size: 10px !important;
+  background: color-mix(in oklab, var(--color-surface) 88%, transparent) !important;
+  color: var(--color-muted) !important;
+}
+
+.maplibregl-ctrl-top-right {
+  top: 9.75rem;
+  right: 10px;
+}
+
+.maplibregl-ctrl-bottom-left {
+  left: 8px;
+  bottom: 1.7rem;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
