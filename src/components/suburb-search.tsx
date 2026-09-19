@@ -15,8 +15,8 @@ export function SuburbSearch() {
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return suburbs;
-    return suburbs.filter((s) => s.name.toLowerCase().includes(q));
+    if (!q) return [];
+    return suburbs.filter((s) => s.name.toLowerCase().includes(q)).slice(0, 12);
   }, [query]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function SuburbSearch() {
         aria-expanded={open}
         aria-controls={listId}
         aria-autocomplete="list"
-        placeholder="Search 20 suburbs"
+        placeholder="Search suburbs"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
@@ -112,7 +112,7 @@ export function SuburbSearch() {
         </button>
       ) : null}
 
-      {open ? (
+      {open && query.trim() ? (
         <ul
           id={listId}
           role="listbox"

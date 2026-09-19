@@ -1,32 +1,50 @@
-import type { Map as MapLibreMap, StyleSpecification } from "maplibre-gl";
+import type {
+  ExpressionSpecification,
+  Map as MapLibreMap,
+  MapGeoJSONFeature,
+  StyleSpecification,
+} from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
+import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
-import { bboxCorners, featureBBox, fitPadding, servicesGeoJSON } from "@/lib/geo";
+import { fillColorExpression } from "@/lib/choropleth";
+import { bboxCorners, featureBBox, fitPadding, servicesGeoJSON, suburbPolygonCount, suburbsGeoJSON } from "@/lib/geo";
 import { useMapStore } from "@/lib/map-store";
 
-const SYDNEY: [number, number] = [151.21, -33.87];
-const DEFAULT_ZOOM = 10.2;
+const SYDNEY: [number, number] = [151.18, -33.88];
+const DEFAULT_ZOOM = 10.6;
 const MAX_BOUNDS: [[number, number], [number, number]] = [
   [150.48, -34.15],
   [151.42, -33.55],
 ];
+/** Inner / eastern / lower north shore / St George — the circled zone. */
+const ZONE_BOUNDS: [[number, number], [number, number]] = [
+  [150.99, -34.04],
+  [151.32, -33.76],
+];
 
-const OSM_RASTER: StyleSpecification = {
+const BASEMAP: StyleSpecification = {
   version: 8,
-  name: "osm-carto-light",
+  name: "esri-light-gray",
   glyphs: "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
   sources: {
-    carto: {
+    esri: {
       type: "raster",
       tiles: [
-        "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-        "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
       ],
       tileSize: 256,
-      attribution: "© OpenStreetMap contributors © CARTO",
-      maxzoom: 20,
+      attribution: "Tiles © Esri · Boundaries ABS · Safety BOCSAR",
+      maxzoom: 16,
+    },
+    esriRef: {
+      type: "raster",
+      tiles: [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+      ],
+      tileSize: 256,
+      maxzoom: 16,
     },
   },
   layers: [
@@ -35,9 +53,55 @@ const OSM_RASTER: StyleSpecification = {
       type: "background",
       paint: { "background-color": "#e8e4dc" },
     },
-    { id: "carto-basemap", type: "raster", source: "carto" },
+    {
+      id: "esri-base",
+      type: "raster",
+      source: "esri",
+      paint: { "raster-opacity": 0.94 },
+    },
+    {
+      id: "esri-ref",
+      type: "raster",
+      source: "esriRef",
+      paint: { "raster-opacity": 0.88 },
+    },
   ],
 };
+
+function fillOpacity(selectedId: string): ExpressionSpecification {
+  return [
+    "case",
+    ["==", ["get", "id"], selectedId],
+    0.9,
+    ["boolean", ["feature-state", "hover"], false],
+    0.86,
+    ["==", ["get", "hasFigures"], 1],
+    selectedId ? 0.62 : 0.72,
+    selectedId ? 0.48 : 0.58,
+  ];
+}
+
+function lineWidth(selectedId: string): ExpressionSpecification {
+  return [
+    "case",
+    ["==", ["get", "id"], selectedId],
+    2.55,
+    ["boolean", ["feature-state", "hover"], false],
+    2.25,
+    1.15,
+  ];
+}
+
+function lineColor(selectedId: string): ExpressionSpecification {
+  return [
+    "case",
+    ["==", ["get", "id"], selectedId],
+    "#1C1917",
+    ["boolean", ["feature-state", "hover"], false],
+    "#1C1917",
+    "#4A433C",
+  ];
+}
 
 function fitToSelected(map: MapLibreMap) {
   const id = useMapStore.getState().selectedId;
@@ -50,7 +114,7 @@ function fitToSelected(map: MapLibreMap) {
     map.fitBounds(bboxCorners(box), {
       padding,
       duration: 650,
-      maxZoom: 14,
+      maxZoom: 13,
       essential: true,
     });
   } catch {
@@ -64,12 +128,108 @@ function fitToSelected(map: MapLibreMap) {
   }
 }
 
+function addLayers(map: MapLibreMap) {
+  if (map.getSource("suburbs")) return;
+  map.addSource("suburbs", {
+    type: "geojson",
+    data: suburbsGeoJSON(),
+    promoteId: "id",
+  });
+  map.addSource("services", { type: "geojson", data: servicesGeoJSON() });
+
+  const choropleth = useMapStore.getState().choropleth;
+  const selectedId = useMapStore.getState().selectedId ?? "";
+  const servicesOn = useMapStore.getState().servicesOn;
+  const beforeRef = map.getLayer("esri-ref") ? "esri-ref" : undefined;
+
+  map.addLayer(
+    {
+      id: "suburbs-fill",
+      type: "fill",
+      source: "suburbs",
+      paint: {
+        "fill-color": fillColorExpression(choropleth),
+        "fill-opacity": fillOpacity(selectedId),
+        "fill-opacity-transition": { duration: 160 },
+        "fill-antialias": true,
+      },
+    },
+    beforeRef,
+  );
+  map.addLayer(
+    {
+      id: "suburbs-casing",
+      type: "line",
+      source: "suburbs",
+      paint: {
+        "line-color": "#FFFCFF",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.8, 12, 2.6],
+        "line-opacity": 0.55,
+      },
+    },
+    beforeRef,
+  );
+  map.addLayer(
+    {
+      id: "suburbs-outline",
+      type: "line",
+      source: "suburbs",
+      paint: {
+        "line-color": lineColor(selectedId),
+        "line-width": lineWidth(selectedId),
+        "line-opacity": 0.95,
+      },
+    },
+    beforeRef,
+  );
+  map.addLayer({
+    id: "suburb-labels",
+    type: "symbol",
+    source: "suburbs",
+    minzoom: 12,
+    layout: {
+      "text-field": ["get", "name"],
+      "text-size": 11,
+      "text-font": ["Noto Sans Regular"],
+      "text-padding": 4,
+    },
+    paint: {
+      "text-color": "#1C1917",
+      "text-halo-color": "#FFFCFF",
+      "text-halo-width": 1.2,
+    },
+  });
+  map.addLayer({
+    id: "service-dots",
+    type: "circle",
+    source: "services",
+    layout: { visibility: servicesOn ? "visible" : "none" },
+    paint: {
+      "circle-radius": 8,
+      "circle-color": [
+        "match",
+        ["get", "type"],
+        "hospital",
+        "#B56A5C",
+        "school",
+        "#3D7A72",
+        "#4A5560",
+      ],
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#FFFCFF",
+    },
+  });
+}
+
 export function SydneyMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const fittedFor = useRef<string | null>(null);
+  const hoveredRef = useRef<string | null>(null);
   const [mapObj, setMapObj] = useState<MapLibreMap | null>(null);
   const [svgOnly, setSvgOnly] = useState(false);
+  const [hoverId, setHoverId] = useState<string | null>(null);
+  const [cursor, setCursor] = useState({ x: 24, y: 24 });
 
   useEffect(() => {
     const el = containerRef.current;
@@ -85,7 +245,7 @@ export function SydneyMap() {
         if (cancelled || !containerRef.current) return;
         const instance = new maplibregl.Map({
           container: containerRef.current,
-          style: OSM_RASTER,
+          style: BASEMAP,
           center: SYDNEY,
           zoom: DEFAULT_ZOOM,
           minZoom: 9,
@@ -108,30 +268,17 @@ export function SydneyMap() {
 
         const onStyleReady = () => {
           onResize?.();
-          if (!instance.getSource("services")) {
-            instance.addSource("services", { type: "geojson", data: servicesGeoJSON() });
-            instance.addLayer({
-              id: "service-dots",
-              type: "circle",
-              source: "services",
-              layout: {
-                visibility: useMapStore.getState().servicesOn ? "visible" : "none",
-              },
-              paint: {
-                "circle-radius": 8,
-                "circle-color": [
-                  "match",
-                  ["get", "type"],
-                  "hospital",
-                  "#B56A5C",
-                  "school",
-                  "#3D7A72",
-                  "#4A5560",
-                ],
-                "circle-stroke-width": 2,
-                "circle-stroke-color": "#FFFCFF",
-              },
-            });
+          addLayers(instance);
+          if (!useMapStore.getState().selectedId) {
+            try {
+              instance.fitBounds(ZONE_BOUNDS, {
+                padding: 28,
+                duration: 0,
+                essential: true,
+              });
+            } catch {
+              /* keep default center */
+            }
           }
           const selected = useMapStore.getState().selectedId;
           if (selected && fittedFor.current !== selected) {
@@ -142,6 +289,50 @@ export function SydneyMap() {
 
         instance.on("load", onStyleReady);
         if (instance.loaded()) onStyleReady();
+
+        let skipDeselect = false;
+        instance.on("click", "suburbs-fill", (e) => {
+          skipDeselect = true;
+          const id = e.features?.[0]?.properties?.id as string | undefined;
+          useMapStore.getState().selectSuburb(id ?? null);
+        });
+        instance.on("click", () => {
+          if (skipDeselect) {
+            skipDeselect = false;
+            return;
+          }
+          useMapStore.getState().selectSuburb(null);
+        });
+        instance.on("mousemove", "suburbs-fill", (e) => {
+          const feat = e.features?.[0] as MapGeoJSONFeature | undefined;
+          const id = (feat?.properties?.id as string | undefined) ?? null;
+          instance.getCanvas().style.cursor = id ? "pointer" : "";
+          if (hoveredRef.current && hoveredRef.current !== id) {
+            instance.setFeatureState(
+              { source: "suburbs", id: hoveredRef.current },
+              { hover: false },
+            );
+          }
+          if (id) instance.setFeatureState({ source: "suburbs", id }, { hover: true });
+          hoveredRef.current = id;
+          setHoverId(id);
+          const rect = instance.getContainer().getBoundingClientRect();
+          setCursor({
+            x: Math.min(e.point.x + 16, rect.width - 244),
+            y: Math.min(e.point.y + 16, rect.height - 128),
+          });
+        });
+        instance.on("mouseleave", "suburbs-fill", () => {
+          if (hoveredRef.current) {
+            instance.setFeatureState(
+              { source: "suburbs", id: hoveredRef.current },
+              { hover: false },
+            );
+          }
+          hoveredRef.current = null;
+          setHoverId(null);
+          instance.getCanvas().style.cursor = "";
+        });
         instance.on("webglcontextlost", () => {
           setSvgOnly(true);
           setMapObj(null);
@@ -171,8 +362,15 @@ export function SydneyMap() {
     };
   }, []);
 
+  const choropleth = useMapStore((s) => s.choropleth);
   const servicesOn = useMapStore((s) => s.servicesOn);
   const selectedId = useMapStore((s) => s.selectedId);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map?.getLayer("suburbs-fill")) return;
+    map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth));
+  }, [choropleth]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -182,7 +380,11 @@ export function SydneyMap() {
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    if (!map?.getLayer("suburbs-fill")) return;
+    const id = selectedId ?? "";
+    map.setPaintProperty("suburbs-fill", "fill-opacity", fillOpacity(id));
+    map.setPaintProperty("suburbs-outline", "line-color", lineColor(id));
+    map.setPaintProperty("suburbs-outline", "line-width", lineWidth(id));
     if (selectedId && fittedFor.current !== selectedId) {
       fittedFor.current = selectedId;
       if (map.isStyleLoaded()) fitToSelected(map);
@@ -190,14 +392,20 @@ export function SydneyMap() {
     if (!selectedId) fittedFor.current = null;
   }, [selectedId]);
 
+  const hovered = hoverId ? suburbsById[hoverId] : undefined;
+
   return (
     <div className="absolute inset-0 h-full w-full bg-[#e8e4dc]">
       <div
         ref={containerRef}
         className="absolute inset-0 h-full w-full"
         aria-label="Map of Greater Sydney suburbs"
+        data-suburb-count={suburbPolygonCount}
       />
-      <SuburbShapes map={svgOnly ? null : mapObj} />
+      {svgOnly ? <SuburbShapes map={mapObj} /> : null}
+      {!svgOnly && hovered ? (
+        <SuburbTooltip suburb={hovered} layer={choropleth} x={cursor.x} y={cursor.y} />
+      ) : null}
     </div>
   );
 }

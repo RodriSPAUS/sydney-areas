@@ -33,7 +33,7 @@ function LegendBody({ layer }: { layer: Choropleth }) {
   if (layer === "safety") {
     return (
       <div>
-        <p className="mb-1.5 text-[11px] font-medium text-fg">Incidents per capita</p>
+        <p className="mb-1.5 text-[11px] font-medium text-fg">Incidents per 1,000 residents</p>
         <div className="flex overflow-hidden rounded-full">
           {([5, 4, 3, 2, 1] as const).map((band) => (
             <span

@@ -1,11 +1,13 @@
 /**
- * Sample suburb figures for product testing.
- * Replace this file later with Census / BOCSAR-backed data.
- * Numbers are plausible but clearly fake — not official output.
+ * Safety = BOCSAR recorded incidents from SuburbData.csv; other layers remain sample.
  */
-import type { Suburb } from "@/lib/suburb-types";
+import bocsarSafety from "@/data/bocsar-safety.json";
+import polygonFc from "@/data/suburb-polygons.json";
+import type { BBox, SafetyBand, Suburb } from "@/lib/suburb-types";
 
-export const suburbs: Suburb[] = [
+const bocsarById = new Map(bocsarSafety.suburbs.map((row) => [row.id, row]));
+
+const suburbsBase: Suburb[] = [
   {
     id: "bondi",
     name: "Bondi",
@@ -527,6 +529,40 @@ export const suburbs: Suburb[] = [
     ],
   },
 ];
+
+export const suburbs: Suburb[] = [
+  ...suburbsBase,
+  ...(
+    polygonFc as unknown as {
+      features: { properties: { id: string; name: string }; bbox?: number[] }[];
+    }
+  ).features
+    .filter((f) => !suburbsBase.some((s) => s.id === f.properties.id))
+    .map((f) => ({
+      id: f.properties.id,
+      name: f.properties.name,
+      bbox: (f.bbox ?? [151.1, -33.9, 151.2, -33.8]) as BBox,
+      services: [],
+    })),
+].map((suburb) => {
+  const row = bocsarById.get(suburb.id);
+  if (!row) return suburb;
+  return {
+    ...suburb,
+    safety: {
+      ...(row.band ? { band: row.band as SafetyBand } : {}),
+      summary: row.summary,
+      period12: row.period12,
+      period6: row.period6,
+      last12Months: row.last12Months,
+      last6Months: row.last6Months,
+      population: row.population,
+      populationYear: row.populationYear,
+      housingPer1000: row.housingPer1000,
+      streetPer1000: row.streetPer1000,
+    },
+  };
+});
 
 export const suburbsById: Record<string, Suburb> = Object.fromEntries(
   suburbs.map((s) => [s.id, s]),

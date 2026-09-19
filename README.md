@@ -1,25 +1,33 @@
 # Sydney Areas
 
-Mapa de 20 suburbios de Greater Sydney. Sin cuenta. Datos inventados para probar el producto — no es salida oficial de ABS ni BOCSAR.
+Map of Greater Sydney suburbs. No account. Safety figures are BOCSAR recorded incidents; housing, households and backgrounds are sample figures for comparing suburbs in the prototype.
 
-## Qué hace
+## What it does
 
-- Mapa a pantalla completa (MapLibre + OpenStreetMap)
-- Formas reales de suburbio (OpenStreetMap)
-- Capas: Safety, Housing, Households, Backgrounds
-- Pines de servicios (hospital, school, station)
-- Hover para ver cifras; clic para el perfil
+- Full-screen map (MapLibre)
+- Real suburb shapes (ABS SAL 2021)
+- Layers: Safety, Housing, Households, Backgrounds
+- Service pins (hospital, school, station)
+- Hover for a snapshot; click for the profile
 
-## Cómo correrlo
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abrí la URL que imprime Vite (por defecto el puerto 8080).
+## Data
 
-## Datos
+- Safety for mapped suburbs: `src/data/bocsar-safety.json`, generated from the official BOCSAR SuburbData.csv (CC-BY 3.0 AU). Map colour is incidents per 1,000 usual residents (ABS Census 2021). Names are matched to ABS SAL 2021 polygons on the map.
+- Refresh that file:
 
-Las cifras viven en `src/data/suburbs.ts`. Los polígonos, en `src/data/suburb-polygons.json`.
-Reemplazalos cuando haya API (Census 2021 / BOCSAR).
+```bash
+npm run data:bocsar
+npm run data:bocsar -- --fresh
+```
+
+The zip is cached under `data/cache/` (gitignored). `unzip` is required. The app never downloads crime data in the browser.
+
+- Polygons: `src/data/suburb-polygons.json`
+- Housing / households / backgrounds: sample figures in `src/data/suburbs.ts`

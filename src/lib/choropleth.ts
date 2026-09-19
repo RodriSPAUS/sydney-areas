@@ -19,9 +19,13 @@ export const FAMILIES_HIGH = "#6B5344";
 export const BORN_AU_LOW = "#D7EDEA";
 export const BORN_AU_HIGH = "#0F5F59";
 
-const rents = suburbs.map((s) => s.housing.medianWeeklyRent);
-const families = suburbs.map((s) => s.households.pctFamiliesWithChildren);
-const bornAu = suburbs.map((s) => s.backgrounds.pctBornAustralia);
+const rents = suburbs.flatMap((s) => (s.housing ? [s.housing.medianWeeklyRent] : []));
+const families = suburbs.flatMap((s) =>
+  s.households ? [s.households.pctFamiliesWithChildren] : [],
+);
+const bornAu = suburbs.flatMap((s) =>
+  s.backgrounds ? [s.backgrounds.pctBornAustralia] : [],
+);
 
 export const rentRange = { min: Math.min(...rents), max: Math.max(...rents) };
 export const familyRange = {
@@ -30,69 +34,91 @@ export const familyRange = {
 };
 export const bornAuRange = { min: Math.min(...bornAu), max: Math.max(...bornAu) };
 
+export const NEUTRAL_FILL = "#C4B49A";
+
 export function fillColorExpression(layer: Choropleth): ExpressionSpecification {
   if (layer === "safety") {
     return [
-      "match",
-      ["get", "safetyBand"],
-      1,
-      SAFETY_FILL[1],
-      2,
-      SAFETY_FILL[2],
-      3,
-      SAFETY_FILL[3],
-      4,
-      SAFETY_FILL[4],
-      5,
-      SAFETY_FILL[5],
-      "#B0A89C",
+      "case",
+      ["==", ["typeof", ["get", "safetyBand"]], "number"],
+      [
+        "match",
+        ["get", "safetyBand"],
+        1,
+        SAFETY_FILL[1],
+        2,
+        SAFETY_FILL[2],
+        3,
+        SAFETY_FILL[3],
+        4,
+        SAFETY_FILL[4],
+        5,
+        SAFETY_FILL[5],
+        NEUTRAL_FILL,
+      ],
+      NEUTRAL_FILL,
     ];
   }
   if (layer === "housing") {
     return [
-      "interpolate",
-      ["linear"],
-      ["get", "rent"],
-      rentRange.min,
-      HOUSING_LOW,
-      rentRange.max,
-      HOUSING_HIGH,
+      "case",
+      ["==", ["typeof", ["get", "rent"]], "number"],
+      [
+        "interpolate",
+        ["linear"],
+        ["get", "rent"],
+        rentRange.min,
+        HOUSING_LOW,
+        rentRange.max,
+        HOUSING_HIGH,
+      ],
+      NEUTRAL_FILL,
     ];
   }
   if (layer === "households") {
     return [
-      "interpolate",
-      ["linear"],
-      ["get", "families"],
-      familyRange.min,
-      FAMILIES_LOW,
-      familyRange.max,
-      FAMILIES_HIGH,
+      "case",
+      ["==", ["typeof", ["get", "families"]], "number"],
+      [
+        "interpolate",
+        ["linear"],
+        ["get", "families"],
+        familyRange.min,
+        FAMILIES_LOW,
+        familyRange.max,
+        FAMILIES_HIGH,
+      ],
+      NEUTRAL_FILL,
     ];
   }
   return [
-    "interpolate",
-    ["linear"],
-    ["get", "bornAu"],
-    bornAuRange.min,
-    BORN_AU_LOW,
-    bornAuRange.max,
-    BORN_AU_HIGH,
+    "case",
+    ["==", ["typeof", ["get", "bornAu"]], "number"],
+    [
+      "interpolate",
+      ["linear"],
+      ["get", "bornAu"],
+      bornAuRange.min,
+      BORN_AU_LOW,
+      bornAuRange.max,
+      BORN_AU_HIGH,
+    ],
+    NEUTRAL_FILL,
   ];
 }
 
 export function safetyBandLabel(band: SafetyBand): string {
   switch (band) {
     case 5:
-      return "Fewer incidents per capita";
+      return "Fewer incidents per 1,000 among mapped suburbs";
     case 4:
-      return "Below the Sydney median";
+      return "Below the middle per 1,000 on this map";
     case 3:
-      return "Near the Sydney median";
+      return "Near the middle per 1,000 on this map";
     case 2:
-      return "Above the Sydney median";
+      return "Above the middle per 1,000 on this map";
     case 1:
-      return "More incidents per capita";
+      return "More incidents per 1,000 among mapped suburbs";
   }
 }
 
@@ -117,8 +143,11 @@ function mixHex(a: string, b: string, t: number): string {
 }
 
 export function suburbFill(suburb: Suburb, layer: Choropleth): string {
-  if (layer === "safety") return SAFETY_FILL[suburb.safety.band];
+  if (layer === "safety") {
+    return suburb.safety?.band ? SAFETY_FILL[suburb.safety.band] : NEUTRAL_FILL;
+  }
   if (layer === "housing") {
+    if (!suburb.housing) return NEUTRAL_FILL;
     const t =
       rentRange.max === rentRange.min
         ? 0.5
@@ -126,6 +155,7 @@ export function suburbFill(suburb: Suburb, layer: Choropleth): string {
     return mixHex(HOUSING_LOW, HOUSING_HIGH, t);
   }
   if (layer === "households") {
+    if (!suburb.households) return NEUTRAL_FILL;
     const t =
       familyRange.max === familyRange.min
         ? 0.5
@@ -133,6 +163,7 @@ export function suburbFill(suburb: Suburb, layer: Choropleth): string {
           (familyRange.max - familyRange.min);
     return mixHex(FAMILIES_LOW, FAMILIES_HIGH, t);
   }
+  if (!suburb.backgrounds) return NEUTRAL_FILL;
   const t =
     bornAuRange.max === bornAuRange.min
       ? 0.5

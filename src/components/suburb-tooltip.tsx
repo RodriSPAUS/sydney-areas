@@ -15,21 +15,41 @@ export function SuburbTooltip({
 }) {
   const primary =
     layer === "safety"
-      ? `Band ${suburb.safety.band} of 5`
+      ? suburb.safety?.band
+        ? `Band ${suburb.safety.band} of 5`
+        : suburb.safety?.last12Months
+          ? "Counts only · no stable rate"
+          : "No BOCSAR extract"
       : layer === "housing"
-        ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
+        ? suburb.housing
+          ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
+          : "Sample housing not in this extract"
         : layer === "households"
-          ? `${suburb.households.pctFamiliesWithChildren}% families with children`
-          : `${suburb.backgrounds.pctBornAustralia}% born in Australia`;
+          ? suburb.households
+            ? `${suburb.households.pctFamiliesWithChildren}% families with children`
+            : "Sample household figures not in this extract"
+          : suburb.backgrounds
+            ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
+            : "Sample ancestry figures not in this extract";
 
   const secondary =
     layer === "safety"
-      ? safetyBandLabel(suburb.safety.band)
+      ? suburb.safety?.band
+        ? safetyBandLabel(suburb.safety.band)
+        : suburb.safety?.population
+          ? "Census population too small for a rate"
+          : "Boundary only"
       : layer === "housing"
-        ? `Median purchase ${formatAud(suburb.housing.medianPurchase)}`
+        ? suburb.housing
+          ? `Median purchase ${formatAud(suburb.housing.medianPurchase)}`
+          : "Click for the name"
         : layer === "households"
-          ? `Median age ${suburb.households.medianAge} · ${suburb.households.pctRenting}% renting`
-          : `${suburb.backgrounds.topAncestries[0].name} ${suburb.backgrounds.topAncestries[0].pct}% · ${suburb.backgrounds.topLanguageOther}`;
+          ? suburb.households
+            ? `Median age ${suburb.households.medianAge} · ${suburb.households.pctRenting}% renting`
+            : "Click for the name"
+          : suburb.backgrounds
+            ? `${suburb.backgrounds.topAncestries[0].name} ${suburb.backgrounds.topAncestries[0].pct}% · ${suburb.backgrounds.topLanguageOther}`
+            : "Click for the name";
 
   return (
     <div

@@ -1,16 +1,14 @@
 import type { Feature, FeatureCollection, MultiPolygon, Point, Polygon } from "geojson";
 import polygonFc from "@/data/suburb-polygons.json";
-import { suburbs } from "@/data/suburbs";
+import { suburbs, suburbsById } from "@/data/suburbs";
 import type { BBox, Suburb } from "@/lib/suburb-types";
 
 type PolyGeom = Polygon | MultiPolygon;
+type PolyProps = { id: string; name: string };
 
-const polygonById = new Map(
-  (polygonFc as FeatureCollection<PolyGeom, { id: string; name: string }>).features.map((f) => [
-    f.properties.id,
-    f,
-  ]),
-);
+const polygonCollection = polygonFc as unknown as FeatureCollection<PolyGeom, PolyProps>;
+
+const polygonById = new Map(polygonCollection.features.map((f) => [f.properties.id, f]));
 
 export function suburbGeometry(id: string): PolyGeom | undefined {
   return polygonById.get(id)?.geometry;
@@ -56,23 +54,28 @@ export function projectGeometry(
     .join(" ");
 }
 
-export function suburbFeature(suburb: Suburb, index: number): Feature<PolyGeom> {
+function propsFor(id: string, name: string, suburb?: Suburb) {
+  return {
+    id,
+    name: suburb?.name ?? name,
+    safetyBand: suburb?.safety?.band ?? null,
+    rent: suburb?.housing?.medianWeeklyRent ?? null,
+    families: suburb?.households?.pctFamiliesWithChildren ?? null,
+    bornAu: suburb?.backgrounds?.pctBornAustralia ?? null,
+    topAncestry: suburb?.backgrounds?.topAncestries[0]?.name ?? "",
+    hasFigures: suburb?.safety?.band ? 1 : 0,
+  };
+}
+
+export function suburbFeature(suburb: Suburb, _index?: number): Feature<PolyGeom> {
   const geometry = suburbGeometry(suburb.id) ?? {
     type: "Polygon" as const,
     coordinates: [],
   };
   return {
     type: "Feature",
-    id: index,
-    properties: {
-      id: suburb.id,
-      name: suburb.name,
-      safetyBand: suburb.safety.band,
-      rent: suburb.housing.medianWeeklyRent,
-      families: suburb.households.pctFamiliesWithChildren,
-      bornAu: suburb.backgrounds.pctBornAustralia,
-      topAncestry: suburb.backgrounds.topAncestries[0]?.name ?? "",
-    },
+    id: suburb.id,
+    properties: propsFor(suburb.id, suburb.name, suburb),
     geometry,
   };
 }
@@ -80,7 +83,12 @@ export function suburbFeature(suburb: Suburb, index: number): Feature<PolyGeom> 
 export function suburbsGeoJSON(): FeatureCollection<PolyGeom> {
   return {
     type: "FeatureCollection",
-    features: suburbs.map(suburbFeature),
+    features: polygonCollection.features.map((f) => ({
+      type: "Feature" as const,
+      id: f.properties.id,
+      properties: propsFor(f.properties.id, f.properties.name, suburbsById[f.properties.id]),
+      geometry: f.geometry,
+    })),
   };
 }
 
@@ -136,3 +144,5 @@ export function fitPadding(sheetOpen: boolean): {
   if (w - left - right < 90) right = Math.max(0, w - left - 90);
   return { top, bottom, left, right };
 }
+
+export const suburbPolygonCount = polygonCollection.features.length;

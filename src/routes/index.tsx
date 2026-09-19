@@ -31,7 +31,7 @@ function Home() {
             <SuburbSearch />
           </div>
           <p className="mt-1.5 text-xs font-medium text-muted">
-            Pasá el mouse sobre un suburbio. Datos inventados.
+            Pasá el mouse sobre un suburbio. Toda esta zona, suburbio por suburbio.
           </p>
         </div>
       </header>
@@ -53,7 +53,8 @@ function Home() {
       </div>
 
       <p className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-bg/90 px-3 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] text-center text-[10px] leading-tight text-muted md:bg-transparent md:text-left">
-        Datos inventados. No es ABS/BOCSAR. Sirven para comparar suburbios en el prototipo.
+        Límites: ABS SAL 2021. Seguridad: BOCSAR por 1.000 habitantes (Censo 2021). Vivienda y
+        hogares: cifras de muestra.
       </p>
 
       <SuburbSheet />
