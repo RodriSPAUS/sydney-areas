@@ -18,6 +18,8 @@ import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
 import ExcelJS from "exceljs";
 
+const REPORT_URL =
+  "https://dcj.nsw.gov.au/about-us/families-and-communities-statistics/housing-rent-and-sales/rent-and-sales-report.html";
 const RENT_URL =
   "https://dcj.nsw.gov.au/content/dam/dcj/dcj-website/documents/about-us/families-and-communities-statistics/housing-and-rent-sales/rent-tables-june-2026-quarter.xlsx";
 const SALES_URL =
@@ -78,6 +80,34 @@ function salCode(raw) {
 
 function isTotal(raw) {
   return /^(total|all|all dwellings|all dwelling types)$/i.test(cellText(raw).trim());
+}
+
+function classifyDwelling(raw) {
+  const t = cellText(raw).trim().toLowerCase();
+  if (isTotal(raw)) return "total";
+  if (/flat|unit|apartment/.test(t)) return "flat";
+  if (/^house$/.test(t) || /^houses$/.test(t)) return "house";
+  return null;
+}
+
+function classifyBedroom(raw) {
+  const t = cellText(raw).trim().toLowerCase().replace(/\s+/g, " ");
+  if (isTotal(raw)) return "total";
+  if (/^(1 bedroom|1 bedrooms|first bedroom|one bedroom|1)$/.test(t)) return "1";
+  if (/^(2 bedroom|2 bedrooms|second bedroom|two bedroom|2)$/.test(t)) return "2";
+  if (/^(3 bedroom|3 bedrooms|third bedroom|three bedroom|3)$/.test(t)) return "3";
+  return null;
+}
+
+function emptyRent() {
+  return {
+    medianWeeklyRent: /** @type {number | null} */ (null),
+    rent1Br: /** @type {number | null} */ (null),
+    rent2Br: /** @type {number | null} */ (null),
+    rent3Br: /** @type {number | null} */ (null),
+    rentHouse: /** @type {number | null} */ (null),
+    rentFlat: /** @type {number | null} */ (null),
+  };
 }
 
 function quarterFromText(text, fallback) {
@@ -176,19 +206,37 @@ async function parseRent(path) {
       `Rent headers missing (pc=${pcCol} dwell=${dwellCol} beds=${bedsCol} median=${medianCol})`,
     );
   }
-  /** @type {Map<string, number>} */
+  /** @type {Map<string, ReturnType<typeof emptyRent>>} */
   const byPc = new Map();
+  let with1 = 0;
+  let withHouse = 0;
   for (let r = header.row + 1; r <= ws.rowCount; r++) {
     const row = ws.getRow(r);
-    if (!isTotal(row.getCell(dwellCol + 1).value) || !isTotal(row.getCell(bedsCol + 1).value)) {
-      continue;
-    }
     const pc = padPostcode(row.getCell(pcCol + 1).value);
+    const dwell = classifyDwelling(row.getCell(dwellCol + 1).value);
+    const beds = classifyBedroom(row.getCell(bedsCol + 1).value);
     const median = parseNum(row.getCell(medianCol + 1).value);
-    if (!pc || median == null) continue;
-    byPc.set(pc, median);
+    if (!pc || !dwell || !beds || median == null) continue;
+    let rec = byPc.get(pc);
+    if (!rec) {
+      rec = emptyRent();
+      byPc.set(pc, rec);
+    }
+    if (dwell === "total" && beds === "total") rec.medianWeeklyRent = median;
+    else if (dwell === "total" && beds === "1") {
+      rec.rent1Br = median;
+      with1 += 1;
+    } else if (dwell === "total" && beds === "2") rec.rent2Br = median;
+    else if (dwell === "total" && beds === "3") rec.rent3Br = median;
+    else if (dwell === "house" && beds === "total") {
+      rec.rentHouse = median;
+      withHouse += 1;
+    } else if (dwell === "flat" && beds === "total") rec.rentFlat = median;
   }
-  console.error(`Rent Postcode: ${byPc.size} postcodes with Total/Total median (${period})`);
+  const withAll = [...byPc.values()].filter((r) => r.medianWeeklyRent != null).length;
+  console.error(
+    `Rent Postcode: ${byPc.size} postcodes (${withAll} all-dwellings, ${with1} 1-bed, ${withHouse} house) · ${period}`,
+  );
   return { period, byPc };
 }
 
@@ -374,7 +422,7 @@ async function ensureCorrespondence(fresh) {
 async function writeEmpty(reason) {
   const payload = {
     source: ATTRIBUTION,
-    sourceUrl: "https://dcj.nsw.gov.au/about-us/families-and-communities-statistics/housing-rent-and-sales/rent-and-sales-report.html",
+    sourceUrl: REPORT_URL,
     period: null,
     salesPeriod: null,
     attribution: ATTRIBUTION,
@@ -461,7 +509,8 @@ async function main() {
     const name = String(f.properties.name);
     const postcode = idToPc.get(id);
     if (!postcode) continue;
-    const medianWeeklyRent = rent.byPc.get(postcode) ?? null;
+    const rentRow = rent.byPc.get(postcode);
+    const medianWeeklyRent = rentRow?.medianWeeklyRent ?? null;
     const medianPurchase = sales.byPc.get(postcode) ?? null;
     if (medianWeeklyRent == null && medianPurchase == null) continue;
     suburbs.push({
@@ -470,14 +519,20 @@ async function main() {
       postcode,
       medianWeeklyRent,
       medianPurchase,
+      rent1Br: rentRow?.rent1Br ?? null,
+      rent2Br: rentRow?.rent2Br ?? null,
+      rent3Br: rentRow?.rent3Br ?? null,
+      rentHouse: rentRow?.rentHouse ?? null,
+      rentFlat: rentRow?.rentFlat ?? null,
       period: rent.period,
+      bondsNote: `New bonds, postcode ${postcode}, ${rent.period}`,
       rentNote: `Postcode ${postcode} median, new bonds, ${rent.period}. Not this suburb alone.`,
     });
   }
 
   const payload = {
     source: ATTRIBUTION,
-    sourceUrl: RENT_URL,
+    sourceUrl: REPORT_URL,
     period: rent.period,
     salesPeriod: sales.period,
     attribution: ATTRIBUTION,
@@ -489,8 +544,11 @@ async function main() {
   await writeFile(outPath, `${JSON.stringify(payload, null, 2)}\n`);
   const withRent = suburbs.filter((s) => s.medianWeeklyRent != null).length;
   const withSale = suburbs.filter((s) => s.medianPurchase != null).length;
+  const with1 = suburbs.filter((s) => s.rent1Br != null).length;
+  const withHouse = suburbs.filter((s) => s.rentHouse != null).length;
+  const withFlat = suburbs.filter((s) => s.rentFlat != null).length;
   console.error(
-    `Wrote ${outPath} (${suburbs.length}/${mapFc.features.length} suburbs, rent ${withRent}, sales ${withSale})`,
+    `Wrote ${outPath} (${suburbs.length}/${mapFc.features.length} suburbs, rent ${withRent}, 1-bed ${with1}, house ${withHouse}, flat ${withFlat}, sales ${withSale})`,
   );
 }
 

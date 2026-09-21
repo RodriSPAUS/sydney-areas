@@ -52,6 +52,12 @@ type DcjRow = {
   period?: string;
   postcode?: string;
   rentNote?: string;
+  bondsNote?: string;
+  rent1Br?: number | null;
+  rent2Br?: number | null;
+  rent3Br?: number | null;
+  rentHouse?: number | null;
+  rentFlat?: number | null;
 };
 
 const bocsarById = new Map((bocsarSafety.suburbs as BocsarRow[]).map((row) => [row.id, row]));
@@ -139,8 +145,13 @@ export const suburbs: Suburb[] = (
       source: dcj.medianWeeklyRent != null ? "dcj" : next.housing?.source,
       period: dcj.period ?? next.housing?.period,
       postcode: dcj.postcode,
-      rentNote: dcj.rentNote,
+      rentNote: dcj.bondsNote ?? dcj.rentNote,
       medianWeeklyRent2021: next.housing?.medianWeeklyRent2021 ?? census?.medianWeeklyRent2021,
+      rent1Br: dcj.rent1Br ?? null,
+      rent2Br: dcj.rent2Br ?? null,
+      rent3Br: dcj.rent3Br ?? null,
+      rentHouse: dcj.rentHouse ?? null,
+      rentFlat: dcj.rentFlat ?? null,
     };
   }
 

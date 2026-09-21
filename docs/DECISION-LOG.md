@@ -5,6 +5,19 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-22 — Drop filters; DCJ 1/2/3-bed and house/flat rents
+
+**What:** Filter chips are gone (too much chrome). Housing sheet now shows DCJ
+new-bond medians for 1 / 2 / 3 bedrooms and House vs Flat when the postcode
+table publishes them. Map colour is still all-dwellings median only. Suppressed
+cells (`*`, `s`, `-`) stay blank, never $0.
+
+**Why:** Three rows of chips covered the map. Bedroom rents are in the same
+DCJ workbook and answer “what does a two-bed cost here?” without a second
+colour scale.
+
+---
+
 ## 2026-09-22 — Centre on search, layer-first sheet, stronger fills, filters
 
 **What:** Search always recentres the suburb in the leftover map (even if it

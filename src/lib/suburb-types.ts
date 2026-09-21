@@ -56,6 +56,11 @@ export type Suburb = {
     period?: string;
     postcode?: string;
     rentNote?: string;
+    rent1Br?: number | null;
+    rent2Br?: number | null;
+    rent3Br?: number | null;
+    rentHouse?: number | null;
+    rentFlat?: number | null;
   };
   households?: {
     medianAge: number;

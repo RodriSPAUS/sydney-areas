@@ -231,41 +231,78 @@ function SafetyBody({
 }
 
 function HousingBody({ suburb }: { suburb: Suburb }) {
+  const h = suburb.housing;
   const hRank = layerRank(suburb.id, "housing", "combined");
-  if (!suburb.housing) return <p className="text-muted">No rent or sale figure for this suburb.</p>;
+  if (!h) return <p className="text-muted">No rent or sale figure for this suburb.</p>;
+  const dcj = h.source === "dcj";
+  const beds: { label: string; value: number }[] = [];
+  if (dcj) {
+    if (h.rent1Br != null) beds.push({ label: "1 bed", value: h.rent1Br });
+    if (h.rent2Br != null) beds.push({ label: "2 bed", value: h.rent2Br });
+    if (h.rent3Br != null) beds.push({ label: "3 bed", value: h.rent3Br });
+  }
+  const showHouseFlat = dcj && (h.rentHouse != null || h.rentFlat != null);
+
   return (
     <>
-      {suburb.housing.medianWeeklyRent != null ? (
+      {h.medianWeeklyRent != null ? (
         <p className="text-2xl font-semibold tracking-tight tabular-nums">
-          {formatAud(suburb.housing.medianWeeklyRent)}
+          {formatAud(h.medianWeeklyRent)}
           <span className="ml-1 text-sm font-medium text-muted">/ week</span>
         </p>
       ) : null}
+      {dcj ? (
+        <p className="text-sm text-muted">
+          All dwellings · postcode {h.postcode ?? "—"} · {h.period ?? ""}
+        </p>
+      ) : (
+        <p className="text-muted">ABS Census 2021</p>
+      )}
       {hRank ? (
         <p className="text-xs text-muted">
           #{hRank.rank} of {hRank.of} · {rankCaption("housing", "combined")}
         </p>
       ) : null}
-      <p className="text-muted">
-        {suburb.housing.source === "dcj"
-          ? `New bonds · postcode ${suburb.housing.postcode ?? "—"} · ${suburb.housing.period ?? ""}`
-          : "ABS Census 2021"}
-      </p>
-      {suburb.housing.medianPurchase != null ? (
+      {beds.length ? (
+        <div className="mt-1 grid grid-cols-3 gap-2">
+          {beds.map(({ label, value }) => (
+            <Stat key={label} label={label} value={formatAud(value)} />
+          ))}
+        </div>
+      ) : null}
+      {showHouseFlat ? (
+        <p>
+          {h.rentHouse != null ? (
+            <>
+              House <span className="font-semibold tabular-nums">{formatAud(h.rentHouse)}</span>
+            </>
+          ) : null}
+          {h.rentHouse != null && h.rentFlat != null ? " · " : null}
+          {h.rentFlat != null ? (
+            <>
+              Flat <span className="font-semibold tabular-nums">{formatAud(h.rentFlat)}</span>
+            </>
+          ) : null}
+        </p>
+      ) : null}
+      {h.medianPurchase != null ? (
         <p>
           Median purchase{" "}
-          <span className="font-semibold tabular-nums">{formatAud(suburb.housing.medianPurchase)}</span>
-          {suburb.housing.source === "dcj" ? " · DCJ sales" : ""}
+          <span className="font-semibold tabular-nums">{formatAud(h.medianPurchase)}</span>
+          {dcj ? " · DCJ sales" : ""}
         </p>
       ) : null}
-      {suburb.housing.source === "dcj" && suburb.housing.medianWeeklyRent2021 != null ? (
-        <p className="text-muted">
-          Census 2021 median rent {formatAud(suburb.housing.medianWeeklyRent2021)}
+      {dcj && h.medianWeeklyRent2021 != null ? (
+        <p className="text-muted">Census 2021 median rent {formatAud(h.medianWeeklyRent2021)}</p>
+      ) : null}
+      {dcj ? (
+        <p className="text-xs text-muted">
+          New rental bonds in this postcode, not this suburb alone. Cells with few bonds are
+          omitted.
         </p>
       ) : null}
-      {suburb.housing.rentNote ? <p className="text-xs text-muted">{suburb.housing.rentNote}</p> : null}
       <p className="text-xs text-muted">
-        {suburb.housing.source === "dcj"
+        {dcj
           ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
           : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
       </p>

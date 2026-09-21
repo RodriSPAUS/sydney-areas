@@ -73,7 +73,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
         </div>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
           {dcj
-            ? "Darker = higher rent. Five equal groups. Neighbouring suburbs may share a postcode."
+            ? "All dwellings, by postcode. Darker = higher rent. Neighbouring suburbs may share a colour."
             : "Darker = higher rent. Five equal groups. ABS Census 2021."}
         </p>
       </div>

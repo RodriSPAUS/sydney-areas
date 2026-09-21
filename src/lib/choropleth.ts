@@ -1,6 +1,6 @@
 import type { ExpressionSpecification } from "maplibre-gl";
 import { suburbs } from "@/data/suburbs";
-import type { Choropleth, LayerFilter, SafetyMetric } from "@/lib/map-store";
+import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import type { SafetyBand, Suburb } from "@/lib/suburb-types";
 
 /**
@@ -127,32 +127,6 @@ export function fillColorExpression(
   if (layer === "housing") return discreteFill("rentBand", HOUSING_FILL);
   if (layer === "households") return discreteFill("familyBand", FAMILIES_FILL);
   return discreteFill("bornBand", BORN_AU_FILL);
-}
-
-export function filterMatchExpression(
-  layer: Choropleth,
-  metric: SafetyMetric,
-  filter: LayerFilter,
-): ExpressionSpecification {
-  if (filter === "all") return ["boolean", true];
-  if (layer === "safety") {
-    const prop = BAND_PROP[metric];
-    const op: "<=" | ">=" = filter === "low" ? ">=" : "<=";
-    const cut = filter === "low" ? 4 : 2;
-    return [
-      "all",
-      ["==", ["typeof", ["get", prop]], "number"],
-      [op, ["get", prop], cut],
-    ];
-  }
-  const prop = layer === "housing" ? "rentBand" : layer === "households" ? "familyBand" : "bornBand";
-  const op: "<=" | ">=" = filter === "low" ? "<=" : ">=";
-  const cut = filter === "low" ? 2 : 4;
-  return [
-    "all",
-    ["==", ["typeof", ["get", prop]], "number"],
-    [op, ["get", prop], cut],
-  ];
 }
 
 export function safetyBandLabel(band: SafetyBand): string {

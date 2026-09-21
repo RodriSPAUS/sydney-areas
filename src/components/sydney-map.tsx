@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
-import { fillColorExpression, filterMatchExpression } from "@/lib/choropleth";
+import { fillColorExpression } from "@/lib/choropleth";
 import {
   bboxCorners,
   expandBBox,
@@ -17,7 +17,6 @@ import {
   suburbPolygonCount,
   suburbsGeoJSON,
 } from "@/lib/geo";
-import type { Choropleth, LayerFilter, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 
 const SYDNEY: [number, number] = [151.02, -33.86];
@@ -75,23 +74,16 @@ const BASEMAP: StyleSpecification = {
   ],
 };
 
-function fillOpacity(
-  selectedId: string,
-  layer: Choropleth,
-  metric: SafetyMetric,
-  filter: LayerFilter,
-): ExpressionSpecification {
-  const match: ExpressionSpecification =
-    filter === "all" ? ["boolean", true] : filterMatchExpression(layer, metric, filter);
+function fillOpacity(selectedId: string): ExpressionSpecification {
   return [
     "case",
     ["==", ["get", "id"], selectedId],
-    0.92,
+    0.9,
     ["boolean", ["feature-state", "hover"], false],
-    0.88,
-    match,
-    selectedId ? 0.78 : 0.86,
-    0.05,
+    0.86,
+    ["==", ["get", "hasFigures"], 1],
+    selectedId ? 0.62 : 0.72,
+    selectedId ? 0.48 : 0.58,
   ];
 }
 
@@ -171,7 +163,7 @@ function addLayers(map: MapLibreMap) {
     source: "suburbs",
     paint: {
       "fill-color": fillColorExpression(st.choropleth, st.safetyMetric),
-      "fill-opacity": fillOpacity(selectedId, st.choropleth, st.safetyMetric, st.layerFilter),
+      "fill-opacity": fillOpacity(selectedId),
       "fill-opacity-transition": { duration: 160 },
       "fill-antialias": true,
     },
@@ -356,7 +348,6 @@ export function SydneyMap() {
 
   const choropleth = useMapStore((s) => s.choropleth);
   const safetyMetric = useMapStore((s) => s.safetyMetric);
-  const layerFilter = useMapStore((s) => s.layerFilter);
   const selectedId = useMapStore((s) => s.selectedId);
   const focusSeq = useMapStore((s) => s.focusSeq);
 
@@ -370,14 +361,10 @@ export function SydneyMap() {
     const map = mapRef.current;
     if (!map?.getLayer("suburbs-fill")) return;
     const id = selectedId ?? "";
-    map.setPaintProperty(
-      "suburbs-fill",
-      "fill-opacity",
-      fillOpacity(id, choropleth, safetyMetric, layerFilter),
-    );
+    map.setPaintProperty("suburbs-fill", "fill-opacity", fillOpacity(id));
     map.setPaintProperty("suburbs-outline", "line-color", lineColor(id));
     map.setPaintProperty("suburbs-outline", "line-width", lineWidth(id));
-  }, [selectedId, choropleth, safetyMetric, layerFilter]);
+  }, [selectedId]);
 
   useEffect(() => {
     const map = mapRef.current;

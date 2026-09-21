@@ -21,7 +21,7 @@ npm run dev
 
 - Safety for mapped suburbs: `src/data/bocsar-safety.json`, generated from the official BOCSAR SuburbData.csv (CC-BY 3.0 AU). Map colour is incidents per 1,000 usual residents (ABS Census 2021), ranked among Greater Sydney suburbs on this map. Combined = street + home; retail theft is never used; domestic assault only colours the Domestic chip. Darker fill = more incidents.
 - Households / backgrounds: `src/data/census-2021.json` (ABS Census 2021 GCP, SAL). CC BY 4.0.
-- Housing: `src/data/dcj-housing.json` (NSW DCJ Rent and Sales Report, postcode). Census 2021 rent if a postcode median is missing. CC BY.
+- Housing: `src/data/dcj-housing.json` (NSW DCJ Rent and Sales Report, postcode). All-dwellings median colours the map; 1/2/3-bed and house/flat medians appear on the profile when published. Census 2021 rent if a postcode median is missing. CC BY.
 - Refresh:
 
 ```bash
