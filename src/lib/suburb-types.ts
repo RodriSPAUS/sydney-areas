@@ -1,17 +1,8 @@
 export type SafetyBand = 1 | 2 | 3 | 4 | 5;
 
-export type ServiceType = "hospital" | "school" | "station";
-
 export type AncestryShare = {
   name: string;
   pct: number;
-};
-
-export type ServicePin = {
-  type: ServiceType;
-  name: string;
-  lng: number;
-  lat: number;
 };
 
 /** Bounding box: [minLng, minLat, maxLng, maxLat] */
@@ -55,9 +46,6 @@ export type Suburb = {
     dwellingPer1000?: number | null;
     combinedPer1000?: number | null;
     domesticPer1000?: number | null;
-    housingPer1000?: number | null;
-    harmPer1000?: number | null;
-    harmScore?: number;
   };
   housing?: {
     medianWeeklyRent?: number;
@@ -79,5 +67,4 @@ export type Suburb = {
     topAncestries: AncestryShare[];
     topLanguageOther: string;
   };
-  services: ServicePin[];
 };

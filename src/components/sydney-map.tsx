@@ -9,7 +9,7 @@ import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
 import { fillColorExpression } from "@/lib/choropleth";
-import { bboxCorners, featureBBox, fitPadding, servicesGeoJSON, suburbPolygonCount, suburbsGeoJSON } from "@/lib/geo";
+import { bboxCorners, featureBBox, fitPadding, suburbPolygonCount, suburbsGeoJSON } from "@/lib/geo";
 import { useMapStore } from "@/lib/map-store";
 
 const SYDNEY: [number, number] = [151.02, -33.86];
@@ -103,6 +103,10 @@ function lineColor(selectedId: string): ExpressionSpecification {
   ];
 }
 
+function canHover() {
+  return typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
 function fitToSelected(map: MapLibreMap) {
   const id = useMapStore.getState().selectedId;
   if (!id) return;
@@ -135,11 +139,9 @@ function addLayers(map: MapLibreMap) {
     data: suburbsGeoJSON(),
     promoteId: "id",
   });
-  map.addSource("services", { type: "geojson", data: servicesGeoJSON() });
 
   const choropleth = useMapStore.getState().choropleth;
   const selectedId = useMapStore.getState().selectedId ?? "";
-  const servicesOn = useMapStore.getState().servicesOn;
 
   map.addLayer({
     id: "suburbs-fill",
@@ -189,26 +191,6 @@ function addLayers(map: MapLibreMap) {
       "text-halo-width": 1.2,
     },
   });
-  map.addLayer({
-    id: "service-dots",
-    type: "circle",
-    source: "services",
-    layout: { visibility: servicesOn ? "visible" : "none" },
-    paint: {
-      "circle-radius": 8,
-      "circle-color": [
-        "match",
-        ["get", "type"],
-        "hospital",
-        "#B56A5C",
-        "school",
-        "#3D7A72",
-        "#4A5560",
-      ],
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#FFFCFF",
-    },
-  });
 }
 
 export function SydneyMap() {
@@ -233,7 +215,8 @@ export function SydneyMap() {
     const ready = Promise.all([
       import("maplibre-gl"),
       import("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url"),
-    ]).then(([maplibregl, worker]) => {
+    ])
+      .then(([maplibregl, worker]) => {
         if (cancelled || !containerRef.current) return;
         maplibregl.setWorkerUrl(worker.default);
         const instance = new maplibregl.Map({
@@ -297,14 +280,12 @@ export function SydneyMap() {
           useMapStore.getState().selectSuburb(null);
         });
         instance.on("mousemove", "suburbs-fill", (e) => {
+          if (!canHover()) return;
           const feat = e.features?.[0] as MapGeoJSONFeature | undefined;
           const id = (feat?.properties?.id as string | undefined) ?? null;
           instance.getCanvas().style.cursor = id ? "pointer" : "";
           if (hoveredRef.current && hoveredRef.current !== id) {
-            instance.setFeatureState(
-              { source: "suburbs", id: hoveredRef.current },
-              { hover: false },
-            );
+            instance.setFeatureState({ source: "suburbs", id: hoveredRef.current }, { hover: false });
           }
           if (id) instance.setFeatureState({ source: "suburbs", id }, { hover: true });
           hoveredRef.current = id;
@@ -317,10 +298,7 @@ export function SydneyMap() {
         });
         instance.on("mouseleave", "suburbs-fill", () => {
           if (hoveredRef.current) {
-            instance.setFeatureState(
-              { source: "suburbs", id: hoveredRef.current },
-              { hover: false },
-            );
+            instance.setFeatureState({ source: "suburbs", id: hoveredRef.current }, { hover: false });
           }
           hoveredRef.current = null;
           setHoverId(null);
@@ -357,7 +335,6 @@ export function SydneyMap() {
 
   const choropleth = useMapStore((s) => s.choropleth);
   const safetyMetric = useMapStore((s) => s.safetyMetric);
-  const servicesOn = useMapStore((s) => s.servicesOn);
   const selectedId = useMapStore((s) => s.selectedId);
 
   useEffect(() => {
@@ -365,12 +342,6 @@ export function SydneyMap() {
     if (!map?.getLayer("suburbs-fill")) return;
     map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth, safetyMetric));
   }, [choropleth, safetyMetric]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map?.getLayer("service-dots")) return;
-    map.setLayoutProperty("service-dots", "visibility", servicesOn ? "visible" : "none");
-  }, [servicesOn]);
 
   useEffect(() => {
     const map = mapRef.current;

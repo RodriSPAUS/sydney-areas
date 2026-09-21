@@ -1,143 +1,154 @@
-# Sydney Areas — log de decisiones
+# Sydney Areas — decision log
 
-Qué hicimos y **por qué**. Una entrada por cambio de producto.
-Quien continúe el trabajo (humano o agente) lee esto; el chat no alcanza.
-
----
-
-## 2026-09-21 — Cloudflare: polígonos sin color
-
-**Qué:** MapLibre 6 pide `maplibre-gl-worker.mjs` al lado del bundle. Vite
-no lo copiaba; Cloudflare devolvía 404 y el canvas pintaba el basemap
-Esri sin fills. Ahora el worker se empaqueta (`?worker&url`) y se pasa
-con `setWorkerUrl`. Las capas de suburbio van encima del raster.
-
-**Por qué:** El sitio en pages.dev se veía (título, leyenda) pero Sydney
-gris, sin quintiles. Log: `ERR_FAILED .../assets/maplibre-gl-worker.mjs`.
+What we did and **why**. One entry per product change.
+Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
-## 2026-09-21 — Cloudflare Pages (dist, no Vercel)
+## 2026-09-22 — Share URL, ranks, colourblind fills, no fake services
 
-**Qué:** El build Nitro por defecto sigue siendo Vercel. Si el entorno es
-Cloudflare Pages (`CF_PAGES=1` o `NITRO_PRESET=cloudflare_pages`) el
-preset pasa a `cloudflare_pages` y escribe `dist/`. `wrangler.toml` con
-`pages_build_output_dir = "dist"` y `nodejs_compat`.
+**What:** Shareable `?s=&layer=&metric=` URL. Suburb sheet shows band bar +
+`#n of N` (1 = fewest / lowest). Safety palette is sequential orange-brown
+(darker = more incidents), not red–green. Sample suburb list and service pins
+are gone. Mobile chrome is compact; legend collapses; sheet is shorter so the
+map stays visible. UI copy is English only.
 
-**Por qué:** Deploy a Cloudflare falló: el comando ponía
-`NITRO_PRESET=cloudflare_pages` pero `vite.config.ts` tenía `preset:
-"vercel"` hardcodeado. Nitro escribió `.vercel/output` y Cloudflare
-buscó `dist`.
+**Why:** The map could not be sent as a link. The profile was a wall of
+counts. Red/green failed colourblind users and fought the “darker = more”
+housing ramp. Services only existed on 20 prototype suburbs. Spanish footer
+plus English chrome mixed languages.
+
+**What we did not add:** language toggle, real OSM services, compare view.
 
 ---
 
-## 2026-09-21 — Census 2021 + DCJ alquiler/venta (fin de sample)
+## 2026-09-21 — Cloudflare: polygons without colour
 
-**Qué:** Households y Backgrounds pasan a ABS Census 2021 (SAL). Housing
-usa mediana de alquiler de **nuevos bonds** DCJ por código postal
-(trimestre jun 2026) y mediana de compra DCJ (trimestre mar 2026).
-Si un SAL no tiene fila DCJ, se deja el alquiler del Censo 2021 y se
-dice. Se fueron los $2,42 m inventados.
+**What:** MapLibre 6 asks for `maplibre-gl-worker.mjs` next to the bundle. Vite
+did not copy it; Cloudflare returned 404 and the canvas painted the Esri
+basemap without fills. Now the worker is bundled (`?worker&url`) and passed
+with `setWorkerUrl`. Suburb layers sit above the raster.
 
-**Por qué:** El usuario pidió cifras oficiales, no sample, y no Domain.
-El Censo cubre cada polígono mapeado (663/663). El alquiler 2021 no es
-el precio de hoy, por eso DCJ por postcode, con nota de que el vecino
-puede compartir color.
+**Why:** The pages.dev site showed chrome (title, legend) but Sydney was grey,
+no quintiles. Log: `ERR_FAILED .../assets/maplibre-gl-worker.mjs`.
 
-**Join:** `CG_SAL_2021_POA_2021.xlsx` (mayor `RATIO_FROM_TO`). Bondi y
-Bondi Beach → 2026 ($1.050/sem, compra $1,93 m). Mount Druitt → 2770
-($530). Penrith → 2750 ($620). 641/663 SAL con DCJ; 22 (pocos bonds o
-sin match) quedan en Censo 2021.
+---
 
-**Qué no se tocó:** Safety/BOCSAR, polígonos, ranking por 1.000,
+## 2026-09-21 — Cloudflare Pages (dist, not Vercel)
+
+**What:** The default Nitro build is still Vercel. If the environment is
+Cloudflare Pages (`CF_PAGES=1` or `NITRO_PRESET=cloudflare_pages`) the
+preset becomes `cloudflare_pages` and writes `dist/`. `wrangler.toml` with
+`pages_build_output_dir = "dist"` and `nodejs_compat`.
+
+**Why:** Deploy to Cloudflare failed: the command set
+`NITRO_PRESET=cloudflare_pages` but `vite.config.ts` had `preset:
+"vercel"` hardcoded. Nitro wrote `.vercel/output` and Cloudflare
+looked for `dist`.
+
+---
+
+## 2026-09-21 — Census 2021 + DCJ rent/sale (end of sample)
+
+**What:** Households and Backgrounds move to ABS Census 2021 (SAL). Housing
+uses median rent of **new bonds** DCJ by postcode (Jun 2026 quarter) and
+median purchase DCJ (Mar 2026 quarter). If a SAL has no DCJ row, Census 2021
+rent is kept and labelled. Invented $2.42 m figures are gone.
+
+**Why:** The user asked for official figures, not sample, and not Domain.
+Census covers every mapped polygon (663/663). 2021 rent is not today’s
+price, hence DCJ by postcode, with a note that a neighbour may share colour.
+
+**Join:** `CG_SAL_2021_POA_2021.xlsx` (largest `RATIO_FROM_TO`). Bondi and
+Bondi Beach → 2026 ($1,050/week, purchase $1.93 m). Mount Druitt → 2770
+($530). Penrith → 2750 ($620). 641/663 SAL with DCJ; 22 (few bonds or no
+match) stay on Census 2021.
+
+**What we did not touch:** Safety/BOCSAR, polygons, ranking per 1,000,
 auth, Google.
 
 **Scripts:** `npm run data:census`, `npm run data:housing`. Cache
-xlsx/zip en `data/cache/` (gitignored). JSON chicos sí se commitean.
+xlsx/zip in `data/cache/` (gitignored). Small JSON is committed.
 DevDep `exceljs`.
 
-**Copy:** leyenda Households/Backgrounds = “ABS Census 2021”. Housing =
-“Weekly rent (new bonds, DCJ)” si hay DCJ.
+**Copy:** Households/Backgrounds legend = “ABS Census 2021”. Housing =
+“Weekly rent (new bonds, DCJ)” when DCJ is present.
 
 ---
 
-## 2026-09-21 — Greater Sydney + ranking de toda la ciudad
+## 2026-09-21 — Greater Sydney + city-wide ranking
 
-**Qué:** Polígonos ABS SAL ~663 (oeste Penrith/Blacktown/Mount Druitt,
-Liverpool, Campbelltown). Cámara muestra Parramatta y Bondi juntos.
-Safety ahora tiene cuatro métricas (Combined / Street / Homes / Domestic),
-quintiles entre **todos** los suburbios mapeados, por 1.000 habitantes.
-Combined = street + home; retail nunca pinta; DV solo el chip Domestic.
+**What:** ABS SAL polygons ~663 (west Penrith/Blacktown/Mount Druitt,
+Liverpool, Campbelltown). Camera shows Parramatta and Bondi together.
+Safety now has four metrics (Combined / Street / Homes / Domestic),
+quintiles among **all** mapped suburbs, per 1,000 residents.
+Combined = street + home; retail never paints; DV only the Domestic chip.
 
-**Por qué:** El recorte inner/east hacía que el oeste ni se viera, y las
-bandas se calculaban solo entre suburbios de economía nocturna. El inner
-east se llevaba todo el rojo y el west parecía calmo aunque no se lo
-estuviera comparando con el resto de la ciudad.
+**Why:** The inner/east crop hid the west, and bands were only among
+night-economy suburbs. Inner east took all the red and the west looked
+calm because it was not compared to the rest of the city.
 
-**Qué deja de pintar el mapa:** el índice de gravedad (20 sep). Los
-conteos extra siguen en la ficha. Pedido explícito de ranking comparable
-en toda la ciudad.
+**What the map stopped painting:** the harm-weighted index (20 Sep). Extra
+counts stay on the sheet. Explicit request for a comparable city-wide rank.
 
 **Script:** `npm run data:polygons` + `npm run data:bocsar -- --fresh`.
 
 ---
 
-## 2026-09-21 — Memoria de proyecto
+## 2026-09-21 — Project memory
 
-**Qué:** `AGENTS.project.md` + este log. Puntero en `AGENTS.md`.
+**What:** this log. Pointer in `AGENTS.md`.
 
-**Por qué:** Hasta acá las decisiones vivían solo en el chat. El usuario
-preguntó si se estaba tomando nota. No se estaba. Sin esto, un session
-nuevo no sabe por qué el mapa es per cápita y ponderado.
-
----
-
-## 2026-09-20 — Índice de gravedad (harm-weighted)
-
-**Qué:** El color de Safety dejó de tratar todos los delitos igual.
-Pasa a tasa ponderada por 1.000 habitantes. Entran homicidio, agresión
-sexual, hurto a persona, asalto a policía. La ficha sigue mostrando
-conteos crudos con el ×peso.
-
-**Por qué:** Un hurto de auto valía lo mismo que un asalto; no entraba
-una violación. Los suburbios ruidosos de hurtos menores se veían igual
-de “altos” que los de violencia. Pedido del usuario.
-
-**Qué no se pudo:** BOCSAR a nivel suburbio no separa pelea de borrachos
-de agresión grave (todo es Non-DV assault).
-
-**Superseded:** el color volvió a tasas sin peso el 21 sep (Greater
-Sydney comparable). Los conteos extra se quedan.
+**Why:** Until here decisions lived only in chat. The user asked if notes
+were being kept. They were not.
 
 ---
 
-## 2026-09-20 — Push a `main`
+## 2026-09-20 — Harm-weighted index
 
-**Qué:** `7522b27` en https://github.com/RodriSPAUS/sydney-areas
+**What:** Safety colour stopped treating every offence equally.
+Moved to a weighted rate per 1,000 residents. Homicide, sexual assault,
+theft from person, assault on police entered. The sheet still shows raw
+counts with the ×weight.
 
-**Incluye:** 357 polígonos ABS, BOCSAR en todos los suburbios del mapa,
-tasa por 1.000 (Censo 2021). No incluye el índice de gravedad (eso fue
-después).
+**Why:** A stolen car counted the same as an assault; rape was missing.
+Noisy minor-theft suburbs looked as “high” as violent ones. User request.
 
-**Por qué:** El usuario preguntó si estaba en `main`. No estaba.
+**What we could not do:** BOCSAR at suburb level does not split a pub fight
+from serious assault (all Non-DV assault).
 
----
-
-## 2026-09-20 — Por 1.000 habitantes
-
-**Qué:** Ranking por tasa (conteo / población 2021 × 1000), no por
-conteo crudo. `MIN_POP = 100`.
-
-**Por qué:** “A más habitantes, parece más peligroso.” Bondi no es
-comparable a un suburbio chico si solo se suman incidentes.
+**Superseded:** colour went back to unweighted rates on 21 Sep (Greater
+Sydney comparable). Extra counts stay.
 
 ---
 
-## 2026-09-20 — BOCSAR en todos los suburbios del mapa
+## 2026-09-20 — Push to `main`
 
-**Qué:** Safety en cada polígono mapeado, no solo los 20 del prototipo.
+**What:** `7522b27` on https://github.com/RodriSPAUS/sydney-areas
 
-**Por qué:** “Ponlo en todos los suburbios que están en el mapa.”
+**Includes:** 357 ABS polygons, BOCSAR on every mapped suburb,
+rate per 1,000 (Census 2021). Does not include the harm index (that was
+later).
 
-**Sigue igual (entonces):** Housing / households / backgrounds = sample.
-Eso cambió el 21 sep (Census 2021 + DCJ).
+**Why:** The user asked if it was on `main`. It was not.
+
+---
+
+## 2026-09-20 — Per 1,000 residents
+
+**What:** Rank by rate (count / 2021 population × 1000), not raw count.
+`MIN_POP = 100`.
+
+**Why:** “More people makes it look more dangerous.” Bondi is not
+comparable to a small suburb if you only sum incidents.
+
+---
+
+## 2026-09-20 — BOCSAR on every mapped suburb
+
+**What:** Safety on each mapped polygon, not only the 20 from the prototype.
+
+**Why:** “Put it on every suburb that is on the map.”
+
+**Still the same (then):** Housing / households / backgrounds = sample.
+That changed 21 Sep (Census 2021 + DCJ).

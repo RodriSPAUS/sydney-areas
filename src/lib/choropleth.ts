@@ -3,13 +3,17 @@ import { suburbs } from "@/data/suburbs";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import type { SafetyBand, Suburb } from "@/lib/suburb-types";
 
-/** Cartographic fills — muted, not alarm colours. */
+/**
+ * Colorblind-safe sequential fills. Darker = more of the mapped value
+ * (more incidents, higher rent, more families, more born in Australia).
+ * Safety is orange-brown (no red/green).
+ */
 export const SAFETY_FILL: Record<SafetyBand, string> = {
-  1: "#C45C4A",
-  2: "#D07A3F",
-  3: "#D4A017",
-  4: "#8BA85A",
-  5: "#3B7D58",
+  5: "#F2E4CC",
+  4: "#E0B06A",
+  3: "#C67A3C",
+  2: "#9A4A28",
+  1: "#5C2418",
 };
 
 export const HOUSING_LOW = "#D6E2EA";
@@ -18,6 +22,7 @@ export const FAMILIES_LOW = "#EDE6D9";
 export const FAMILIES_HIGH = "#6B5344";
 export const BORN_AU_LOW = "#D7EDEA";
 export const BORN_AU_HIGH = "#0F5F59";
+export const NEUTRAL_FILL = "#C9BBA8";
 
 const rents = suburbs.flatMap((s) =>
   s.housing?.medianWeeklyRent != null ? [s.housing.medianWeeklyRent] : [],
@@ -41,8 +46,6 @@ export const bornAuRange = {
   min: bornAu.length ? Math.min(...bornAu) : 0,
   max: bornAu.length ? Math.max(...bornAu) : 1,
 };
-
-export const NEUTRAL_FILL = "#C4B49A";
 
 const BAND_PROP: Record<SafetyMetric, string> = {
   combined: "safetyBand",
@@ -171,7 +174,11 @@ function mixHex(a: string, b: string, t: number): string {
   return `#${hex(Math.round(ar + (br - ar) * p))}${hex(Math.round(ag + (bg - ag) * p))}${hex(Math.round(ab + (bb - ab) * p))}`;
 }
 
-export function suburbFill(suburb: Suburb, layer: Choropleth, metric: SafetyMetric = "combined"): string {
+export function suburbFill(
+  suburb: Suburb,
+  layer: Choropleth,
+  metric: SafetyMetric = "combined",
+): string {
   if (layer === "safety") {
     const band = activeSafetyBand(suburb, metric);
     return band ? SAFETY_FILL[band] : NEUTRAL_FILL;
@@ -197,6 +204,7 @@ export function suburbFill(suburb: Suburb, layer: Choropleth, metric: SafetyMetr
   const t =
     bornAuRange.max === bornAuRange.min
       ? 0.5
-      : (suburb.backgrounds.pctBornAustralia - bornAuRange.min) / (bornAuRange.max - bornAuRange.min);
+      : (suburb.backgrounds.pctBornAustralia - bornAuRange.min) /
+        (bornAuRange.max - bornAuRange.min);
   return mixHex(BORN_AU_LOW, BORN_AU_HIGH, t);
 }

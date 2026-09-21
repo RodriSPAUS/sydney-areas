@@ -1,6 +1,6 @@
-import type { Feature, FeatureCollection, MultiPolygon, Point, Polygon } from "geojson";
+import type { Feature, FeatureCollection, MultiPolygon, Polygon } from "geojson";
 import polygonFc from "@/data/suburb-polygons.json";
-import { suburbs, suburbsById } from "@/data/suburbs";
+import { suburbsById } from "@/data/suburbs";
 import type { BBox, Suburb } from "@/lib/suburb-types";
 
 type PolyGeom = Polygon | MultiPolygon;
@@ -67,13 +67,11 @@ function propsFor(id: string, name: string, suburb?: Suburb) {
     bornAu: suburb?.backgrounds?.pctBornAustralia ?? null,
     topAncestry: suburb?.backgrounds?.topAncestries[0]?.name ?? "",
     hasFigures:
-      suburb?.safety?.band || suburb?.safety?.bandCombined || suburb?.safety?.bandStreet
-        ? 1
-        : 0,
+      suburb?.safety?.band || suburb?.safety?.bandCombined || suburb?.safety?.bandStreet ? 1 : 0,
   };
 }
 
-export function suburbFeature(suburb: Suburb, _index?: number): Feature<PolyGeom> {
+export function suburbFeature(suburb: Suburb): Feature<PolyGeom> {
   const geometry = suburbGeometry(suburb.id) ?? {
     type: "Polygon" as const,
     coordinates: [],
@@ -98,35 +96,12 @@ export function suburbsGeoJSON(): FeatureCollection<PolyGeom> {
   };
 }
 
-export function servicesGeoJSON(): FeatureCollection<Point> {
-  return {
-    type: "FeatureCollection",
-    features: suburbs.flatMap((suburb) =>
-      suburb.services.map((pin, i) => ({
-        type: "Feature" as const,
-        id: `${suburb.id}-${i}`,
-        properties: {
-          suburbId: suburb.id,
-          type: pin.type,
-          name: pin.name,
-          label: pin.type === "hospital" ? "H" : pin.type === "school" ? "S" : "T",
-        },
-        geometry: { type: "Point" as const, coordinates: [pin.lng, pin.lat] },
-      })),
-    ),
-  };
-}
-
 export function bboxCorners(bbox: BBox): [[number, number], [number, number]] {
   const [west, south, east, north] = bbox;
   return [
     [west, south],
     [east, north],
   ];
-}
-
-export function isDesktop(): boolean {
-  return window.matchMedia("(min-width: 768px)").matches;
 }
 
 export function fitPadding(sheetOpen: boolean): {
@@ -138,12 +113,12 @@ export function fitPadding(sheetOpen: boolean): {
   const w = Math.max(typeof window === "undefined" ? 390 : window.innerWidth, 1);
   const h = Math.max(typeof window === "undefined" ? 640 : window.innerHeight, 1);
   const desktop = w >= 768;
-  const top = Math.min(136, Math.round(h * 0.2));
+  const top = Math.min(88, Math.round(h * 0.14));
   let bottom = sheetOpen
     ? desktop
       ? Math.min(88, Math.round(h * 0.14))
-      : Math.round(h * 0.48)
-    : Math.min(112, Math.round(h * 0.16));
+      : Math.round(h * 0.42)
+    : Math.min(104, Math.round(h * 0.16));
   const left = 16;
   let right = desktop && sheetOpen ? Math.min(372, Math.round(w * 0.38)) : 16;
   if (h - top - bottom < 90) bottom = Math.max(0, h - top - 90);

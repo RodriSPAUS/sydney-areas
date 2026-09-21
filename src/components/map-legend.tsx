@@ -1,3 +1,5 @@
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { suburbs } from "@/data/suburbs";
 import {
   BORN_AU_HIGH,
@@ -14,6 +16,7 @@ import {
 } from "@/lib/choropleth";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
+import { cn } from "@/lib/utils";
 
 function Ramp({ from, to, left, right }: { from: string; to: string; left: string; right: string }) {
   return (
@@ -30,6 +33,20 @@ function Ramp({ from, to, left, right }: { from: string; to: string; left: strin
   );
 }
 
+function SafetyRamp() {
+  return (
+    <div className="flex overflow-hidden rounded-full">
+      {([5, 4, 3, 2, 1] as const).map((band) => (
+        <span
+          key={band}
+          className="h-1.5 flex-1 first:rounded-l-full last:rounded-r-full"
+          style={{ backgroundColor: SAFETY_FILL[band] }}
+        />
+      ))}
+    </div>
+  );
+}
+
 const SAFETY_TITLE: Record<SafetyMetric, string> = {
   combined: "Street + home incidents / 1,000",
   street: "Street incidents / 1,000",
@@ -42,21 +59,13 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
     return (
       <div>
         <p className="mb-1.5 text-[11px] font-medium text-fg">{SAFETY_TITLE[metric]}</p>
-        <div className="flex overflow-hidden rounded-full">
-          {([5, 4, 3, 2, 1] as const).map((band) => (
-            <span
-              key={band}
-              className="h-1.5 flex-1 first:rounded-l-full last:rounded-r-full"
-              style={{ backgroundColor: SAFETY_FILL[band] }}
-            />
-          ))}
-        </div>
+        <SafetyRamp />
         <div className="mt-1 flex justify-between text-[10px] text-muted">
           <span>Fewer</span>
           <span>More</span>
         </div>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Among Greater Sydney suburbs on this map. Not a live risk score.
+          Darker = more incidents. Among Greater Sydney suburbs on this map. Not a live risk score.
         </p>
         {metric === "domestic" ? (
           <p className="mt-1 text-[10px] leading-snug text-muted">
@@ -81,8 +90,8 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
         />
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
           {dcj
-            ? "By postcode. Neighbouring suburbs may share a colour."
-            : "ABS Census 2021. Not today’s advertised price."}
+            ? "Darker = higher rent. By postcode. Neighbouring suburbs may share a colour."
+            : "Darker = higher rent. ABS Census 2021. Not today’s advertised price."}
         </p>
       </div>
     );
@@ -97,7 +106,9 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           left={`${familyRange.min}%`}
           right={`${familyRange.max}%`}
         />
-        <p className="mt-1.5 text-[10px] leading-snug text-muted">ABS Census 2021</p>
+        <p className="mt-1.5 text-[10px] leading-snug text-muted">
+          Darker = more families. ABS Census 2021
+        </p>
       </div>
     );
   }
@@ -110,7 +121,9 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
         left={`${bornAuRange.min}%`}
         right={`${bornAuRange.max}%`}
       />
-      <p className="mt-1.5 text-[10px] leading-snug text-muted">ABS Census 2021</p>
+      <p className="mt-1.5 text-[10px] leading-snug text-muted">
+        Darker = higher share. ABS Census 2021
+      </p>
     </div>
   );
 }
@@ -118,24 +131,46 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
 export function MapLegend() {
   const layer = useMapStore((s) => s.choropleth);
   const metric = useMapStore((s) => s.safetyMetric);
-  const servicesOn = useMapStore((s) => s.servicesOn);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="pointer-events-none w-[196px] rounded-xl bg-surface/95 px-3 py-2.5 shadow-[var(--shadow-border)]">
-      <LegendBody layer={layer} metric={metric} />
-      {servicesOn ? (
-        <ul className="mt-2 flex flex-col gap-1 border-t border-border pt-2 text-[10px] text-muted">
-          <li className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-pin-hospital" /> Hospital
-          </li>
-          <li className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-pin-school" /> School
-          </li>
-          <li className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-pin-station" /> Station
-          </li>
-        </ul>
+    <div className="pointer-events-auto w-[196px] rounded-xl bg-surface/95 px-3 py-2 shadow-[var(--shadow-border)]">
+      <button
+        type="button"
+        className="flex h-8 w-full items-center justify-between text-[11px] font-medium text-fg md:hidden"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        Legend
+        <ChevronDown
+          className={cn("size-4 text-muted transition-transform duration-150", open && "rotate-180")}
+          strokeWidth={2}
+          aria-hidden
+        />
+      </button>
+      {!open ? (
+        <div className="md:hidden">
+          {layer === "safety" ? (
+            <SafetyRamp />
+          ) : (
+            <div
+              className="h-1.5 rounded-full"
+              style={{
+                background: `linear-gradient(to right, ${
+                  layer === "housing"
+                    ? `${HOUSING_LOW}, ${HOUSING_HIGH}`
+                    : layer === "households"
+                      ? `${FAMILIES_LOW}, ${FAMILIES_HIGH}`
+                      : `${BORN_AU_LOW}, ${BORN_AU_HIGH}`
+                })`,
+              }}
+            />
+          )}
+        </div>
       ) : null}
+      <div className={cn(open ? "mt-2 block" : "hidden md:block")}>
+        <LegendBody layer={layer} metric={metric} />
+      </div>
     </div>
   );
 }

@@ -17,12 +17,15 @@ function geoProject(lng: number, lat: number) {
   };
 }
 
+function canHover() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
 export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
   const choropleth = useMapStore((s) => s.choropleth);
   const safetyMetric = useMapStore((s) => s.safetyMetric);
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
-  const servicesOn = useMapStore((s) => s.servicesOn);
   const [size, setSize] = useState({ w: 1, h: 1 });
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [cursor, setCursor] = useState({ x: 24, y: 24 });
@@ -88,10 +91,7 @@ export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
       onMouseLeave={() => setHoveredId(null)}
     >
       <svg
-        className={cn(
-          "pointer-events-none absolute inset-0 h-full w-full",
-          !map && "bg-[#e8e4dc]",
-        )}
+        className={cn("pointer-events-none absolute inset-0 h-full w-full", !map && "bg-[#e8e4dc]")}
         viewBox={viewBox}
         preserveAspectRatio={map ? "none" : "xMidYMid meet"}
         role="img"
@@ -117,7 +117,9 @@ export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
                 on && "is-selected",
               )}
               aria-label={suburb.name}
-              onMouseEnter={() => setHoveredId(suburb.id)}
+              onMouseEnter={() => {
+                if (canHover()) setHoveredId(suburb.id);
+              }}
               onFocus={() => setHoveredId(suburb.id)}
               onClick={(e) => {
                 e.stopPropagation();
@@ -126,38 +128,8 @@ export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
             />
           );
         })}
-        {servicesOn
-          ? suburbs.flatMap((suburb) =>
-              suburb.services.map((pin) => {
-                const p = project(pin.lng, pin.lat);
-                const fill =
-                  pin.type === "hospital"
-                    ? "var(--color-pin-hospital)"
-                    : pin.type === "school"
-                      ? "var(--color-pin-school)"
-                      : "var(--color-pin-station)";
-                const label = pin.type === "hospital" ? "H" : pin.type === "school" ? "S" : "T";
-                return (
-                  <g key={`${suburb.id}-${pin.name}`} className="pointer-events-none">
-                    <circle cx={p.x} cy={p.y} r={7} fill={fill} stroke="var(--color-surface)" strokeWidth={2} />
-                    <text
-                      x={p.x}
-                      y={p.y + 3.5}
-                      textAnchor="middle"
-                      fill="var(--color-surface)"
-                      fontSize={8}
-                      fontWeight={700}
-                      fontFamily="Inter, system-ui, sans-serif"
-                    >
-                      {label}
-                    </text>
-                  </g>
-                );
-              }),
-            )
-          : null}
       </svg>
-      {hovered ? (
+      {hovered && canHover() ? (
         <SuburbTooltip suburb={hovered} layer={choropleth} metric={safetyMetric} x={cursor.x} y={cursor.y} />
       ) : null}
     </div>

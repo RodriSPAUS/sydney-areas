@@ -15,20 +15,17 @@
   --color-border: #e4dfd6;
   --color-ink: #1c1917;
 
-  --color-safety-1: #c45c4a;
-  --color-safety-2: #d07a3f;
-  --color-safety-3: #d4a017;
-  --color-safety-4: #8ba85a;
-  --color-safety-5: #3b7d58;
+  --color-safety-1: #5c2418;
+  --color-safety-2: #9a4a28;
+  --color-safety-3: #c67a3c;
+  --color-safety-4: #e0b06a;
+  --color-safety-5: #f2e4cc;
   --color-housing-low: #d6e2ea;
   --color-housing-high: #2c4a5e;
   --color-families-low: #ede6d9;
   --color-families-high: #6b5344;
   --color-born-low: #d7edea;
   --color-born-high: #0f5f59;
-  --color-pin-hospital: #b56a5c;
-  --color-pin-school: #3d7a72;
-  --color-pin-station: #4a5560;
 
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -135,6 +132,10 @@
   p {
     text-wrap: pretty;
   }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -167,8 +168,14 @@
 }
 
 .maplibregl-ctrl-top-right {
-  top: 9.75rem;
+  top: 4.5rem;
   right: 10px;
+}
+
+@media (min-width: 768px) {
+  .maplibregl-ctrl-top-right {
+    top: 7.5rem;
+  }
 }
 
 .maplibregl-ctrl-bottom-left {
