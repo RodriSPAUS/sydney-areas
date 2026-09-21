@@ -140,48 +140,38 @@ function addLayers(map: MapLibreMap) {
   const choropleth = useMapStore.getState().choropleth;
   const selectedId = useMapStore.getState().selectedId ?? "";
   const servicesOn = useMapStore.getState().servicesOn;
-  const beforeRef = map.getLayer("esri-ref") ? "esri-ref" : undefined;
 
-  map.addLayer(
-    {
-      id: "suburbs-fill",
-      type: "fill",
-      source: "suburbs",
-      paint: {
-        "fill-color": fillColorExpression(choropleth, useMapStore.getState().safetyMetric),
-        "fill-opacity": fillOpacity(selectedId),
-        "fill-opacity-transition": { duration: 160 },
-        "fill-antialias": true,
-      },
+  map.addLayer({
+    id: "suburbs-fill",
+    type: "fill",
+    source: "suburbs",
+    paint: {
+      "fill-color": fillColorExpression(choropleth, useMapStore.getState().safetyMetric),
+      "fill-opacity": fillOpacity(selectedId),
+      "fill-opacity-transition": { duration: 160 },
+      "fill-antialias": true,
     },
-    beforeRef,
-  );
-  map.addLayer(
-    {
-      id: "suburbs-casing",
-      type: "line",
-      source: "suburbs",
-      paint: {
-        "line-color": "#FFFCFF",
-        "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.8, 12, 2.6],
-        "line-opacity": 0.55,
-      },
+  });
+  map.addLayer({
+    id: "suburbs-casing",
+    type: "line",
+    source: "suburbs",
+    paint: {
+      "line-color": "#FFFCFF",
+      "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.8, 12, 2.6],
+      "line-opacity": 0.55,
     },
-    beforeRef,
-  );
-  map.addLayer(
-    {
-      id: "suburbs-outline",
-      type: "line",
-      source: "suburbs",
-      paint: {
-        "line-color": lineColor(selectedId),
-        "line-width": lineWidth(selectedId),
-        "line-opacity": 0.95,
-      },
+  });
+  map.addLayer({
+    id: "suburbs-outline",
+    type: "line",
+    source: "suburbs",
+    paint: {
+      "line-color": lineColor(selectedId),
+      "line-width": lineWidth(selectedId),
+      "line-opacity": 0.95,
     },
-    beforeRef,
-  );
+  });
   map.addLayer({
     id: "suburb-labels",
     type: "symbol",
@@ -240,9 +230,12 @@ export function SydneyMap() {
     let onResize: (() => void) | undefined;
     const timers: number[] = [];
 
-    const ready = import("maplibre-gl")
-      .then((maplibregl) => {
+    const ready = Promise.all([
+      import("maplibre-gl"),
+      import("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url"),
+    ]).then(([maplibregl, worker]) => {
         if (cancelled || !containerRef.current) return;
+        maplibregl.setWorkerUrl(worker.default);
         const instance = new maplibregl.Map({
           container: containerRef.current,
           style: BASEMAP,

@@ -5,6 +5,18 @@ Quien continúe el trabajo (humano o agente) lee esto; el chat no alcanza.
 
 ---
 
+## 2026-09-21 — Cloudflare: polígonos sin color
+
+**Qué:** MapLibre 6 pide `maplibre-gl-worker.mjs` al lado del bundle. Vite
+no lo copiaba; Cloudflare devolvía 404 y el canvas pintaba el basemap
+Esri sin fills. Ahora el worker se empaqueta (`?worker&url`) y se pasa
+con `setWorkerUrl`. Las capas de suburbio van encima del raster.
+
+**Por qué:** El sitio en pages.dev se veía (título, leyenda) pero Sydney
+gris, sin quintiles. Log: `ERR_FAILED .../assets/maplibre-gl-worker.mjs`.
+
+---
+
 ## 2026-09-21 — Cloudflare Pages (dist, no Vercel)
 
 **Qué:** El build Nitro por defecto sigue siendo Vercel. Si el entorno es

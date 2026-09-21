@@ -170,6 +170,11 @@ export default defineConfig(({ command, isPreview }) => ({
     port: 8081,
     strictPort: true,
   },
+  // MapLibre 6 loads a module worker. Vite's default IIFE worker is ignored
+  // (type: 'module' does not throw, so the IIFE never runs and fills stay empty).
+  worker: {
+    format: "es",
+  },
   resolve: { tsconfigPaths: true },
   plugins: [
     pgliteBootstrapPlugin(),
