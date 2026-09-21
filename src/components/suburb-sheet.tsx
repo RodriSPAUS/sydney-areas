@@ -1,20 +1,25 @@
 import { X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
-import { formatAud, safetyBandLabel } from "@/lib/choropleth";
+import { activeSafetyBand, formatAud, safetyBandLabel } from "@/lib/choropleth";
 import { useMapStore } from "@/lib/map-store";
 import type { SafetyCounts } from "@/lib/suburb-types";
 import { cn } from "@/lib/utils";
 
 const COUNT_ROWS: { key: keyof SafetyCounts; label: string }[] = [
+  { key: "homicide", label: "Homicide" },
+  { key: "sexualAssault", label: "Sexual assault" },
+  { key: "otherSexual", label: "Other sexual offences" },
+  { key: "robbery", label: "Robbery" },
   { key: "assaultNonDv", label: "Non-DV assault" },
-  { key: "assaultDv", label: "Domestic assault" },
+  { key: "assaultPolice", label: "Assault on police" },
+  { key: "stealFromPerson", label: "Theft from person" },
   { key: "breakEnterDwelling", label: "Break and enter (home)" },
+  { key: "motorVehicleTheft", label: "Stolen vehicles" },
   { key: "stealFromDwelling", label: "Theft from home" },
   { key: "stealFromVehicle", label: "Theft from vehicle" },
-  { key: "motorVehicleTheft", label: "Stolen vehicles" },
-  { key: "robbery", label: "Robbery" },
   { key: "maliciousDamage", label: "Property damage" },
+  { key: "assaultDv", label: "Domestic assault" },
   { key: "stealRetail", label: "Retail theft" },
 ];
 
@@ -27,9 +32,15 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+function rateLine(label: string, value: number | null | undefined) {
+  if (value == null) return `${label} —`;
+  return `${label} ${value}`;
+}
+
 export function SuburbSheet() {
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
+  const safetyMetric = useMapStore((s) => s.safetyMetric);
   const feedback = useMapStore((s) => s.feedback);
   const setFeedback = useMapStore((s) => s.setFeedback);
   const suburb = selectedId ? suburbsById[selectedId] : undefined;
@@ -43,6 +54,7 @@ export function SuburbSheet() {
 
   const counts =
     period === "6" ? suburb?.safety?.last6Months : suburb?.safety?.last12Months;
+  const metricBand = suburb ? activeSafetyBand(suburb, safetyMetric) : undefined;
 
   return (
     <aside
@@ -84,9 +96,9 @@ export function SuburbSheet() {
             <Block title="Safety">
               {suburb.safety ? (
                 <>
-                  {suburb.safety.band ? (
+                  {metricBand ? (
                     <p className="font-medium">
-                      Band {suburb.safety.band} of 5 · {safetyBandLabel(suburb.safety.band)}
+                      Band {metricBand} of 5 · {safetyBandLabel(metricBand)}
                     </p>
                   ) : (
                     <p className="font-medium">No map colour — too few Census 2021 residents for a stable rate</p>
@@ -95,11 +107,14 @@ export function SuburbSheet() {
                   {suburb.safety.population ? (
                     <p className="text-muted">
                       Census 2021 usual residents {suburb.safety.population.toLocaleString("en-AU")}
-                      {suburb.safety.housingPer1000 != null && suburb.safety.streetPer1000 != null
-                        ? ` · dwelling ${suburb.safety.housingPer1000} and street ${suburb.safety.streetPer1000} per 1,000`
-                        : ""}
                     </p>
                   ) : null}
+                  <ul className="mt-1 space-y-0.5 text-muted">
+                    <li>{rateLine("Street per 1,000", suburb.safety.streetPer1000)}</li>
+                    <li>{rateLine("Homes per 1,000", suburb.safety.dwellingPer1000)}</li>
+                    <li>{rateLine("Combined per 1,000", suburb.safety.combinedPer1000)}</li>
+                    <li>{rateLine("Domestic assault per 1,000", suburb.safety.domesticPer1000)}</li>
+                  </ul>
                   <div
                     role="radiogroup"
                     aria-label="Incident period"
@@ -146,8 +161,9 @@ export function SuburbSheet() {
                     </ul>
                   ) : null}
                   <p className="text-xs text-muted">
-                    The map colour uses dwelling and street incidents per 1,000 residents. The list
-                    is raw counts. Retail theft and domestic assault are not used for the colour.
+                    Rank among Greater Sydney suburbs on this map, incidents per 1,000 Census 2021
+                    residents. Combined is street + home and ignores retail theft and domestic
+                    assault. The list is raw counts.
                   </p>
                   <p className="text-xs text-muted">
                     NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU. Population:
@@ -156,25 +172,42 @@ export function SuburbSheet() {
                 </>
               ) : (
                 <p className="text-muted">
-                  No BOCSAR row in this prototype extract. The boundary is from ABS Suburbs and
-                  Localities 2021.
+                  No BOCSAR row in this extract. The boundary is from ABS Suburbs and Localities
+                  2021.
                 </p>
               )}
             </Block>
 
             {suburb.housing ? (
               <Block title="Housing">
-                <p>
-                  Median weekly rent {formatAud(suburb.housing.medianWeeklyRent)}{" "}
-                  <span className="text-muted">· Sample figures · not official</span>
-                </p>
-                <p>
-                  Median purchase {formatAud(suburb.housing.medianPurchase)}{" "}
-                  <span className="text-muted">· Sample figures · not official</span>
-                </p>
-                <p className="text-muted">
-                  2026 advertised rents city-wide are higher; use this to compare suburbs, not as
-                  today’s price.
+                {suburb.housing.medianWeeklyRent != null ? (
+                  <p>
+                    {suburb.housing.source === "dcj"
+                      ? `Median weekly rent ${formatAud(suburb.housing.medianWeeklyRent)} · new bonds · postcode ${suburb.housing.postcode ?? "—"} · ${suburb.housing.period ?? ""}`
+                      : `Median weekly rent ${formatAud(suburb.housing.medianWeeklyRent)} · ABS Census 2021`}
+                  </p>
+                ) : null}
+                {suburb.housing.medianPurchase != null ? (
+                  <p>
+                    Median purchase {formatAud(suburb.housing.medianPurchase)}
+                    {suburb.housing.postcode ? ` · postcode ${suburb.housing.postcode}` : ""}
+                    {suburb.housing.source === "dcj" ? " · DCJ sales" : ""}
+                  </p>
+                ) : null}
+                {suburb.housing.source === "dcj" && suburb.housing.medianWeeklyRent2021 != null ? (
+                  <p className="text-muted">
+                    Census 2021 median rent {formatAud(suburb.housing.medianWeeklyRent2021)} (for
+                    comparison)
+                  </p>
+                ) : null}
+                {suburb.housing.rentNote ? (
+                  <p className="text-xs text-muted">{suburb.housing.rentNote}</p>
+                ) : null}
+                <p className="text-muted">2021 Census rent is not today’s advertised price.</p>
+                <p className="text-xs text-muted">
+                  {suburb.housing.source === "dcj"
+                    ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
+                    : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
                 </p>
               </Block>
             ) : null}
@@ -184,7 +217,7 @@ export function SuburbSheet() {
                 <p>Median age {suburb.households.medianAge}</p>
                 <p>{suburb.households.pctRenting}% renting</p>
                 <p>{suburb.households.pctFamiliesWithChildren}% families with children</p>
-                <p className="text-xs text-muted">Sample figures · not official</p>
+                <p className="text-xs text-muted">ABS Census 2021</p>
               </Block>
             ) : null}
 
@@ -199,7 +232,7 @@ export function SuburbSheet() {
                 </p>
                 <p>Top language other than English: {suburb.backgrounds.topLanguageOther}</p>
                 <p className="text-xs text-muted">
-                  Sample figures · not official. Ancestry is self-reported; people can choose two.
+                  ABS Census 2021. Ancestry is self-reported; people can choose two.
                 </p>
               </Block>
             ) : null}

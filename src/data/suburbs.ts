@@ -1,11 +1,16 @@
 /**
- * Safety = BOCSAR recorded incidents from SuburbData.csv; other layers remain sample.
+ * Safety = BOCSAR. Households / backgrounds = ABS Census 2021.
+ * Housing = DCJ new-bond rents when present, else Census 2021 rent.
  */
 import bocsarSafety from "@/data/bocsar-safety.json";
+import census2021 from "@/data/census-2021.json";
+import dcjHousing from "@/data/dcj-housing.json";
 import polygonFc from "@/data/suburb-polygons.json";
-import type { BBox, SafetyBand, Suburb } from "@/lib/suburb-types";
+import type { AncestryShare, BBox, SafetyBand, Suburb } from "@/lib/suburb-types";
 
 const bocsarById = new Map(bocsarSafety.suburbs.map((row) => [row.id, row]));
+const censusById = new Map(census2021.suburbs.map((row) => [row.id, row]));
+const dcjById = new Map(dcjHousing.suburbs.map((row) => [row.id, row]));
 
 const suburbsBase: Suburb[] = [
   {
@@ -545,23 +550,85 @@ export const suburbs: Suburb[] = [
       services: [],
     })),
 ].map((suburb) => {
-  const row = bocsarById.get(suburb.id);
-  if (!row) return suburb;
-  return {
+  const safetyRow = bocsarById.get(suburb.id);
+  const census = censusById.get(suburb.id);
+  const dcj = dcjById.get(suburb.id);
+
+  let next: Suburb = {
     ...suburb,
-    safety: {
-      ...(row.band ? { band: row.band as SafetyBand } : {}),
-      summary: row.summary,
-      period12: row.period12,
-      period6: row.period6,
-      last12Months: row.last12Months,
-      last6Months: row.last6Months,
-      population: row.population,
-      populationYear: row.populationYear,
-      housingPer1000: row.housingPer1000,
-      streetPer1000: row.streetPer1000,
-    },
+    housing: undefined,
+    households: undefined,
+    backgrounds: undefined,
   };
+
+  if (safetyRow) {
+    next = {
+      ...next,
+      safety: {
+        ...(safetyRow.band ? { band: safetyRow.band as SafetyBand } : {}),
+        ...(safetyRow.bandStreet ? { bandStreet: safetyRow.bandStreet as SafetyBand } : {}),
+        ...(safetyRow.bandDwelling ? { bandDwelling: safetyRow.bandDwelling as SafetyBand } : {}),
+        ...(safetyRow.bandCombined ? { bandCombined: safetyRow.bandCombined as SafetyBand } : {}),
+        ...(safetyRow.bandDomestic ? { bandDomestic: safetyRow.bandDomestic as SafetyBand } : {}),
+        summary: safetyRow.summary,
+        period12: safetyRow.period12,
+        period6: safetyRow.period6,
+        last12Months: safetyRow.last12Months,
+        last6Months: safetyRow.last6Months,
+        population: safetyRow.population,
+        populationYear: safetyRow.populationYear,
+        streetPer1000: safetyRow.streetPer1000,
+        dwellingPer1000: safetyRow.dwellingPer1000,
+        combinedPer1000: safetyRow.combinedPer1000,
+        domesticPer1000: safetyRow.domesticPer1000,
+      },
+    };
+  }
+
+  if (census) {
+    if (
+      census.medianAge != null &&
+      census.pctRenting != null &&
+      census.pctFamiliesWithChildren != null
+    ) {
+      next.households = {
+        medianAge: census.medianAge,
+        pctRenting: census.pctRenting,
+        pctFamiliesWithChildren: census.pctFamiliesWithChildren,
+      };
+    }
+    if (census.pctBornAustralia != null && census.topAncestries?.length) {
+      next.backgrounds = {
+        pctBornAustralia: census.pctBornAustralia,
+        topAncestries: census.topAncestries as AncestryShare[],
+        topLanguageOther: census.topLanguageOther || "—",
+      };
+    }
+    if (census.medianWeeklyRent2021 != null) {
+      next.housing = {
+        medianWeeklyRent: census.medianWeeklyRent2021,
+        medianWeeklyRent2021: census.medianWeeklyRent2021,
+        medianMortgageMonthly2021: census.medianMortgageMonthly2021,
+        source: "census-2021",
+        period: "Census 2021",
+      };
+    }
+  }
+
+  if (dcj && (dcj.medianWeeklyRent != null || dcj.medianPurchase != null)) {
+    next.housing = {
+      ...next.housing,
+      ...(dcj.medianWeeklyRent != null ? { medianWeeklyRent: dcj.medianWeeklyRent } : {}),
+      ...(dcj.medianPurchase != null ? { medianPurchase: dcj.medianPurchase } : {}),
+      source: dcj.medianWeeklyRent != null ? "dcj" : next.housing?.source,
+      period: dcj.period ?? next.housing?.period,
+      postcode: dcj.postcode,
+      rentNote: dcj.rentNote,
+      medianWeeklyRent2021: next.housing?.medianWeeklyRent2021 ?? census?.medianWeeklyRent2021,
+    };
+  }
+
+  return next;
 });
 
 export const suburbsById: Record<string, Suburb> = Object.fromEntries(

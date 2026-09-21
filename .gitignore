@@ -5,6 +5,8 @@ dist
 .nitro
 .tanstack
 .vercel
+.wrangler
+.env
 .env
 .env.*
 !.env.example

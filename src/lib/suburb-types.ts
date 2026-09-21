@@ -18,13 +18,18 @@ export type ServicePin = {
 export type BBox = [number, number, number, number];
 
 export type SafetyCounts = {
+  homicide: number;
+  sexualAssault: number;
+  otherSexual: number;
   assaultNonDv: number;
+  assaultPolice: number;
   assaultDv: number;
+  robbery: number;
+  stealFromPerson: number;
   breakEnterDwelling: number;
   stealFromDwelling: number;
   stealFromVehicle: number;
   motorVehicleTheft: number;
-  robbery: number;
   maliciousDamage: number;
   stealRetail: number;
 };
@@ -35,6 +40,10 @@ export type Suburb = {
   bbox: BBox;
   safety?: {
     band?: SafetyBand;
+    bandStreet?: SafetyBand;
+    bandDwelling?: SafetyBand;
+    bandCombined?: SafetyBand;
+    bandDomestic?: SafetyBand;
     summary: string;
     period12?: string;
     period6?: string;
@@ -42,12 +51,23 @@ export type Suburb = {
     last6Months?: SafetyCounts;
     population?: number | null;
     populationYear?: string;
-    housingPer1000?: number | null;
     streetPer1000?: number | null;
+    dwellingPer1000?: number | null;
+    combinedPer1000?: number | null;
+    domesticPer1000?: number | null;
+    housingPer1000?: number | null;
+    harmPer1000?: number | null;
+    harmScore?: number;
   };
   housing?: {
-    medianWeeklyRent: number;
-    medianPurchase: number;
+    medianWeeklyRent?: number;
+    medianPurchase?: number;
+    medianWeeklyRent2021?: number | null;
+    medianMortgageMonthly2021?: number | null;
+    source?: "dcj" | "census-2021";
+    period?: string;
+    postcode?: string;
+    rentNote?: string;
   };
   households?: {
     medianAge: number;
@@ -56,7 +76,7 @@ export type Suburb = {
   };
   backgrounds?: {
     pctBornAustralia: number;
-    topAncestries: [AncestryShare, AncestryShare, AncestryShare];
+    topAncestries: AncestryShare[];
     topLanguageOther: string;
   };
   services: ServicePin[];

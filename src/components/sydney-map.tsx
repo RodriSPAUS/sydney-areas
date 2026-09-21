@@ -12,16 +12,16 @@ import { fillColorExpression } from "@/lib/choropleth";
 import { bboxCorners, featureBBox, fitPadding, servicesGeoJSON, suburbPolygonCount, suburbsGeoJSON } from "@/lib/geo";
 import { useMapStore } from "@/lib/map-store";
 
-const SYDNEY: [number, number] = [151.18, -33.88];
-const DEFAULT_ZOOM = 10.6;
+const SYDNEY: [number, number] = [151.02, -33.86];
+const DEFAULT_ZOOM = 9.4;
 const MAX_BOUNDS: [[number, number], [number, number]] = [
-  [150.48, -34.15],
-  [151.42, -33.55],
+  [150.55, -34.22],
+  [151.42, -33.52],
 ];
-/** Inner / eastern / lower north shore / St George — the circled zone. */
+/** Greater Sydney urban view — Penrith/Blacktown west to Bondi east. */
 const ZONE_BOUNDS: [[number, number], [number, number]] = [
-  [150.99, -34.04],
-  [151.32, -33.76],
+  [150.72, -34.06],
+  [151.32, -33.7],
 ];
 
 const BASEMAP: StyleSpecification = {
@@ -148,7 +148,7 @@ function addLayers(map: MapLibreMap) {
       type: "fill",
       source: "suburbs",
       paint: {
-        "fill-color": fillColorExpression(choropleth),
+        "fill-color": fillColorExpression(choropleth, useMapStore.getState().safetyMetric),
         "fill-opacity": fillOpacity(selectedId),
         "fill-opacity-transition": { duration: 160 },
         "fill-antialias": true,
@@ -248,7 +248,7 @@ export function SydneyMap() {
           style: BASEMAP,
           center: SYDNEY,
           zoom: DEFAULT_ZOOM,
-          minZoom: 9,
+          minZoom: 8.5,
           maxZoom: 16,
           maxBounds: MAX_BOUNDS,
           attributionControl: { compact: true },
@@ -363,14 +363,15 @@ export function SydneyMap() {
   }, []);
 
   const choropleth = useMapStore((s) => s.choropleth);
+  const safetyMetric = useMapStore((s) => s.safetyMetric);
   const servicesOn = useMapStore((s) => s.servicesOn);
   const selectedId = useMapStore((s) => s.selectedId);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map?.getLayer("suburbs-fill")) return;
-    map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth));
-  }, [choropleth]);
+    map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth, safetyMetric));
+  }, [choropleth, safetyMetric]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -404,7 +405,7 @@ export function SydneyMap() {
       />
       {svgOnly ? <SuburbShapes map={mapObj} /> : null}
       {!svgOnly && hovered ? (
-        <SuburbTooltip suburb={hovered} layer={choropleth} x={cursor.x} y={cursor.y} />
+        <SuburbTooltip suburb={hovered} layer={choropleth} metric={safetyMetric} x={cursor.x} y={cursor.y} />
       ) : null}
     </div>
   );

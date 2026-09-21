@@ -6,6 +6,13 @@
  *
  *   npm run data:bocsar
  *   npm run data:bocsar -- --fresh
+ *
+ * Map colour is a harm-weighted rate per 1,000 Census 2021 residents.
+ * Weights are a compressed Crime Severity Index (Canada CSI / UK ONS CSS
+ * style): personal harm outranks property, but a single rare event does
+ * not dominate a 12-month suburb. Retail theft and domestic assault are
+ * listed, not scored. BOCSAR suburb files do not split common assault
+ * from assault occasioning injury.
  */
 import { spawn, spawnSync } from "node:child_process";
 import { createWriteStream, readFileSync } from "node:fs";
@@ -24,31 +31,65 @@ const POP_ATTRIBUTION =
   "Australian Bureau of Statistics, Census of Population and Housing 2021, usual resident population by SAL";
 const MIN_POP = 100;
 const BAND_NOTE =
-  "Rank among mapped suburbs using incidents per 1,000 residents (Census 2021 usual residence). 5 = fewer, 1 = more. Retail theft and domestic assault are not used.";
+  "Rank among Greater Sydney suburbs on this map, incidents per 1,000 Census 2021 residents. Combined = street + home offences. Retail theft is never used. Domestic assault only colours the Domestic metric.";
 
 const GROUPS = {
+  homicide: "Homicide (murder, manslaughter, attempted murder)",
+  sexualAssault: "Sexual offences / Sexual assault",
+  otherSexual: "Sexual offences / Sexual touching, sexual act and other sexual offences",
   assaultNonDv: "Assault / Non-domestic violence related assault",
+  assaultPolice: "Assault / Assault Police",
   assaultDv: "Assault / Domestic violence related assault",
+  robbery: "Robbery (all weapon categories)",
+  stealFromPerson: "Theft / Steal from person",
   breakEnterDwelling: "Theft / Break and enter dwelling",
   stealFromDwelling: "Theft / Steal from dwelling",
   stealFromVehicle: "Theft / Steal from motor vehicle",
   motorVehicleTheft: "Theft / Motor vehicle theft",
-  robbery: "Robbery (all weapon categories)",
   maliciousDamage: "Malicious damage to property / Malicious damage to property",
   stealRetail: "Theft / Steal from retail store",
 };
 
+/** Harm weights used for the map colour. 0 = listed only. */
+const WEIGHTS = {
+  homicide: 40,
+  sexualAssault: 20,
+  robbery: 15,
+  assaultNonDv: 8,
+  assaultPolice: 8,
+  otherSexual: 8,
+  stealFromPerson: 6,
+  breakEnterDwelling: 5,
+  motorVehicleTheft: 3,
+  stealFromDwelling: 2,
+  stealFromVehicle: 1,
+  maliciousDamage: 1,
+  assaultDv: 0,
+  stealRetail: 0,
+};
+
 /** @type {{ key: keyof typeof GROUPS; category: string; subcategory: string }[]} */
 const GROUP_ROWS = [
+  { key: "homicide", category: "Homicide", subcategory: "Murder *" },
+  { key: "homicide", category: "Homicide", subcategory: "Attempted murder" },
+  { key: "homicide", category: "Homicide", subcategory: "Manslaughter *" },
+  { key: "sexualAssault", category: "Sexual offences", subcategory: "Sexual assault" },
+  {
+    key: "otherSexual",
+    category: "Sexual offences",
+    subcategory: "Sexual touching, sexual act and other sexual offences",
+  },
   { key: "assaultNonDv", category: "Assault", subcategory: "Non-domestic violence related assault" },
+  { key: "assaultPolice", category: "Assault", subcategory: "Assault Police" },
   { key: "assaultDv", category: "Assault", subcategory: "Domestic violence related assault" },
+  { key: "robbery", category: "Robbery", subcategory: "Robbery without a weapon" },
+  { key: "robbery", category: "Robbery", subcategory: "Robbery with a firearm" },
+  { key: "robbery", category: "Robbery", subcategory: "Robbery with a weapon not a firearm" },
+  { key: "stealFromPerson", category: "Theft", subcategory: "Steal from person" },
   { key: "breakEnterDwelling", category: "Theft", subcategory: "Break and enter dwelling" },
   { key: "stealFromDwelling", category: "Theft", subcategory: "Steal from dwelling" },
   { key: "stealFromVehicle", category: "Theft", subcategory: "Steal from motor vehicle" },
   { key: "motorVehicleTheft", category: "Theft", subcategory: "Motor vehicle theft" },
-  { key: "robbery", category: "Robbery", subcategory: "Robbery without a weapon" },
-  { key: "robbery", category: "Robbery", subcategory: "Robbery with a firearm" },
-  { key: "robbery", category: "Robbery", subcategory: "Robbery with a weapon not a firearm" },
   {
     key: "maliciousDamage",
     category: "Malicious damage to property",
@@ -135,9 +176,6 @@ function csvNameLookup(mapSuburbs) {
   for (const { id, name } of mapSuburbs) {
     const folded = foldName(name);
     if (folded && !lookup.has(folded)) lookup.set(folded, id);
-    else if (folded && lookup.get(folded) !== id) {
-      /* keep the exact mapping; do not collapse distinct places */
-    }
   }
   for (const [key, ids] of stripClaims) {
     if (ids.length === 1 && !lookup.has(key)) lookup.set(key, ids[0]);
@@ -228,6 +266,15 @@ function matchUrp(mapSuburbs, nswRows) {
 function per1000(count, pop) {
   if (!pop || pop < MIN_POP) return null;
   return Math.round((count / pop) * 10000) / 10;
+}
+
+/** @param {Record<string, number>} counts */
+function harmScore(counts) {
+  let total = 0;
+  for (const key of COUNT_KEYS) {
+    total += (counts[key] ?? 0) * (WEIGHTS[key] ?? 0);
+  }
+  return total;
 }
 
 function parseCount(raw) {
@@ -384,14 +431,9 @@ function vsMedian(score, med) {
   return "well above the median";
 }
 
-function summarise(housingRate, streetRate, housingMed, streetMed, period12) {
-  const h = vsMedian(housingRate, housingMed);
-  const s = vsMedian(streetRate, streetMed);
-  const lead =
-    h === s
-      ? `Dwelling and street incidents per 1,000 residents both sit ${h} of mapped suburbs.`
-      : `Dwelling incidents per 1,000 residents sit ${h} of mapped suburbs. Street incidents sit ${s}.`;
-  return `${lead} BOCSAR recorded incidents, ${period12}.`;
+function summarise(combinedRate, combinedMed, period12) {
+  const h = vsMedian(combinedRate, combinedMed);
+  return `Combined street and home incidents per 1,000 residents sit ${h} of Greater Sydney suburbs on this map. BOCSAR recorded incidents, ${period12}.`;
 }
 
 function clampBand(n) {
@@ -521,50 +563,64 @@ async function main() {
       if (!rec.seen) return null;
       const c = rec.last12Months;
       const population = popById.get(id) ?? null;
-      const housingScore = c.breakEnterDwelling + c.stealFromDwelling;
       const streetScore = c.assaultNonDv + c.robbery + c.stealFromVehicle + c.motorVehicleTheft;
+      const dwellingScore = c.breakEnterDwelling + c.stealFromDwelling;
+      const combinedScore = streetScore + dwellingScore;
+      const domesticScore = c.assaultDv;
       return {
         id,
         name,
         population,
-        housingScore,
-        streetScore,
-        housingPer1000: per1000(housingScore, population),
         streetPer1000: per1000(streetScore, population),
+        dwellingPer1000: per1000(dwellingScore, population),
+        combinedPer1000: per1000(combinedScore, population),
+        domesticPer1000: per1000(domesticScore, population),
         last12Months: rec.last12Months,
         last6Months: rec.last6Months,
       };
     })
     .filter(Boolean);
 
-  const ranked = rows.filter((r) => r.housingPer1000 != null && r.streetPer1000 != null);
+  const ranked = rows.filter((r) => r.combinedPer1000 != null);
   if (!ranked.length) fail("No suburbs had both BOCSAR counts and Census 2021 population. Do not invent numbers.");
 
-  const housingQ = quintiles(ranked.map((r) => r.housingPer1000));
-  const streetQ = quintiles(ranked.map((r) => r.streetPer1000));
-  const housingMed = median(ranked.map((r) => r.housingPer1000));
-  const streetMed = median(ranked.map((r) => r.streetPer1000));
-  const bandById = new Map(
-    ranked.map((r, i) => [r.id, clampBand(Math.round((housingQ[i] + streetQ[i]) / 2))]),
-  );
+  function bandsFor(key) {
+    const eligible = ranked.filter((r) => r[key] != null);
+    const q = quintiles(eligible.map((r) => r[key]));
+    return new Map(eligible.map((r, i) => [r.id, clampBand(q[i])]));
+  }
+
+  const streetBands = bandsFor("streetPer1000");
+  const dwellingBands = bandsFor("dwellingPer1000");
+  const combinedBands = bandsFor("combinedPer1000");
+  const domesticBands = bandsFor("domesticPer1000");
+  const combinedMed = median(ranked.map((r) => r.combinedPer1000));
 
   const suburbs = rows.map((r) => {
-    const band = bandById.get(r.id);
+    const bandCombined = combinedBands.get(r.id);
+    const bandStreet = streetBands.get(r.id);
+    const bandDwelling = dwellingBands.get(r.id);
+    const bandDomestic = domesticBands.get(r.id);
     const summary =
-      band != null
-        ? summarise(r.housingPer1000, r.streetPer1000, housingMed, streetMed, period12)
+      bandCombined != null
+        ? summarise(r.combinedPer1000, combinedMed, period12)
         : `Census 2021 usual residents are too few for a stable rate. Counts are still listed. BOCSAR recorded incidents, ${period12}.`;
     return {
       id: r.id,
       name: r.name,
       period12,
       period6,
-      ...(band != null ? { band } : {}),
+      ...(bandCombined != null ? { band: bandCombined, bandCombined } : {}),
+      ...(bandStreet != null ? { bandStreet } : {}),
+      ...(bandDwelling != null ? { bandDwelling } : {}),
+      ...(bandDomestic != null ? { bandDomestic } : {}),
       bandNote: BAND_NOTE,
       population: r.population,
       populationYear: "2021",
-      housingPer1000: r.housingPer1000,
       streetPer1000: r.streetPer1000,
+      dwellingPer1000: r.dwellingPer1000,
+      combinedPer1000: r.combinedPer1000,
+      domesticPer1000: r.domesticPer1000,
       last12Months: r.last12Months,
       last6Months: r.last6Months,
       summary,
@@ -580,12 +636,13 @@ async function main() {
     extractedAt: new Date().toISOString(),
     latestMonthInFile,
     groups: GROUPS,
+    weights: WEIGHTS,
     suburbs,
   };
 
   await writeFile(outPath, `${JSON.stringify(payload, null, 2)}\n`);
   console.error(
-    `Wrote ${outPath} (${suburbs.length} suburbs, ${ranked.length} with per-1,000 bands, period ${period12})`,
+    `Wrote ${outPath} (${suburbs.length} suburbs, ${ranked.length} with Greater Sydney combined bands, period ${period12})`,
   );
 }
 

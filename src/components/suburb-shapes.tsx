@@ -7,7 +7,7 @@ import { featureBBox, projectGeometry, suburbGeometry } from "@/lib/geo";
 import { useMapStore } from "@/lib/map-store";
 import { cn } from "@/lib/utils";
 
-const WORLD: [number, number, number, number] = [150.48, -34.15, 151.42, -33.55];
+const WORLD: [number, number, number, number] = [150.55, -34.22, 151.42, -33.52];
 
 function geoProject(lng: number, lat: number) {
   const [west, south, east, north] = WORLD;
@@ -19,6 +19,7 @@ function geoProject(lng: number, lat: number) {
 
 export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
   const choropleth = useMapStore((s) => s.choropleth);
+  const safetyMetric = useMapStore((s) => s.safetyMetric);
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
   const servicesOn = useMapStore((s) => s.servicesOn);
@@ -107,7 +108,7 @@ export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
             <path
               key={suburb.id}
               d={d}
-              fill={suburbFill(suburb, choropleth)}
+              fill={suburbFill(suburb, choropleth, safetyMetric)}
               fillRule="evenodd"
               className={cn(
                 "suburb-poly pointer-events-auto",
@@ -157,7 +158,7 @@ export function SuburbShapes({ map }: { map: MapLibreMap | null }) {
           : null}
       </svg>
       {hovered ? (
-        <SuburbTooltip suburb={hovered} layer={choropleth} x={cursor.x} y={cursor.y} />
+        <SuburbTooltip suburb={hovered} layer={choropleth} metric={safetyMetric} x={cursor.x} y={cursor.y} />
       ) : null}
     </div>
   );

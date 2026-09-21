@@ -1,54 +1,61 @@
-import { formatAud, safetyBandLabel } from "@/lib/choropleth";
-import type { Choropleth } from "@/lib/map-store";
+import { activeSafetyBand, formatAud, safetyBandLabel } from "@/lib/choropleth";
+import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import type { Suburb } from "@/lib/suburb-types";
 
 export function SuburbTooltip({
   suburb,
   layer,
+  metric = "combined",
   x,
   y,
 }: {
   suburb: Suburb;
   layer: Choropleth;
+  metric?: SafetyMetric;
   x: number;
   y: number;
 }) {
+  const safetyBand = activeSafetyBand(suburb, metric);
   const primary =
     layer === "safety"
-      ? suburb.safety?.band
-        ? `Band ${suburb.safety.band} of 5`
+      ? safetyBand
+        ? `Band ${safetyBand} of 5`
         : suburb.safety?.last12Months
           ? "Counts only · no stable rate"
           : "No BOCSAR extract"
       : layer === "housing"
-        ? suburb.housing
+        ? suburb.housing?.medianWeeklyRent != null
           ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
-          : "Sample housing not in this extract"
+          : "No rent figure in this extract"
         : layer === "households"
           ? suburb.households
             ? `${suburb.households.pctFamiliesWithChildren}% families with children`
-            : "Sample household figures not in this extract"
+            : "No Census 2021 household figures"
           : suburb.backgrounds
             ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
-            : "Sample ancestry figures not in this extract";
+            : "No Census 2021 ancestry figures";
 
   const secondary =
     layer === "safety"
-      ? suburb.safety?.band
-        ? safetyBandLabel(suburb.safety.band)
+      ? safetyBand
+        ? safetyBandLabel(safetyBand)
         : suburb.safety?.population
           ? "Census population too small for a rate"
           : "Boundary only"
       : layer === "housing"
-        ? suburb.housing
+        ? suburb.housing?.medianPurchase != null
           ? `Median purchase ${formatAud(suburb.housing.medianPurchase)}`
-          : "Click for the name"
+          : suburb.housing?.source === "dcj"
+            ? `Postcode ${suburb.housing.postcode ?? ""} · ${suburb.housing.period ?? ""}`
+            : suburb.housing
+              ? "ABS Census 2021"
+              : "Click for the name"
         : layer === "households"
           ? suburb.households
             ? `Median age ${suburb.households.medianAge} · ${suburb.households.pctRenting}% renting`
             : "Click for the name"
           : suburb.backgrounds
-            ? `${suburb.backgrounds.topAncestries[0].name} ${suburb.backgrounds.topAncestries[0].pct}% · ${suburb.backgrounds.topLanguageOther}`
+            ? `${suburb.backgrounds.topAncestries[0]?.name ?? ""} ${suburb.backgrounds.topAncestries[0]?.pct ?? ""}% · ${suburb.backgrounds.topLanguageOther}`
             : "Click for the name";
 
   return (

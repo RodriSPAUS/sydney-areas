@@ -1,0 +1,5781 @@
+{
+  "source": "NSW Department of Communities and Justice, Rent and Sales Report",
+  "sourceUrl": "https://dcj.nsw.gov.au/content/dam/dcj/dcj-website/documents/about-us/families-and-communities-statistics/housing-and-rent-sales/rent-tables-june-2026-quarter.xlsx",
+  "period": "Jun 2026 quarter",
+  "salesPeriod": "Mar 2026 quarter",
+  "attribution": "NSW Department of Communities and Justice, Rent and Sales Report",
+  "licence": "CC BY 4.0",
+  "extractedAt": "2026-09-21T02:50:55.782Z",
+  "join": "ABS 2021 correspondence CG_SAL_2021_POA_2021 (largest RATIO_FROM_TO)",
+  "suburbs": [
+    {
+      "id": "abbotsbury",
+      "name": "Abbotsbury",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "abbotsford",
+      "name": "Abbotsford",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "acacia-gardens",
+      "name": "Acacia Gardens",
+      "postcode": "2763",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1280000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2763 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "agnes-banks",
+      "name": "Agnes Banks",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "airds",
+      "name": "Airds",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "alexandria",
+      "name": "Alexandria",
+      "postcode": "2015",
+      "medianWeeklyRent": 890,
+      "medianPurchase": 1095000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2015 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "alfords-point",
+      "name": "Alfords Point",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "allambie-heights",
+      "name": "Allambie Heights",
+      "postcode": "2100",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 2250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2100 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "allawah",
+      "name": "Allawah",
+      "postcode": "2218",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 855000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2218 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ambarvale",
+      "name": "Ambarvale",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "angus",
+      "name": "Angus",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "annandale",
+      "name": "Annandale",
+      "postcode": "2038",
+      "medianWeeklyRent": 765,
+      "medianPurchase": 2250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2038 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "annangrove",
+      "name": "Annangrove",
+      "postcode": "2156",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2750000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2156 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "arncliffe",
+      "name": "Arncliffe",
+      "postcode": "2205",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 843000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2205 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "arndell-park",
+      "name": "Arndell Park",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "artarmon",
+      "name": "Artarmon",
+      "postcode": "2064",
+      "medianWeeklyRent": 820,
+      "medianPurchase": 1159000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2064 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ashbury",
+      "name": "Ashbury",
+      "postcode": "2193",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 945000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2193 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ashcroft",
+      "name": "Ashcroft",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ashfield",
+      "name": "Ashfield",
+      "postcode": "2131",
+      "medianWeeklyRent": 693,
+      "medianPurchase": 978000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2131 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "asquith",
+      "name": "Asquith",
+      "postcode": "2077",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2077 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "auburn",
+      "name": "Auburn",
+      "postcode": "2144",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 630000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2144 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "austral",
+      "name": "Austral",
+      "postcode": "2179",
+      "medianWeeklyRent": 810,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2179 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "avalon-beach",
+      "name": "Avalon Beach",
+      "postcode": "2107",
+      "medianWeeklyRent": 1250,
+      "medianPurchase": 2700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2107 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "balgowlah",
+      "name": "Balgowlah",
+      "postcode": "2093",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2093 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "balgowlah-heights",
+      "name": "Balgowlah Heights",
+      "postcode": "2093",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2093 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "balmain",
+      "name": "Balmain",
+      "postcode": "2041",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 2170000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2041 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "balmain-east",
+      "name": "Balmain East",
+      "postcode": "2041",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 2170000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2041 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bangor",
+      "name": "Bangor",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "banksia",
+      "name": "Banksia",
+      "postcode": "2216",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 821000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2216 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "banksmeadow",
+      "name": "Banksmeadow",
+      "postcode": "2019",
+      "medianWeeklyRent": 920,
+      "medianPurchase": 1225000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2019 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bankstown",
+      "name": "Bankstown",
+      "postcode": "2200",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 695000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2200 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bankstown-aerodrome",
+      "name": "Bankstown Aerodrome",
+      "postcode": "2200",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 695000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2200 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "barangaroo",
+      "name": "Barangaroo",
+      "postcode": "2000",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2000 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "barden-ridge",
+      "name": "Barden Ridge",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bardia",
+      "name": "Bardia",
+      "postcode": "2565",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1039000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2565 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bardwell-park",
+      "name": "Bardwell Park",
+      "postcode": "2207",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1496000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2207 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bardwell-valley",
+      "name": "Bardwell Valley",
+      "postcode": "2207",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1496000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2207 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bass-hill",
+      "name": "Bass Hill",
+      "postcode": "2197",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2197 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "baulkham-hills",
+      "name": "Baulkham Hills",
+      "postcode": "2153",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1630000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2153 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beacon-hill",
+      "name": "Beacon Hill",
+      "postcode": "2100",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 2250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2100 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beaconsfield",
+      "name": "Beaconsfield",
+      "postcode": "2015",
+      "medianWeeklyRent": 890,
+      "medianPurchase": 1095000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2015 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beaumont-hills",
+      "name": "Beaumont Hills",
+      "postcode": "2155",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1435000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2155 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beecroft",
+      "name": "Beecroft",
+      "postcode": "2119",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 2800000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2119 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "belfield",
+      "name": "Belfield",
+      "postcode": "2191",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 2160000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2191 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bella-vista",
+      "name": "Bella Vista",
+      "postcode": "2153",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1630000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2153 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bellevue-hill",
+      "name": "Bellevue Hill",
+      "postcode": "2023",
+      "medianWeeklyRent": 1005,
+      "medianPurchase": 1750000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2023 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "belmore",
+      "name": "Belmore",
+      "postcode": "2192",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2192 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "belrose",
+      "name": "Belrose",
+      "postcode": "2085",
+      "medianWeeklyRent": 1575,
+      "medianPurchase": 2288000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2085 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "berala",
+      "name": "Berala",
+      "postcode": "2141",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 850000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2141 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "berkshire-park",
+      "name": "Berkshire Park",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "berowra",
+      "name": "Berowra",
+      "postcode": "2081",
+      "medianWeeklyRent": 750,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2081 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "berowra-heights",
+      "name": "Berowra Heights",
+      "postcode": "2082",
+      "medianWeeklyRent": null,
+      "medianPurchase": 1550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2082 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beverley-park",
+      "name": "Beverley Park",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "beverly-hills",
+      "name": "Beverly Hills",
+      "postcode": "2209",
+      "medianWeeklyRent": 695,
+      "medianPurchase": 1314000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2209 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bexley",
+      "name": "Bexley",
+      "postcode": "2207",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1496000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2207 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bexley-north",
+      "name": "Bexley North",
+      "postcode": "2207",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1496000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2207 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bidwill",
+      "name": "Bidwill",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bilgola-beach",
+      "name": "Bilgola Beach",
+      "postcode": "2107",
+      "medianWeeklyRent": 1250,
+      "medianPurchase": 2700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2107 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bilgola-plateau",
+      "name": "Bilgola Plateau",
+      "postcode": "2107",
+      "medianWeeklyRent": 1250,
+      "medianPurchase": 2700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2107 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "birchgrove",
+      "name": "Birchgrove",
+      "postcode": "2041",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 2170000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2041 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "birrong",
+      "name": "Birrong",
+      "postcode": "2143",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2143 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "blackett",
+      "name": "Blackett",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "blacktown",
+      "name": "Blacktown",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "blair-athol",
+      "name": "Blair Athol",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "blairmount",
+      "name": "Blairmount",
+      "postcode": "2559",
+      "medianWeeklyRent": 670,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2559 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "blakehurst",
+      "name": "Blakehurst",
+      "postcode": "2221",
+      "medianWeeklyRent": 845,
+      "medianPurchase": 1585000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2221 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bligh-park",
+      "name": "Bligh Park",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bondi",
+      "name": "Bondi",
+      "postcode": "2026",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 1930000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2026 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bondi-beach",
+      "name": "Bondi Beach",
+      "postcode": "2026",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 1930000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2026 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bondi-junction",
+      "name": "Bondi Junction",
+      "postcode": "2022",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 1700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2022 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bonnet-bay",
+      "name": "Bonnet Bay",
+      "postcode": "2226",
+      "medianWeeklyRent": 935,
+      "medianPurchase": 1730000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2226 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bonnyrigg",
+      "name": "Bonnyrigg",
+      "postcode": "2177",
+      "medianWeeklyRent": 640,
+      "medianPurchase": 1292000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2177 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bonnyrigg-heights",
+      "name": "Bonnyrigg Heights",
+      "postcode": "2177",
+      "medianWeeklyRent": 640,
+      "medianPurchase": 1292000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2177 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bossley-park",
+      "name": "Bossley Park",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "botany",
+      "name": "Botany",
+      "postcode": "2019",
+      "medianWeeklyRent": 920,
+      "medianPurchase": 1225000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2019 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bow-bowing",
+      "name": "Bow Bowing",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "box-hill",
+      "name": "Box Hill",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bradbury",
+      "name": "Bradbury",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "breakfast-point",
+      "name": "Breakfast Point",
+      "postcode": "2137",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 1450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2137 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "brighton-le-sands",
+      "name": "Brighton-Le-Sands",
+      "postcode": "2216",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 821000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2216 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bronte",
+      "name": "Bronte",
+      "postcode": "2024",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 3500000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2024 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "brookvale",
+      "name": "Brookvale",
+      "postcode": "2100",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 2250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2100 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "brownlow-hill",
+      "name": "Brownlow Hill",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bundeena",
+      "name": "Bundeena",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "bungarribee",
+      "name": "Bungarribee",
+      "postcode": "2767",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1045000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2767 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "burraneer",
+      "name": "Burraneer",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "burwood",
+      "name": "Burwood",
+      "postcode": "2134",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 988000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2134 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "burwood-heights",
+      "name": "Burwood Heights",
+      "postcode": "2136",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1000000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2136 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "busby",
+      "name": "Busby",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cabarita",
+      "name": "Cabarita",
+      "postcode": "2137",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 1450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2137 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cabramatta",
+      "name": "Cabramatta",
+      "postcode": "2166",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 1003000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2166 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cabramatta-west",
+      "name": "Cabramatta West",
+      "postcode": "2166",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 1003000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2166 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "caddens",
+      "name": "Caddens",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cambridge-gardens",
+      "name": "Cambridge Gardens",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cambridge-park",
+      "name": "Cambridge Park",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "camden",
+      "name": "Camden",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "camden-park",
+      "name": "Camden Park",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "camden-south",
+      "name": "Camden South",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "camellia",
+      "name": "Camellia",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cammeray",
+      "name": "Cammeray",
+      "postcode": "2062",
+      "medianWeeklyRent": 840,
+      "medianPurchase": 1575000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2062 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "campbelltown",
+      "name": "Campbelltown",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "camperdown",
+      "name": "Camperdown",
+      "postcode": "2050",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 980000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2050 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "campsie",
+      "name": "Campsie",
+      "postcode": "2194",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2194 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "canada-bay",
+      "name": "Canada Bay",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "canley-heights",
+      "name": "Canley Heights",
+      "postcode": "2166",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 1003000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2166 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "canley-vale",
+      "name": "Canley Vale",
+      "postcode": "2166",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 1003000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2166 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "canterbury",
+      "name": "Canterbury",
+      "postcode": "2193",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 945000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2193 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "caringbah",
+      "name": "Caringbah",
+      "postcode": "2229",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1548000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2229 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "caringbah-south",
+      "name": "Caringbah South",
+      "postcode": "2229",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1548000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2229 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "carlingford",
+      "name": "Carlingford",
+      "postcode": "2118",
+      "medianWeeklyRent": 755,
+      "medianPurchase": 872000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2118 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "carlton",
+      "name": "Carlton",
+      "postcode": "2218",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 855000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2218 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "carnes-hill",
+      "name": "Carnes Hill",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "carramar",
+      "name": "Carramar",
+      "postcode": "2163",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 560000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2163 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "carss-park",
+      "name": "Carss Park",
+      "postcode": "2221",
+      "medianWeeklyRent": 845,
+      "medianPurchase": 1585000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2221 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cartwright",
+      "name": "Cartwright",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "castle-cove",
+      "name": "Castle Cove",
+      "postcode": "2069",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2069 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "castle-hill",
+      "name": "Castle Hill",
+      "postcode": "2154",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1930000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2154 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "castlecrag",
+      "name": "Castlecrag",
+      "postcode": "2068",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2068 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "castlereagh",
+      "name": "Castlereagh",
+      "postcode": "2749",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1150000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2749 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "casula",
+      "name": "Casula",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "catherine-field",
+      "name": "Catherine Field",
+      "postcode": "2557",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1260000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2557 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cawdor",
+      "name": "Cawdor",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cecil-hills",
+      "name": "Cecil Hills",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cecil-park",
+      "name": "Cecil Park",
+      "postcode": "2178",
+      "medianWeeklyRent": 675,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2178 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "centennial-park",
+      "name": "Centennial Park",
+      "postcode": "2021",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 2453000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2021 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chatswood",
+      "name": "Chatswood",
+      "postcode": "2067",
+      "medianWeeklyRent": 870,
+      "medianPurchase": 1518000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2067 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chatswood-west",
+      "name": "Chatswood West",
+      "postcode": "2067",
+      "medianWeeklyRent": 870,
+      "medianPurchase": 1518000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2067 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cheltenham",
+      "name": "Cheltenham",
+      "postcode": "2119",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 2800000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2119 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cherrybrook",
+      "name": "Cherrybrook",
+      "postcode": "2126",
+      "medianWeeklyRent": 1150,
+      "medianPurchase": 2640000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2126 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chester-hill",
+      "name": "Chester Hill",
+      "postcode": "2162",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2162 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chifley",
+      "name": "Chifley",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chippendale",
+      "name": "Chippendale",
+      "postcode": "2008",
+      "medianWeeklyRent": 897,
+      "medianPurchase": 923000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2008 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chipping-norton",
+      "name": "Chipping Norton",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chiswick",
+      "name": "Chiswick",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "chullora",
+      "name": "Chullora",
+      "postcode": "2190",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1500000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2190 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "claremont-meadows",
+      "name": "Claremont Meadows",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clarendon",
+      "name": "Clarendon",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clareville",
+      "name": "Clareville",
+      "postcode": "2107",
+      "medianWeeklyRent": 1250,
+      "medianPurchase": 2700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2107 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "claymore",
+      "name": "Claymore",
+      "postcode": "2559",
+      "medianWeeklyRent": 670,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2559 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clemton-park",
+      "name": "Clemton Park",
+      "postcode": "2206",
+      "medianWeeklyRent": 883,
+      "medianPurchase": 2100000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2206 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clontarf",
+      "name": "Clontarf",
+      "postcode": "2093",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2093 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clovelly",
+      "name": "Clovelly",
+      "postcode": "2031",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1388000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2031 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "clyde",
+      "name": "Clyde",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "coasters-retreat",
+      "name": "Coasters Retreat",
+      "postcode": "2108",
+      "medianWeeklyRent": 1530,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2108 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cobbitty",
+      "name": "Cobbitty",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "colebee",
+      "name": "Colebee",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "collaroy",
+      "name": "Collaroy",
+      "postcode": "2097",
+      "medianWeeklyRent": 945,
+      "medianPurchase": 2255000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2097 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "collaroy-plateau",
+      "name": "Collaroy Plateau",
+      "postcode": "2097",
+      "medianWeeklyRent": 945,
+      "medianPurchase": 2255000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2097 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "colyton",
+      "name": "Colyton",
+      "postcode": "2760",
+      "medianWeeklyRent": 590,
+      "medianPurchase": 852000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2760 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "como",
+      "name": "Como",
+      "postcode": "2226",
+      "medianWeeklyRent": 935,
+      "medianPurchase": 1730000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2226 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "concord",
+      "name": "Concord",
+      "postcode": "2137",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 1450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2137 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "concord-west",
+      "name": "Concord West",
+      "postcode": "2138",
+      "medianWeeklyRent": 940,
+      "medianPurchase": 1100000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2138 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "condell-park",
+      "name": "Condell Park",
+      "postcode": "2200",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 695000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2200 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "connells-point",
+      "name": "Connells Point",
+      "postcode": "2221",
+      "medianWeeklyRent": 845,
+      "medianPurchase": 1585000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2221 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "constitution-hill",
+      "name": "Constitution Hill",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "coogee",
+      "name": "Coogee",
+      "postcode": "2034",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 8954000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2034 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cornwallis",
+      "name": "Cornwallis",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cranebrook",
+      "name": "Cranebrook",
+      "postcode": "2749",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1150000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2749 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cremorne",
+      "name": "Cremorne",
+      "postcode": "2090",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2090 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cremorne-point",
+      "name": "Cremorne Point",
+      "postcode": "2090",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2090 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cromer",
+      "name": "Cromer",
+      "postcode": "2099",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2099 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "cronulla",
+      "name": "Cronulla",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "crows-nest",
+      "name": "Crows Nest",
+      "postcode": "2065",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2065 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "croydon",
+      "name": "Croydon",
+      "postcode": "2132",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 2135000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2132 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "croydon-park",
+      "name": "Croydon Park",
+      "postcode": "2133",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1776000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2133 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "curl-curl",
+      "name": "Curl Curl",
+      "postcode": "2096",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1588000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2096 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "currans-hill",
+      "name": "Currans Hill",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "daceyville",
+      "name": "Daceyville",
+      "postcode": "2032",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1385000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2032 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "darling-point",
+      "name": "Darling Point",
+      "postcode": "2027",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 2550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2027 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "darlinghurst",
+      "name": "Darlinghurst",
+      "postcode": "2010",
+      "medianWeeklyRent": 853,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2010 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "darlington-sydney-nsw",
+      "name": "Darlington (Sydney - NSW)",
+      "postcode": "2330",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 783000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2330 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "davidson",
+      "name": "Davidson",
+      "postcode": "2085",
+      "medianWeeklyRent": 1575,
+      "medianPurchase": 2288000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2085 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dawes-point",
+      "name": "Dawes Point",
+      "postcode": "2000",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2000 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dean-park",
+      "name": "Dean Park",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dee-why",
+      "name": "Dee Why",
+      "postcode": "2099",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2099 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "denham-court",
+      "name": "Denham Court",
+      "postcode": "2565",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1039000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2565 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "denistone",
+      "name": "Denistone",
+      "postcode": "2114",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2114 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "denistone-east",
+      "name": "Denistone East",
+      "postcode": "2112",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 825000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2112 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "denistone-west",
+      "name": "Denistone West",
+      "postcode": "2114",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2114 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dharruk",
+      "name": "Dharruk",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dolans-bay",
+      "name": "Dolans Bay",
+      "postcode": "2229",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1548000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2229 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dolls-point",
+      "name": "Dolls Point",
+      "postcode": "2219",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1388000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2219 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "doonside",
+      "name": "Doonside",
+      "postcode": "2767",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1045000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2767 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "double-bay",
+      "name": "Double Bay",
+      "postcode": "2028",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2875000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2028 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dover-heights",
+      "name": "Dover Heights",
+      "postcode": "2030",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 5050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2030 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "drummoyne",
+      "name": "Drummoyne",
+      "postcode": "2047",
+      "medianWeeklyRent": 910,
+      "medianPurchase": 1550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2047 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dulwich-hill",
+      "name": "Dulwich Hill",
+      "postcode": "2203",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1225000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2203 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dundas",
+      "name": "Dundas",
+      "postcode": "2117",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2117 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dundas-valley",
+      "name": "Dundas Valley",
+      "postcode": "2117",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2117 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "dural-hornsby-nsw",
+      "name": "Dural (Hornsby - NSW)",
+      "postcode": "2158",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 2155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2158 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eagle-vale",
+      "name": "Eagle Vale",
+      "postcode": "2558",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1077000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2558 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "earlwood",
+      "name": "Earlwood",
+      "postcode": "2206",
+      "medianWeeklyRent": 883,
+      "medianPurchase": 2100000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2206 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "east-hills",
+      "name": "East Hills",
+      "postcode": "2213",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1662000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2213 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "east-killara",
+      "name": "East Killara",
+      "postcode": "2071",
+      "medianWeeklyRent": 940,
+      "medianPurchase": 1910000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2071 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "east-lindfield",
+      "name": "East Lindfield",
+      "postcode": "2070",
+      "medianWeeklyRent": 1150,
+      "medianPurchase": 1850000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2070 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "east-ryde",
+      "name": "East Ryde",
+      "postcode": "2113",
+      "medianWeeklyRent": 816,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2113 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eastern-creek",
+      "name": "Eastern Creek",
+      "postcode": "2766",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1057000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2766 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eastgardens",
+      "name": "Eastgardens",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eastlakes",
+      "name": "Eastlakes",
+      "postcode": "2018",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 908000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2018 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eastwood",
+      "name": "Eastwood",
+      "postcode": "2122",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1180000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2122 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "edensor-park",
+      "name": "Edensor Park",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "edgecliff",
+      "name": "Edgecliff",
+      "postcode": "2027",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 2550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2027 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "edmondson-park",
+      "name": "Edmondson Park",
+      "postcode": "2174",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 1075000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2174 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "elanora-heights",
+      "name": "Elanora Heights",
+      "postcode": "2101",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2123000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2101 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "elderslie-camden-nsw",
+      "name": "Elderslie (Camden - NSW)",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "elizabeth-bay",
+      "name": "Elizabeth Bay",
+      "postcode": "2011",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 955000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2011 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "elizabeth-hills",
+      "name": "Elizabeth Hills",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ellis-lane",
+      "name": "Ellis Lane",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "emerton",
+      "name": "Emerton",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "emu-heights",
+      "name": "Emu Heights",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "emu-plains",
+      "name": "Emu Plains",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "enfield",
+      "name": "Enfield",
+      "postcode": "2136",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1000000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2136 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "engadine",
+      "name": "Engadine",
+      "postcode": "2233",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1433000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2233 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "englorie-park",
+      "name": "Englorie Park",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "enmore-inner-west-nsw",
+      "name": "Enmore (Inner West - NSW)",
+      "postcode": "2350",
+      "medianWeeklyRent": 480,
+      "medianPurchase": 660000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2350 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "epping",
+      "name": "Epping",
+      "postcode": "2121",
+      "medianWeeklyRent": 840,
+      "medianPurchase": 913000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2121 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ermington",
+      "name": "Ermington",
+      "postcode": "2115",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1890000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2115 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "erskine-park",
+      "name": "Erskine Park",
+      "postcode": "2759",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2759 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "erskineville",
+      "name": "Erskineville",
+      "postcode": "2043",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 1245000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2043 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eschol-park",
+      "name": "Eschol Park",
+      "postcode": "2558",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1077000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2558 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "eveleigh",
+      "name": "Eveleigh",
+      "postcode": "2015",
+      "medianWeeklyRent": 890,
+      "medianPurchase": 1095000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2015 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "fairfield",
+      "name": "Fairfield",
+      "postcode": "2165",
+      "medianWeeklyRent": 615,
+      "medianPurchase": 1165000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2165 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "fairfield-east",
+      "name": "Fairfield East",
+      "postcode": "2165",
+      "medianWeeklyRent": 615,
+      "medianPurchase": 1165000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2165 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "fairfield-heights",
+      "name": "Fairfield Heights",
+      "postcode": "2165",
+      "medianWeeklyRent": 615,
+      "medianPurchase": 1165000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2165 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "fairfield-west",
+      "name": "Fairfield West",
+      "postcode": "2165",
+      "medianWeeklyRent": 615,
+      "medianPurchase": 1165000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2165 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "fairlight",
+      "name": "Fairlight",
+      "postcode": "2094",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 2248000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2094 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "five-dock",
+      "name": "Five Dock",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "forest-lodge",
+      "name": "Forest Lodge",
+      "postcode": "2037",
+      "medianWeeklyRent": 893,
+      "medianPurchase": 1650000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2037 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "forestville",
+      "name": "Forestville",
+      "postcode": "2087",
+      "medianWeeklyRent": 1495,
+      "medianPurchase": 2725000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2087 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "frenchs-forest",
+      "name": "Frenchs Forest",
+      "postcode": "2086",
+      "medianWeeklyRent": 1175,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2086 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "freshwater",
+      "name": "Freshwater",
+      "postcode": "2096",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1588000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2096 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gables",
+      "name": "Gables",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "georges-hall",
+      "name": "Georges Hall",
+      "postcode": "2198",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2198 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "girraween",
+      "name": "Girraween",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gladesville",
+      "name": "Gladesville",
+      "postcode": "2111",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 940000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2111 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glebe",
+      "name": "Glebe",
+      "postcode": "2037",
+      "medianWeeklyRent": 893,
+      "medianPurchase": 1650000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2037 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gledswood-hills",
+      "name": "Gledswood Hills",
+      "postcode": "2557",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1260000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2557 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glen-alpine",
+      "name": "Glen Alpine",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glendenning",
+      "name": "Glendenning",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glenfield",
+      "name": "Glenfield",
+      "postcode": "2167",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1110000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2167 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glenhaven",
+      "name": "Glenhaven",
+      "postcode": "2156",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2750000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2156 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glenmore-park",
+      "name": "Glenmore Park",
+      "postcode": "2745",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1258000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2745 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "glenwood",
+      "name": "Glenwood",
+      "postcode": "2768",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 1705000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2768 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "postcode": "2072",
+      "medianWeeklyRent": 805,
+      "medianPurchase": 1183000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2072 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "grantham-farm",
+      "name": "Grantham Farm",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "granville",
+      "name": "Granville",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "grasmere",
+      "name": "Grasmere",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "grays-point",
+      "name": "Grays Point",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "great-mackerel-beach",
+      "name": "Great Mackerel Beach",
+      "postcode": "2108",
+      "medianWeeklyRent": 1530,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2108 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "green-valley",
+      "name": "Green Valley",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greenacre",
+      "name": "Greenacre",
+      "postcode": "2190",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1500000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2190 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greendale-liverpool-nsw",
+      "name": "Greendale (Liverpool - NSW)",
+      "postcode": "2550",
+      "medianWeeklyRent": 510,
+      "medianPurchase": 803000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2550 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greenfield-park",
+      "name": "Greenfield Park",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greenhills-beach",
+      "name": "Greenhills Beach",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greenwich",
+      "name": "Greenwich",
+      "postcode": "2065",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2065 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gregory-hills",
+      "name": "Gregory Hills",
+      "postcode": "2557",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1260000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2557 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "greystanes",
+      "name": "Greystanes",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "grose-vale",
+      "name": "Grose Vale",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "grose-wold",
+      "name": "Grose Wold",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "guildford",
+      "name": "Guildford",
+      "postcode": "2161",
+      "medianWeeklyRent": 645,
+      "medianPurchase": 1164000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2161 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "guildford-west",
+      "name": "Guildford West",
+      "postcode": "2161",
+      "medianWeeklyRent": 645,
+      "medianPurchase": 1164000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2161 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gymea",
+      "name": "Gymea",
+      "postcode": "2227",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2048000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2227 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "gymea-bay",
+      "name": "Gymea Bay",
+      "postcode": "2227",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2048000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2227 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "haberfield",
+      "name": "Haberfield",
+      "postcode": "2045",
+      "medianWeeklyRent": 775,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2045 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hammondville",
+      "name": "Hammondville",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "harrington-park",
+      "name": "Harrington Park",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "harris-park",
+      "name": "Harris Park",
+      "postcode": "2150",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 620000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2150 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hassall-grove",
+      "name": "Hassall Grove",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hawkesbury-heights",
+      "name": "Hawkesbury Heights",
+      "postcode": "2777",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1125000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2777 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "haymarket",
+      "name": "Haymarket",
+      "postcode": "2000",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2000 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "heathcote",
+      "name": "Heathcote",
+      "postcode": "2233",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1433000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2233 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hebersham",
+      "name": "Hebersham",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "heckenberg",
+      "name": "Heckenberg",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "henley",
+      "name": "Henley",
+      "postcode": "2111",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 940000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2111 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hillsdale",
+      "name": "Hillsdale",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hinchinbrook",
+      "name": "Hinchinbrook",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hobartville",
+      "name": "Hobartville",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "holroyd",
+      "name": "Holroyd",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "holsworthy",
+      "name": "Holsworthy",
+      "postcode": "2173",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1367000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2173 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "homebush",
+      "name": "Homebush",
+      "postcode": "2140",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 655000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2140 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "homebush-west",
+      "name": "Homebush West",
+      "postcode": "2140",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 655000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2140 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "horningsea-park",
+      "name": "Horningsea Park",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hornsby",
+      "name": "Hornsby",
+      "postcode": "2077",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2077 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hornsby-heights",
+      "name": "Hornsby Heights",
+      "postcode": "2077",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2077 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hoxton-park",
+      "name": "Hoxton Park",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hunters-hill",
+      "name": "Hunters Hill",
+      "postcode": "2110",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 3215000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2110 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "huntingwood",
+      "name": "Huntingwood",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "huntleys-cove",
+      "name": "Huntleys Cove",
+      "postcode": "2111",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 940000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2111 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "huntleys-point",
+      "name": "Huntleys Point",
+      "postcode": "2111",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 940000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2111 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hurlstone-park",
+      "name": "Hurlstone Park",
+      "postcode": "2193",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 945000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2193 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hurstville",
+      "name": "Hurstville",
+      "postcode": "2220",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 796000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2220 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "hurstville-grove",
+      "name": "Hurstville Grove",
+      "postcode": "2220",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 796000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2220 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "illawong",
+      "name": "Illawong",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ingleburn",
+      "name": "Ingleburn",
+      "postcode": "2565",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1039000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2565 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ingleside",
+      "name": "Ingleside",
+      "postcode": "2101",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2123000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2101 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "jamisontown",
+      "name": "Jamisontown",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "jannali",
+      "name": "Jannali",
+      "postcode": "2226",
+      "medianWeeklyRent": 935,
+      "medianPurchase": 1730000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2226 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "jordan-springs",
+      "name": "Jordan Springs",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kangaroo-point",
+      "name": "Kangaroo Point",
+      "postcode": "2224",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 1980000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2224 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kareela",
+      "name": "Kareela",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kearns",
+      "name": "Kearns",
+      "postcode": "2558",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1077000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2558 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kellyville",
+      "name": "Kellyville",
+      "postcode": "2155",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1435000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2155 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kellyville-ridge",
+      "name": "Kellyville Ridge",
+      "postcode": "2155",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1435000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2155 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kemps-creek",
+      "name": "Kemps Creek",
+      "postcode": "2178",
+      "medianWeeklyRent": 675,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2178 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kensington",
+      "name": "Kensington",
+      "postcode": "2033",
+      "medianWeeklyRent": 799,
+      "medianPurchase": 957000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2033 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kenthurst",
+      "name": "Kenthurst",
+      "postcode": "2156",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2750000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2156 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kentlyn",
+      "name": "Kentlyn",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "killara",
+      "name": "Killara",
+      "postcode": "2071",
+      "medianWeeklyRent": 940,
+      "medianPurchase": 1910000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2071 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "killarney-heights",
+      "name": "Killarney Heights",
+      "postcode": "2087",
+      "medianWeeklyRent": 1495,
+      "medianPurchase": 2725000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2087 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kings-langley",
+      "name": "Kings Langley",
+      "postcode": "2147",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1290000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2147 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kings-park",
+      "name": "Kings Park",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kingsford",
+      "name": "Kingsford",
+      "postcode": "2032",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1385000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2032 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kingsgrove",
+      "name": "Kingsgrove",
+      "postcode": "2208",
+      "medianWeeklyRent": 893,
+      "medianPurchase": 1838000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2208 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kingswood-penrith-nsw",
+      "name": "Kingswood (Penrith - NSW)",
+      "postcode": "2550",
+      "medianWeeklyRent": 510,
+      "medianPurchase": 803000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2550 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kirkham",
+      "name": "Kirkham",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kirrawee",
+      "name": "Kirrawee",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kirribilli",
+      "name": "Kirribilli",
+      "postcode": "2061",
+      "medianWeeklyRent": 853,
+      "medianPurchase": 1265000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2061 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kogarah",
+      "name": "Kogarah",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kogarah-bay",
+      "name": "Kogarah Bay",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kurnell",
+      "name": "Kurnell",
+      "postcode": "2231",
+      "medianWeeklyRent": 800,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2231 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kurraba-point",
+      "name": "Kurraba Point",
+      "postcode": "2089",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1356000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2089 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kyeemagh",
+      "name": "Kyeemagh",
+      "postcode": "2216",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 821000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2216 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "kyle-bay",
+      "name": "Kyle Bay",
+      "postcode": "2221",
+      "medianWeeklyRent": 845,
+      "medianPurchase": 1585000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2221 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "la-perouse",
+      "name": "La Perouse",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lakemba",
+      "name": "Lakemba",
+      "postcode": "2195",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 553000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2195 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lalor-park",
+      "name": "Lalor Park",
+      "postcode": "2147",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1290000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2147 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lane-cove",
+      "name": "Lane Cove",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lane-cove-north",
+      "name": "Lane Cove North",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lane-cove-west",
+      "name": "Lane Cove West",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lansdowne-canterbury-bankstown-nsw",
+      "name": "Lansdowne (Canterbury-Bankstown - NSW)",
+      "postcode": "2163",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 560000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2163 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lansvale",
+      "name": "Lansvale",
+      "postcode": "2166",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 1003000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2166 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lavender-bay",
+      "name": "Lavender Bay",
+      "postcode": "2060",
+      "medianWeeklyRent": 820,
+      "medianPurchase": 1310000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2060 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "leichhardt",
+      "name": "Leichhardt",
+      "postcode": "2040",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2000000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2040 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "len-waters-estate",
+      "name": "Len Waters Estate",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "leonay",
+      "name": "Leonay",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "leppington",
+      "name": "Leppington",
+      "postcode": "2179",
+      "medianWeeklyRent": 810,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2179 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lethbridge-park",
+      "name": "Lethbridge Park",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "leumeah",
+      "name": "Leumeah",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lewisham",
+      "name": "Lewisham",
+      "postcode": "2049",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 1248000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2049 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "liberty-grove",
+      "name": "Liberty Grove",
+      "postcode": "2138",
+      "medianWeeklyRent": 940,
+      "medianPurchase": 1100000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2138 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lidcombe",
+      "name": "Lidcombe",
+      "postcode": "2141",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 850000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2141 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lilli-pilli-sutherland-shire-nsw",
+      "name": "Lilli Pilli (Sutherland Shire - NSW)",
+      "postcode": "2536",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 835000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2536 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lilyfield",
+      "name": "Lilyfield",
+      "postcode": "2040",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2000000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2040 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lindfield",
+      "name": "Lindfield",
+      "postcode": "2070",
+      "medianWeeklyRent": 1150,
+      "medianPurchase": 1850000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2070 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "linley-point",
+      "name": "Linley Point",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "little-bay",
+      "name": "Little Bay",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "liverpool",
+      "name": "Liverpool",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "llandilo",
+      "name": "Llandilo",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "loftus",
+      "name": "Loftus",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "londonderry",
+      "name": "Londonderry",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "long-point-campbelltown-nsw",
+      "name": "Long Point (Campbelltown - NSW)",
+      "postcode": "2564",
+      "medianWeeklyRent": 598,
+      "medianPurchase": 945000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2564 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "longueville",
+      "name": "Longueville",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lucas-heights",
+      "name": "Lucas Heights",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "luddenham",
+      "name": "Luddenham",
+      "postcode": "2745",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1258000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2745 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lugarno",
+      "name": "Lugarno",
+      "postcode": "2210",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2210 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "lurnea",
+      "name": "Lurnea",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "macquarie-fields",
+      "name": "Macquarie Fields",
+      "postcode": "2564",
+      "medianWeeklyRent": 598,
+      "medianPurchase": 945000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2564 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "macquarie-links",
+      "name": "Macquarie Links",
+      "postcode": "2565",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1039000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2565 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "macquarie-park",
+      "name": "Macquarie Park",
+      "postcode": "2113",
+      "medianWeeklyRent": 816,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2113 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "maianbar",
+      "name": "Maianbar",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "malabar",
+      "name": "Malabar",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "manly",
+      "name": "Manly",
+      "postcode": "2095",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2285000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2095 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "manly-vale",
+      "name": "Manly Vale",
+      "postcode": "2093",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2093 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "maraylya",
+      "name": "Maraylya",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "marayong",
+      "name": "Marayong",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "maroubra",
+      "name": "Maroubra",
+      "postcode": "2035",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1410000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2035 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "marrickville",
+      "name": "Marrickville",
+      "postcode": "2204",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1495000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2204 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "marsden-park",
+      "name": "Marsden Park",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "marsfield",
+      "name": "Marsfield",
+      "postcode": "2122",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1180000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2122 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mascot",
+      "name": "Mascot",
+      "postcode": "2020",
+      "medianWeeklyRent": 1003,
+      "medianPurchase": 974000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2020 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "matraville",
+      "name": "Matraville",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mays-hill",
+      "name": "Mays Hill",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mcgraths-hill",
+      "name": "McGraths Hill",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mcmahons-point",
+      "name": "McMahons Point",
+      "postcode": "2060",
+      "medianWeeklyRent": 820,
+      "medianPurchase": 1310000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2060 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "meadowbank",
+      "name": "Meadowbank",
+      "postcode": "2114",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2114 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "melonba",
+      "name": "Melonba",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "melrose-park",
+      "name": "Melrose Park",
+      "postcode": "2114",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2114 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "menai",
+      "name": "Menai",
+      "postcode": "2234",
+      "medianWeeklyRent": 925,
+      "medianPurchase": 1790000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2234 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "menangle-park",
+      "name": "Menangle Park",
+      "postcode": "2563",
+      "medianWeeklyRent": 750,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2563 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "merrylands",
+      "name": "Merrylands",
+      "postcode": "2160",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 755000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2160 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "merrylands-west",
+      "name": "Merrylands West",
+      "postcode": "2160",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 755000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2160 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "middle-cove",
+      "name": "Middle Cove",
+      "postcode": "2068",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2068 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "middle-dural",
+      "name": "Middle Dural",
+      "postcode": "2158",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 2155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2158 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "middleton-grange",
+      "name": "Middleton Grange",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "miller",
+      "name": "Miller",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "millers-point",
+      "name": "Millers Point",
+      "postcode": "2000",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2000 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "milperra",
+      "name": "Milperra",
+      "postcode": "2214",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 1550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2214 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "milsons-point",
+      "name": "Milsons Point",
+      "postcode": "2061",
+      "medianWeeklyRent": 853,
+      "medianPurchase": 1265000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2061 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "minchinbury",
+      "name": "Minchinbury",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "minto",
+      "name": "Minto",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "minto-heights",
+      "name": "Minto Heights",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "miranda",
+      "name": "Miranda",
+      "postcode": "2228",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2228 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mona-vale",
+      "name": "Mona Vale",
+      "postcode": "2103",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 2238000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2103 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "monterey",
+      "name": "Monterey",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "moore-park",
+      "name": "Moore Park",
+      "postcode": "2021",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 2453000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2021 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "moorebank",
+      "name": "Moorebank",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mortdale",
+      "name": "Mortdale",
+      "postcode": "2223",
+      "medianWeeklyRent": 690,
+      "medianPurchase": 1141000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2223 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mortlake",
+      "name": "Mortlake",
+      "postcode": "2137",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 1450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2137 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mosman",
+      "name": "Mosman",
+      "postcode": "2088",
+      "medianWeeklyRent": 895,
+      "medianPurchase": 1502000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2088 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-annan",
+      "name": "Mount Annan",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-colah",
+      "name": "Mount Colah",
+      "postcode": "2079",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 1664000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2079 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-druitt",
+      "name": "Mount Druitt",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-hunter",
+      "name": "Mount Hunter",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-lewis",
+      "name": "Mount Lewis",
+      "postcode": "2190",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1500000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2190 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-pritchard",
+      "name": "Mount Pritchard",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-riverview",
+      "name": "Mount Riverview",
+      "postcode": "2774",
+      "medianWeeklyRent": 660,
+      "medianPurchase": 1190000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2774 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mount-vernon",
+      "name": "Mount Vernon",
+      "postcode": "2178",
+      "medianWeeklyRent": 675,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2178 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mulgoa",
+      "name": "Mulgoa",
+      "postcode": "2745",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1258000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2745 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "mulgrave",
+      "name": "Mulgrave",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "narellan",
+      "name": "Narellan",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "narellan-vale",
+      "name": "Narellan Vale",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "naremburn",
+      "name": "Naremburn",
+      "postcode": "2065",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2065 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "narrabeen",
+      "name": "Narrabeen",
+      "postcode": "2101",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2123000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2101 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "narraweena",
+      "name": "Narraweena",
+      "postcode": "2099",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2099 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "narwee",
+      "name": "Narwee",
+      "postcode": "2209",
+      "medianWeeklyRent": 695,
+      "medianPurchase": 1314000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2209 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "nelson-the-hills-shire-nsw",
+      "name": "Nelson (The Hills Shire - NSW)",
+      "postcode": "2550",
+      "medianWeeklyRent": 510,
+      "medianPurchase": 803000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2550 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "neutral-bay",
+      "name": "Neutral Bay",
+      "postcode": "2089",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1356000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2089 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "newington",
+      "name": "Newington",
+      "postcode": "2127",
+      "medianWeeklyRent": 808,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2127 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "newport",
+      "name": "Newport",
+      "postcode": "2106",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1875000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2106 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "newtown",
+      "name": "Newtown",
+      "postcode": "2042",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 1465000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2042 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "nirimba-fields",
+      "name": "Nirimba Fields",
+      "postcode": "2763",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1280000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2763 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "normanhurst",
+      "name": "Normanhurst",
+      "postcode": "2076",
+      "medianWeeklyRent": 963,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2076 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-balgowlah",
+      "name": "North Balgowlah",
+      "postcode": "2093",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2093 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-bondi",
+      "name": "North Bondi",
+      "postcode": "2026",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 1930000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2026 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-curl-curl",
+      "name": "North Curl Curl",
+      "postcode": "2099",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2099 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-epping",
+      "name": "North Epping",
+      "postcode": "2121",
+      "medianWeeklyRent": 840,
+      "medianPurchase": 913000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2121 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-kellyville",
+      "name": "North Kellyville",
+      "postcode": "2155",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1435000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2155 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-manly",
+      "name": "North Manly",
+      "postcode": "2100",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 2250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2100 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-narrabeen",
+      "name": "North Narrabeen",
+      "postcode": "2101",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 2123000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2101 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-parramatta",
+      "name": "North Parramatta",
+      "postcode": "2151",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 810000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2151 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-rocks",
+      "name": "North Rocks",
+      "postcode": "2151",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 810000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2151 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-ryde",
+      "name": "North Ryde",
+      "postcode": "2113",
+      "medianWeeklyRent": 816,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2113 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-st-marys",
+      "name": "North St Marys",
+      "postcode": "2760",
+      "medianWeeklyRent": 590,
+      "medianPurchase": 852000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2760 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-strathfield",
+      "name": "North Strathfield",
+      "postcode": "2137",
+      "medianWeeklyRent": 865,
+      "medianPurchase": 1450000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2137 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-sydney",
+      "name": "North Sydney",
+      "postcode": "2060",
+      "medianWeeklyRent": 820,
+      "medianPurchase": 1310000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2060 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-turramurra",
+      "name": "North Turramurra",
+      "postcode": "2074",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2515000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2074 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-wahroonga",
+      "name": "North Wahroonga",
+      "postcode": "2076",
+      "medianWeeklyRent": 963,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2076 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "north-willoughby",
+      "name": "North Willoughby",
+      "postcode": "2068",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2068 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "northbridge",
+      "name": "Northbridge",
+      "postcode": "2063",
+      "medianWeeklyRent": 1240,
+      "medianPurchase": 4700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2063 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "northmead",
+      "name": "Northmead",
+      "postcode": "2152",
+      "medianWeeklyRent": 660,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2152 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "northwood",
+      "name": "Northwood",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "norwest",
+      "name": "Norwest",
+      "postcode": "2153",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1630000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2153 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oakhurst",
+      "name": "Oakhurst",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oakville",
+      "name": "Oakville",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oatlands",
+      "name": "Oatlands",
+      "postcode": "2117",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2117 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oatley",
+      "name": "Oatley",
+      "postcode": "2223",
+      "medianWeeklyRent": 690,
+      "medianPurchase": 1141000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2223 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "old-guildford",
+      "name": "Old Guildford",
+      "postcode": "2161",
+      "medianWeeklyRent": 645,
+      "medianPurchase": 1164000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2161 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "old-toongabbie",
+      "name": "Old Toongabbie",
+      "postcode": "2146",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 920000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2146 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oran-park",
+      "name": "Oran Park",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "orangeville",
+      "name": "Orangeville",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oxford-falls",
+      "name": "Oxford Falls",
+      "postcode": "2099",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2099 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "oxley-park",
+      "name": "Oxley Park",
+      "postcode": "2760",
+      "medianWeeklyRent": 590,
+      "medianPurchase": 852000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2760 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "paddington",
+      "name": "Paddington",
+      "postcode": "2021",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 2453000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2021 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "padstow",
+      "name": "Padstow",
+      "postcode": "2211",
+      "medianWeeklyRent": 745,
+      "medianPurchase": 1775000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2211 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "padstow-heights",
+      "name": "Padstow Heights",
+      "postcode": "2211",
+      "medianWeeklyRent": 745,
+      "medianPurchase": 1775000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2211 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pagewood",
+      "name": "Pagewood",
+      "postcode": "2035",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1410000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2035 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "palm-beach",
+      "name": "Palm Beach",
+      "postcode": "2108",
+      "medianWeeklyRent": 1530,
+      "medianPurchase": null,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2108 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "panania",
+      "name": "Panania",
+      "postcode": "2213",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1662000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2213 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "parklea",
+      "name": "Parklea",
+      "postcode": "2768",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 1705000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2768 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "parramatta",
+      "name": "Parramatta",
+      "postcode": "2150",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 620000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2150 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "peakhurst",
+      "name": "Peakhurst",
+      "postcode": "2210",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2210 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "peakhurst-heights",
+      "name": "Peakhurst Heights",
+      "postcode": "2210",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2210 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pemulwuy",
+      "name": "Pemulwuy",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pendle-hill",
+      "name": "Pendle Hill",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pennant-hills",
+      "name": "Pennant Hills",
+      "postcode": "2120",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 1950000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2120 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "penrith",
+      "name": "Penrith",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "penshurst",
+      "name": "Penshurst",
+      "postcode": "2222",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 761000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2222 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "petersham",
+      "name": "Petersham",
+      "postcode": "2049",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 1248000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2049 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "phillip-bay",
+      "name": "Phillip Bay",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "picnic-point",
+      "name": "Picnic Point",
+      "postcode": "2213",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1662000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2213 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pitt-town",
+      "name": "Pitt Town",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pitt-town-bottoms",
+      "name": "Pitt Town Bottoms",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "plumpton",
+      "name": "Plumpton",
+      "postcode": "2761",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1103000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2761 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "point-piper",
+      "name": "Point Piper",
+      "postcode": "2027",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 2550000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2027 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "port-botany",
+      "name": "Port Botany",
+      "postcode": "2036",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1313000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2036 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "port-hacking",
+      "name": "Port Hacking",
+      "postcode": "2229",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1548000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2229 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "potts-hill",
+      "name": "Potts Hill",
+      "postcode": "2143",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2143 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "potts-point",
+      "name": "Potts Point",
+      "postcode": "2011",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 955000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2011 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "prairiewood",
+      "name": "Prairiewood",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "prestons",
+      "name": "Prestons",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "prospect",
+      "name": "Prospect",
+      "postcode": "2148",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 1033000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2148 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "punchbowl-canterbury-bankstown-nsw",
+      "name": "Punchbowl (Canterbury-Bankstown - NSW)",
+      "postcode": "2196",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1173000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2196 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "putney",
+      "name": "Putney",
+      "postcode": "2112",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 825000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2112 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pymble",
+      "name": "Pymble",
+      "postcode": "2073",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2760000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2073 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "pyrmont",
+      "name": "Pyrmont",
+      "postcode": "2009",
+      "medianWeeklyRent": 980,
+      "medianPurchase": 1221000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2009 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "quakers-hill",
+      "name": "Quakers Hill",
+      "postcode": "2763",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1280000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2763 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "queens-park",
+      "name": "Queens Park",
+      "postcode": "2022",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 1700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2022 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "queenscliff",
+      "name": "Queenscliff",
+      "postcode": "2096",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1588000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2096 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "raby",
+      "name": "Raby",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ramsgate",
+      "name": "Ramsgate",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ramsgate-beach",
+      "name": "Ramsgate Beach",
+      "postcode": "2217",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 856000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2217 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "randwick",
+      "name": "Randwick",
+      "postcode": "2031",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1388000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2031 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "redfern",
+      "name": "Redfern",
+      "postcode": "2016",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1335000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2016 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "regents-park",
+      "name": "Regents Park",
+      "postcode": "2143",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 1300000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2143 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "regentville",
+      "name": "Regentville",
+      "postcode": "2745",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1258000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2745 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "revesby",
+      "name": "Revesby",
+      "postcode": "2212",
+      "medianWeeklyRent": 873,
+      "medianPurchase": 1594000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2212 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "revesby-heights",
+      "name": "Revesby Heights",
+      "postcode": "2212",
+      "medianWeeklyRent": 873,
+      "medianPurchase": 1594000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2212 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rhodes",
+      "name": "Rhodes",
+      "postcode": "2138",
+      "medianWeeklyRent": 940,
+      "medianPurchase": 1100000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2138 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "richards",
+      "name": "Richards",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "richmond",
+      "name": "Richmond",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "richmond-lowlands",
+      "name": "Richmond Lowlands",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "riverstone",
+      "name": "Riverstone",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "riverview",
+      "name": "Riverview",
+      "postcode": "2066",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1090000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2066 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "riverwood",
+      "name": "Riverwood",
+      "postcode": "2210",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2210 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rockdale",
+      "name": "Rockdale",
+      "postcode": "2216",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 821000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2216 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rodd-point",
+      "name": "Rodd Point",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rookwood",
+      "name": "Rookwood",
+      "postcode": "2141",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 850000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2141 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rooty-hill",
+      "name": "Rooty Hill",
+      "postcode": "2766",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1057000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2766 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ropes-crossing",
+      "name": "Ropes Crossing",
+      "postcode": "2760",
+      "medianWeeklyRent": 590,
+      "medianPurchase": 852000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2760 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rose-bay",
+      "name": "Rose Bay",
+      "postcode": "2029",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 1780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2029 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rosebery",
+      "name": "Rosebery",
+      "postcode": "2018",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 908000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2018 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rosehill",
+      "name": "Rosehill",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "roselands",
+      "name": "Roselands",
+      "postcode": "2196",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1173000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2196 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rosemeadow",
+      "name": "Rosemeadow",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "roseville",
+      "name": "Roseville",
+      "postcode": "2069",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2069 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "roseville-chase",
+      "name": "Roseville Chase",
+      "postcode": "2069",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2069 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rossmore",
+      "name": "Rossmore",
+      "postcode": "2557",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1260000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2557 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rouse-hill",
+      "name": "Rouse Hill",
+      "postcode": "2155",
+      "medianWeeklyRent": 795,
+      "medianPurchase": 1435000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2155 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "royal-national-park",
+      "name": "Royal National Park",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rozelle",
+      "name": "Rozelle",
+      "postcode": "2039",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 2125000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2039 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ruse",
+      "name": "Ruse",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rushcutters-bay",
+      "name": "Rushcutters Bay",
+      "postcode": "2011",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 955000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2011 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "russell-lea",
+      "name": "Russell Lea",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "rydalmere",
+      "name": "Rydalmere",
+      "postcode": "2116",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 1405000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2116 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ryde",
+      "name": "Ryde",
+      "postcode": "2112",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 825000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2112 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sadleir",
+      "name": "Sadleir",
+      "postcode": "2168",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1130000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2168 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sandringham",
+      "name": "Sandringham",
+      "postcode": "2219",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1388000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2219 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sans-souci",
+      "name": "Sans Souci",
+      "postcode": "2219",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1388000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2219 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "scheyville",
+      "name": "Scheyville",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "schofields",
+      "name": "Schofields",
+      "postcode": "2762",
+      "medianWeeklyRent": 705,
+      "medianPurchase": 730000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2762 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "seaforth",
+      "name": "Seaforth",
+      "postcode": "2092",
+      "medianWeeklyRent": 1525,
+      "medianPurchase": 3650000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2092 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sefton",
+      "name": "Sefton",
+      "postcode": "2162",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2162 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "seven-hills",
+      "name": "Seven Hills",
+      "postcode": "2147",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1290000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2147 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "shalvey",
+      "name": "Shalvey",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "shanes-park",
+      "name": "Shanes Park",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "silverwater-parramatta-nsw",
+      "name": "Silverwater (Parramatta - NSW)",
+      "postcode": "2264",
+      "medianWeeklyRent": 668,
+      "medianPurchase": 920000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2264 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "smeaton-grange",
+      "name": "Smeaton Grange",
+      "postcode": "2567",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1208000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2567 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "smithfield",
+      "name": "Smithfield",
+      "postcode": "2164",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2164 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-coogee",
+      "name": "South Coogee",
+      "postcode": "2034",
+      "medianWeeklyRent": 995,
+      "medianPurchase": 8954000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2034 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-granville",
+      "name": "South Granville",
+      "postcode": "2142",
+      "medianWeeklyRent": 630,
+      "medianPurchase": 590000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2142 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-hurstville",
+      "name": "South Hurstville",
+      "postcode": "2221",
+      "medianWeeklyRent": 845,
+      "medianPurchase": 1585000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2221 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-penrith",
+      "name": "South Penrith",
+      "postcode": "2750",
+      "medianWeeklyRent": 620,
+      "medianPurchase": 848000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2750 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-turramurra",
+      "name": "South Turramurra",
+      "postcode": "2074",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2515000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2074 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-wentworthville",
+      "name": "South Wentworthville",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "south-windsor",
+      "name": "South Windsor",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "spring-farm",
+      "name": "Spring Farm",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-andrews",
+      "name": "St Andrews",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-clair-penrith-nsw",
+      "name": "St Clair (Penrith - NSW)",
+      "postcode": "2759",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2759 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-helens-park",
+      "name": "St Helens Park",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-ives",
+      "name": "St Ives",
+      "postcode": "2075",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2443000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2075 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-ives-chase",
+      "name": "St Ives Chase",
+      "postcode": "2075",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2443000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2075 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-johns-park",
+      "name": "St Johns Park",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-leonards",
+      "name": "St Leonards",
+      "postcode": "2065",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2065 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-marys",
+      "name": "St Marys",
+      "postcode": "2760",
+      "medianWeeklyRent": 590,
+      "medianPurchase": 852000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2760 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "st-peters",
+      "name": "St Peters",
+      "postcode": "2044",
+      "medianWeeklyRent": 920,
+      "medianPurchase": 1680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2044 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "stanhope-gardens",
+      "name": "Stanhope Gardens",
+      "postcode": "2768",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 1705000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2768 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "stanmore",
+      "name": "Stanmore",
+      "postcode": "2048",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1352000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2048 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "strathfield",
+      "name": "Strathfield",
+      "postcode": "2135",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 865000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2135 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "strathfield-south",
+      "name": "Strathfield South",
+      "postcode": "2136",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1000000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2136 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "surry-hills",
+      "name": "Surry Hills",
+      "postcode": "2010",
+      "medianWeeklyRent": 853,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2010 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sutherland",
+      "name": "Sutherland",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sydenham",
+      "name": "Sydenham",
+      "postcode": "2044",
+      "medianWeeklyRent": 920,
+      "medianPurchase": 1680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2044 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sydney",
+      "name": "Sydney",
+      "postcode": "2000",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 1050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2000 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sydney-olympic-park",
+      "name": "Sydney Olympic Park",
+      "postcode": "2127",
+      "medianWeeklyRent": 808,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2127 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sylvania",
+      "name": "Sylvania",
+      "postcode": "2224",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 1980000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2224 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "sylvania-waters",
+      "name": "Sylvania Waters",
+      "postcode": "2224",
+      "medianWeeklyRent": 950,
+      "medianPurchase": 1980000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2224 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "tallawong",
+      "name": "Tallawong",
+      "postcode": "2762",
+      "medianWeeklyRent": 705,
+      "medianPurchase": 730000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2762 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "tamarama",
+      "name": "Tamarama",
+      "postcode": "2026",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 1930000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2026 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "taren-point",
+      "name": "Taren Point",
+      "postcode": "2229",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1548000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2229 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "telopea",
+      "name": "Telopea",
+      "postcode": "2117",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2117 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "tempe",
+      "name": "Tempe",
+      "postcode": "2044",
+      "medianWeeklyRent": 920,
+      "medianPurchase": 1680000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2044 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "tennyson-point",
+      "name": "Tennyson Point",
+      "postcode": "2111",
+      "medianWeeklyRent": 760,
+      "medianPurchase": 940000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2111 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "the-ponds",
+      "name": "The Ponds",
+      "postcode": "2769",
+      "medianWeeklyRent": 913,
+      "medianPurchase": 1582000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2769 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "the-rocks-sydney-nsw",
+      "name": "The Rocks (Sydney - NSW)",
+      "postcode": "2795",
+      "medianWeeklyRent": 540,
+      "medianPurchase": 742000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2795 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "theresa-park",
+      "name": "Theresa Park",
+      "postcode": "2570",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1220000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2570 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "thornleigh",
+      "name": "Thornleigh",
+      "postcode": "2120",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 1950000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2120 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "toongabbie",
+      "name": "Toongabbie",
+      "postcode": "2146",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 920000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2146 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "tregear",
+      "name": "Tregear",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "turramurra",
+      "name": "Turramurra",
+      "postcode": "2074",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2515000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2074 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "turrella",
+      "name": "Turrella",
+      "postcode": "2205",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 843000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2205 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "ultimo",
+      "name": "Ultimo",
+      "postcode": "2007",
+      "medianWeeklyRent": 719,
+      "medianPurchase": 885000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2007 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "varroville",
+      "name": "Varroville",
+      "postcode": "2566",
+      "medianWeeklyRent": 623,
+      "medianPurchase": 1034000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2566 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "vaucluse",
+      "name": "Vaucluse",
+      "postcode": "2030",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 5050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2030 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "villawood",
+      "name": "Villawood",
+      "postcode": "2163",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 560000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2163 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "vineyard",
+      "name": "Vineyard",
+      "postcode": "2765",
+      "medianWeeklyRent": 830,
+      "medianPurchase": 1250000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2765 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wahroonga",
+      "name": "Wahroonga",
+      "postcode": "2076",
+      "medianWeeklyRent": 963,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2076 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "waitara",
+      "name": "Waitara",
+      "postcode": "2077",
+      "medianWeeklyRent": 725,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2077 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wakeley",
+      "name": "Wakeley",
+      "postcode": "2176",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 1513000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2176 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wallacia",
+      "name": "Wallacia",
+      "postcode": "2745",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1258000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2745 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wareemba",
+      "name": "Wareemba",
+      "postcode": "2046",
+      "medianWeeklyRent": 885,
+      "medianPurchase": 1358000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2046 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "warragamba",
+      "name": "Warragamba",
+      "postcode": "2752",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 1285000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2752 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "warrawee",
+      "name": "Warrawee",
+      "postcode": "2074",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 2515000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2074 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "warriewood",
+      "name": "Warriewood",
+      "postcode": "2102",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2052000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2102 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "warwick-farm",
+      "name": "Warwick Farm",
+      "postcode": "2170",
+      "medianWeeklyRent": 610,
+      "medianPurchase": 700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2170 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "waterfall",
+      "name": "Waterfall",
+      "postcode": "2233",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1433000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2233 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "waterloo",
+      "name": "Waterloo",
+      "postcode": "2017",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 995000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2017 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "watsons-bay",
+      "name": "Watsons Bay",
+      "postcode": "2030",
+      "medianWeeklyRent": 1200,
+      "medianPurchase": 5050000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2030 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wattle-grove",
+      "name": "Wattle Grove",
+      "postcode": "2173",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1367000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2173 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "waverley",
+      "name": "Waverley",
+      "postcode": "2024",
+      "medianWeeklyRent": 1000,
+      "medianPurchase": 3500000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2024 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "waverton",
+      "name": "Waverton",
+      "postcode": "2060",
+      "medianWeeklyRent": 820,
+      "medianPurchase": 1310000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2060 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wentworth-point",
+      "name": "Wentworth Point",
+      "postcode": "2127",
+      "medianWeeklyRent": 808,
+      "medianPurchase": 780000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2127 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wentworthville",
+      "name": "Wentworthville",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "werrington",
+      "name": "Werrington",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "werrington-county",
+      "name": "Werrington County",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "werrington-downs",
+      "name": "Werrington Downs",
+      "postcode": "2747",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 1063000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2747 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "west-hoxton",
+      "name": "West Hoxton",
+      "postcode": "2171",
+      "medianWeeklyRent": 800,
+      "medianPurchase": 1330000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2171 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "west-pennant-hills",
+      "name": "West Pennant Hills",
+      "postcode": "2125",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2725000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2125 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "west-pymble",
+      "name": "West Pymble",
+      "postcode": "2073",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 2760000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2073 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "west-ryde",
+      "name": "West Ryde",
+      "postcode": "2114",
+      "medianWeeklyRent": 700,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2114 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "westleigh",
+      "name": "Westleigh",
+      "postcode": "2120",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 1950000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2120 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "westmead",
+      "name": "Westmead",
+      "postcode": "2145",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 770000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2145 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wetherill-park",
+      "name": "Wetherill Park",
+      "postcode": "2164",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2164 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "whalan",
+      "name": "Whalan",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "whale-beach",
+      "name": "Whale Beach",
+      "postcode": "2107",
+      "medianWeeklyRent": 1250,
+      "medianPurchase": 2700000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2107 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wheeler-heights",
+      "name": "Wheeler Heights",
+      "postcode": "2097",
+      "medianWeeklyRent": 945,
+      "medianPurchase": 2255000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2097 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wiley-park",
+      "name": "Wiley Park",
+      "postcode": "2195",
+      "medianWeeklyRent": 550,
+      "medianPurchase": 553000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2195 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "willmot",
+      "name": "Willmot",
+      "postcode": "2770",
+      "medianWeeklyRent": 530,
+      "medianPurchase": 900000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2770 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "willoughby",
+      "name": "Willoughby",
+      "postcode": "2068",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2068 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "willoughby-east",
+      "name": "Willoughby East",
+      "postcode": "2068",
+      "medianWeeklyRent": 1025,
+      "medianPurchase": 2200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2068 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "windsor",
+      "name": "Windsor",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "windsor-downs",
+      "name": "Windsor Downs",
+      "postcode": "2756",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1155000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2756 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "winmalee",
+      "name": "Winmalee",
+      "postcode": "2777",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1125000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2777 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "winston-hills",
+      "name": "Winston Hills",
+      "postcode": "2153",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1630000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2153 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wolli-creek",
+      "name": "Wolli Creek",
+      "postcode": "2205",
+      "medianWeeklyRent": 860,
+      "medianPurchase": 843000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2205 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "wollstonecraft",
+      "name": "Wollstonecraft",
+      "postcode": "2065",
+      "medianWeeklyRent": 900,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2065 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woodbine",
+      "name": "Woodbine",
+      "postcode": "2560",
+      "medianWeeklyRent": 600,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2560 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woodcroft",
+      "name": "Woodcroft",
+      "postcode": "2767",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1045000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2767 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woodpark",
+      "name": "Woodpark",
+      "postcode": "2164",
+      "medianWeeklyRent": 680,
+      "medianPurchase": 1400000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2164 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woollahra",
+      "name": "Woollahra",
+      "postcode": "2025",
+      "medianWeeklyRent": 1150,
+      "medianPurchase": 3205000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2025 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woolloomooloo",
+      "name": "Woolloomooloo",
+      "postcode": "2011",
+      "medianWeeklyRent": 730,
+      "medianPurchase": 955000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2011 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woolooware",
+      "name": "Woolooware",
+      "postcode": "2230",
+      "medianWeeklyRent": 750,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2230 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woolwich",
+      "name": "Woolwich",
+      "postcode": "2110",
+      "medianWeeklyRent": 1100,
+      "medianPurchase": 3215000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2110 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woronora",
+      "name": "Woronora",
+      "postcode": "2232",
+      "medianWeeklyRent": 740,
+      "medianPurchase": 970000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2232 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "woronora-heights",
+      "name": "Woronora Heights",
+      "postcode": "2233",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1433000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2233 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yagoona",
+      "name": "Yagoona",
+      "postcode": "2199",
+      "medianWeeklyRent": 650,
+      "medianPurchase": 1350000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2199 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yarramundi",
+      "name": "Yarramundi",
+      "postcode": "2753",
+      "medianWeeklyRent": 670,
+      "medianPurchase": 976000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2753 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yarrawarrah",
+      "name": "Yarrawarrah",
+      "postcode": "2233",
+      "medianWeeklyRent": 850,
+      "medianPurchase": 1433000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2233 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yellow-rock-blue-mountains-nsw",
+      "name": "Yellow Rock (Blue Mountains - NSW)",
+      "postcode": "2777",
+      "medianWeeklyRent": 720,
+      "medianPurchase": 1125000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2777 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yennora",
+      "name": "Yennora",
+      "postcode": "2161",
+      "medianWeeklyRent": 645,
+      "medianPurchase": 1164000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2161 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "yowie-bay",
+      "name": "Yowie Bay",
+      "postcode": "2228",
+      "medianWeeklyRent": 780,
+      "medianPurchase": 1200000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2228 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    },
+    {
+      "id": "zetland",
+      "name": "Zetland",
+      "postcode": "2017",
+      "medianWeeklyRent": 1050,
+      "medianPurchase": 995000,
+      "period": "Jun 2026 quarter",
+      "rentNote": "Postcode 2017 median, new bonds, Jun 2026 quarter. Not this suburb alone."
+    }
+  ]
+}

@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
     "build": "node scripts/with-app-env.mjs vite build && npm run db:migrate",
+    "build:cloudflare": "NITRO_PRESET=cloudflare_pages node scripts/with-app-env.mjs vite build",
     "db:migrate": "node scripts/migrate.mjs",
     "build:dev": "node scripts/with-app-env.mjs vite build --mode development",
     "preview": "node scripts/with-app-env.mjs vite preview",
@@ -19,7 +20,10 @@
     "test": "node --test 'scripts/**/*.test.mjs' && node --experimental-strip-types --test src/lib/app-data/app-data.test.ts src/lib/app-data/readiness-schedule.test.ts src/lib/auth/gate-identity.test.ts src/lib/auth/sign-in-gate.test.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "data:bocsar": "node scripts/fetch-bocsar-safety.mjs"
+    "data:bocsar": "node scripts/fetch-bocsar-safety.mjs",
+    "data:polygons": "node scripts/fetch-sal-polygons.mjs",
+    "data:census": "node scripts/fetch-census-2021.mjs",
+    "data:housing": "node scripts/fetch-dcj-housing.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.4",
@@ -87,6 +91,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "exceljs": "^4.4.0",
     "globals": "^15.15.0",
     "lightningcss": "^1.28.0",
     "nitro": "3.0.260610-beta",

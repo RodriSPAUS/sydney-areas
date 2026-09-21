@@ -1,0 +1,9 @@
+# Cloudflare Pages. Dashboard:
+#   Build command: npm run build
+#   Output directory: dist
+# CF_PAGES=1 (or NITRO_PRESET=cloudflare_pages) switches Nitro off the Vercel
+# preset so the build actually writes dist/ instead of .vercel/output/.
+name = "sydney-areas"
+compatibility_date = "2025-09-21"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"

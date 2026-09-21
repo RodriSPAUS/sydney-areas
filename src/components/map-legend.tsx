@@ -1,3 +1,4 @@
+import { suburbs } from "@/data/suburbs";
 import {
   BORN_AU_HIGH,
   BORN_AU_LOW,
@@ -11,7 +12,7 @@ import {
   formatAud,
   rentRange,
 } from "@/lib/choropleth";
-import type { Choropleth } from "@/lib/map-store";
+import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 
 function Ramp({ from, to, left, right }: { from: string; to: string; left: string; right: string }) {
@@ -29,11 +30,18 @@ function Ramp({ from, to, left, right }: { from: string; to: string; left: strin
   );
 }
 
-function LegendBody({ layer }: { layer: Choropleth }) {
+const SAFETY_TITLE: Record<SafetyMetric, string> = {
+  combined: "Street + home incidents / 1,000",
+  street: "Street incidents / 1,000",
+  dwelling: "Break-ins and theft from homes / 1,000",
+  domestic: "Domestic assault / 1,000",
+};
+
+function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric }) {
   if (layer === "safety") {
     return (
       <div>
-        <p className="mb-1.5 text-[11px] font-medium text-fg">Incidents per 1,000 residents</p>
+        <p className="mb-1.5 text-[11px] font-medium text-fg">{SAFETY_TITLE[metric]}</p>
         <div className="flex overflow-hidden rounded-full">
           {([5, 4, 3, 2, 1] as const).map((band) => (
             <span
@@ -47,19 +55,35 @@ function LegendBody({ layer }: { layer: Choropleth }) {
           <span>Fewer</span>
           <span>More</span>
         </div>
+        <p className="mt-1.5 text-[10px] leading-snug text-muted">
+          Among Greater Sydney suburbs on this map. Not a live risk score.
+        </p>
+        {metric === "domestic" ? (
+          <p className="mt-1 text-[10px] leading-snug text-muted">
+            Recorded domestic-violence assaults. Different pattern from street crime.
+          </p>
+        ) : null}
       </div>
     );
   }
   if (layer === "housing") {
+    const dcj = suburbs.some((s) => s.housing?.source === "dcj");
     return (
       <div>
-        <p className="mb-1.5 text-[11px] font-medium text-fg">Weekly rent (sample)</p>
+        <p className="mb-1.5 text-[11px] font-medium text-fg">
+          {dcj ? "Weekly rent (new bonds, DCJ)" : "Weekly rent (Census 2021)"}
+        </p>
         <Ramp
           from={HOUSING_LOW}
           to={HOUSING_HIGH}
           left={formatAud(rentRange.min)}
           right={formatAud(rentRange.max)}
         />
+        <p className="mt-1.5 text-[10px] leading-snug text-muted">
+          {dcj
+            ? "By postcode. Neighbouring suburbs may share a colour."
+            : "ABS Census 2021. Not today’s advertised price."}
+        </p>
       </div>
     );
   }
@@ -73,6 +97,7 @@ function LegendBody({ layer }: { layer: Choropleth }) {
           left={`${familyRange.min}%`}
           right={`${familyRange.max}%`}
         />
+        <p className="mt-1.5 text-[10px] leading-snug text-muted">ABS Census 2021</p>
       </div>
     );
   }
@@ -85,17 +110,19 @@ function LegendBody({ layer }: { layer: Choropleth }) {
         left={`${bornAuRange.min}%`}
         right={`${bornAuRange.max}%`}
       />
+      <p className="mt-1.5 text-[10px] leading-snug text-muted">ABS Census 2021</p>
     </div>
   );
 }
 
 export function MapLegend() {
   const layer = useMapStore((s) => s.choropleth);
+  const metric = useMapStore((s) => s.safetyMetric);
   const servicesOn = useMapStore((s) => s.servicesOn);
 
   return (
-    <div className="pointer-events-none w-[168px] rounded-xl bg-surface/95 px-3 py-2.5 shadow-[var(--shadow-border)]">
-      <LegendBody layer={layer} />
+    <div className="pointer-events-none w-[196px] rounded-xl bg-surface/95 px-3 py-2.5 shadow-[var(--shadow-border)]">
+      <LegendBody layer={layer} metric={metric} />
       {servicesOn ? (
         <ul className="mt-2 flex flex-col gap-1 border-t border-border pt-2 text-[10px] text-muted">
           <li className="flex items-center gap-1.5">

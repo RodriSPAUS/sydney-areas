@@ -58,12 +58,18 @@ function propsFor(id: string, name: string, suburb?: Suburb) {
   return {
     id,
     name: suburb?.name ?? name,
-    safetyBand: suburb?.safety?.band ?? null,
+    safetyBand: suburb?.safety?.bandCombined ?? suburb?.safety?.band ?? null,
+    bandStreet: suburb?.safety?.bandStreet ?? null,
+    bandDwelling: suburb?.safety?.bandDwelling ?? null,
+    bandDomestic: suburb?.safety?.bandDomestic ?? null,
     rent: suburb?.housing?.medianWeeklyRent ?? null,
     families: suburb?.households?.pctFamiliesWithChildren ?? null,
     bornAu: suburb?.backgrounds?.pctBornAustralia ?? null,
     topAncestry: suburb?.backgrounds?.topAncestries[0]?.name ?? "",
-    hasFigures: suburb?.safety?.band ? 1 : 0,
+    hasFigures:
+      suburb?.safety?.band || suburb?.safety?.bandCombined || suburb?.safety?.bandStreet
+        ? 1
+        : 0,
   };
 }
 
