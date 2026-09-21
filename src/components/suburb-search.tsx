@@ -16,7 +16,16 @@ export function SuburbSearch() {
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return suburbs.filter((s) => s.name.toLowerCase().includes(q)).slice(0, 12);
+    const hits = suburbs.filter((s) => s.name.toLowerCase().includes(q));
+    hits.sort((a, b) => {
+      const an = a.name.toLowerCase();
+      const bn = b.name.toLowerCase();
+      const score = (name: string) =>
+        name === q ? 0 : name.startsWith(q) ? 1 : name.startsWith(q + " ") ? 1 : 2;
+      const d = score(an) - score(bn);
+      return d || an.localeCompare(bn);
+    });
+    return hits.slice(0, 12);
   }, [query]);
 
   useEffect(() => {

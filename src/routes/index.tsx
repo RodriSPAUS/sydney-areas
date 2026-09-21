@@ -8,6 +8,7 @@ import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
 import { useMapStore } from "@/lib/map-store";
 import {
+  filterFromSearch,
   layerFromSearch,
   metricFromSearch,
   sameSearch,
@@ -28,15 +29,23 @@ function UrlSync() {
     const selectedId = search.s && suburbsById[search.s] ? search.s : null;
     const choropleth = layerFromSearch(search);
     const safetyMetric = metricFromSearch(search);
+    const layerFilter = filterFromSearch(search);
     const st = useMapStore.getState();
     if (
       st.selectedId !== selectedId ||
       st.choropleth !== choropleth ||
-      st.safetyMetric !== safetyMetric
+      st.safetyMetric !== safetyMetric ||
+      st.layerFilter !== layerFilter
     ) {
-      useMapStore.setState({ selectedId, choropleth, safetyMetric });
+      useMapStore.setState({
+        selectedId,
+        choropleth,
+        safetyMetric,
+        layerFilter,
+        ...(selectedId && selectedId !== st.selectedId ? { focusSeq: st.focusSeq + 1 } : {}),
+      });
     }
-  }, [search.s, search.layer, search.metric]);
+  }, [search.s, search.layer, search.metric, search.f]);
 
   useEffect(() => {
     return useMapStore.subscribe((state) => {
@@ -86,7 +95,7 @@ function Home() {
         className={
           selectedId
             ? "pointer-events-none absolute inset-x-0 bottom-[calc(42vh+0.5rem)] z-20 hidden px-3 md:right-[372px] md:bottom-12 md:left-0 md:block md:px-4"
-            : "pointer-events-none absolute inset-x-0 bottom-14 z-20 px-3 md:bottom-12 md:px-4"
+            : "pointer-events-none absolute inset-x-0 bottom-16 z-20 px-3 md:bottom-12 md:px-4"
         }
       >
         <div className="flex justify-center md:justify-start">

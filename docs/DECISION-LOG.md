@@ -5,6 +5,22 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-22 — Centre on search, layer-first sheet, stronger fills, filters
+
+**What:** Search always recentres the suburb in the leftover map (even if it
+was already selected). The profile opens on the **active layer** (Housing first
+when Housing is on); the other sections collapse. Housing / Households /
+Backgrounds use five discrete quintile colours with a wider lightness range.
+Filter chips: All / lower / higher for the current layer (also in the URL as
+`f=low|high`). Unmatched suburbs fade.
+
+**Why:** Typing a suburb did not reliably fly the camera. The sheet always
+started at Safety, so Housing looked missing. Continuous ramps clustered most
+suburbs in one muddy mid-tone. No way to hide the expensive or high-incident
+end.
+
+---
+
 ## 2026-09-22 — Share URL, ranks, colourblind fills, no fake services
 
 **What:** Shareable `?s=&layer=&metric=` URL. Suburb sheet shows band bar +

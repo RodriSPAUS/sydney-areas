@@ -8,8 +8,16 @@ import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
-import { fillColorExpression } from "@/lib/choropleth";
-import { bboxCorners, featureBBox, fitPadding, suburbPolygonCount, suburbsGeoJSON } from "@/lib/geo";
+import { fillColorExpression, filterMatchExpression } from "@/lib/choropleth";
+import {
+  bboxCorners,
+  expandBBox,
+  featureBBox,
+  fitPadding,
+  suburbPolygonCount,
+  suburbsGeoJSON,
+} from "@/lib/geo";
+import type { Choropleth, LayerFilter, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 
 const SYDNEY: [number, number] = [151.02, -33.86];
@@ -18,7 +26,6 @@ const MAX_BOUNDS: [[number, number], [number, number]] = [
   [150.55, -34.22],
   [151.42, -33.52],
 ];
-/** Greater Sydney urban view — Penrith/Blacktown west to Bondi east. */
 const ZONE_BOUNDS: [[number, number], [number, number]] = [
   [150.72, -34.06],
   [151.32, -33.7],
@@ -68,16 +75,23 @@ const BASEMAP: StyleSpecification = {
   ],
 };
 
-function fillOpacity(selectedId: string): ExpressionSpecification {
+function fillOpacity(
+  selectedId: string,
+  layer: Choropleth,
+  metric: SafetyMetric,
+  filter: LayerFilter,
+): ExpressionSpecification {
+  const match: ExpressionSpecification =
+    filter === "all" ? ["boolean", true] : filterMatchExpression(layer, metric, filter);
   return [
     "case",
     ["==", ["get", "id"], selectedId],
-    0.9,
+    0.92,
     ["boolean", ["feature-state", "hover"], false],
-    0.86,
-    ["==", ["get", "hasFigures"], 1],
-    selectedId ? 0.62 : 0.72,
-    selectedId ? 0.48 : 0.58,
+    0.88,
+    match,
+    selectedId ? 0.78 : 0.86,
+    0.05,
   ];
 }
 
@@ -104,7 +118,9 @@ function lineColor(selectedId: string): ExpressionSpecification {
 }
 
 function canHover() {
-  return typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  return (
+    typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches
+  );
 }
 
 function fitToSelected(map: MapLibreMap) {
@@ -112,24 +128,30 @@ function fitToSelected(map: MapLibreMap) {
   if (!id) return;
   const suburb = suburbsById[id];
   if (!suburb) return;
-  const box = featureBBox(id) ?? suburb.bbox;
+  const box = expandBBox(featureBBox(id) ?? suburb.bbox);
   const padding = fitPadding(true);
-  try {
-    map.fitBounds(bboxCorners(box), {
-      padding,
-      duration: 650,
-      maxZoom: 13,
-      essential: true,
-    });
-  } catch {
-    const [west, south, east, north] = box;
-    map.easeTo({
-      center: [(west + east) / 2, (south + north) / 2],
-      zoom: 13.2,
-      duration: 650,
-      essential: true,
-    });
-  }
+  const [west, south, east, north] = box;
+  const run = () => {
+    try {
+      map.stop();
+      map.fitBounds(bboxCorners(box), {
+        padding,
+        duration: 800,
+        maxZoom: 14.5,
+        essential: true,
+      });
+    } catch {
+      map.easeTo({
+        center: [(west + east) / 2, (south + north) / 2],
+        zoom: 14,
+        duration: 800,
+        essential: true,
+        padding,
+      });
+    }
+  };
+  run();
+  window.setTimeout(run, 120);
 }
 
 function addLayers(map: MapLibreMap) {
@@ -140,16 +162,16 @@ function addLayers(map: MapLibreMap) {
     promoteId: "id",
   });
 
-  const choropleth = useMapStore.getState().choropleth;
-  const selectedId = useMapStore.getState().selectedId ?? "";
+  const st = useMapStore.getState();
+  const selectedId = st.selectedId ?? "";
 
   map.addLayer({
     id: "suburbs-fill",
     type: "fill",
     source: "suburbs",
     paint: {
-      "fill-color": fillColorExpression(choropleth, useMapStore.getState().safetyMetric),
-      "fill-opacity": fillOpacity(selectedId),
+      "fill-color": fillColorExpression(st.choropleth, st.safetyMetric),
+      "fill-opacity": fillOpacity(selectedId, st.choropleth, st.safetyMetric, st.layerFilter),
       "fill-opacity-transition": { duration: 160 },
       "fill-antialias": true,
     },
@@ -245,7 +267,11 @@ export function SydneyMap() {
         const onStyleReady = () => {
           onResize?.();
           addLayers(instance);
-          if (!useMapStore.getState().selectedId) {
+          const selected = useMapStore.getState().selectedId;
+          if (selected) {
+            fittedFor.current = `${selected}:${useMapStore.getState().focusSeq}`;
+            fitToSelected(instance);
+          } else {
             try {
               instance.fitBounds(ZONE_BOUNDS, {
                 padding: 28,
@@ -255,11 +281,6 @@ export function SydneyMap() {
             } catch {
               /* keep default center */
             }
-          }
-          const selected = useMapStore.getState().selectedId;
-          if (selected && fittedFor.current !== selected) {
-            fittedFor.current = selected;
-            fitToSelected(instance);
           }
         };
 
@@ -335,7 +356,9 @@ export function SydneyMap() {
 
   const choropleth = useMapStore((s) => s.choropleth);
   const safetyMetric = useMapStore((s) => s.safetyMetric);
+  const layerFilter = useMapStore((s) => s.layerFilter);
   const selectedId = useMapStore((s) => s.selectedId);
+  const focusSeq = useMapStore((s) => s.focusSeq);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -347,15 +370,27 @@ export function SydneyMap() {
     const map = mapRef.current;
     if (!map?.getLayer("suburbs-fill")) return;
     const id = selectedId ?? "";
-    map.setPaintProperty("suburbs-fill", "fill-opacity", fillOpacity(id));
+    map.setPaintProperty(
+      "suburbs-fill",
+      "fill-opacity",
+      fillOpacity(id, choropleth, safetyMetric, layerFilter),
+    );
     map.setPaintProperty("suburbs-outline", "line-color", lineColor(id));
     map.setPaintProperty("suburbs-outline", "line-width", lineWidth(id));
-    if (selectedId && fittedFor.current !== selectedId) {
-      fittedFor.current = selectedId;
-      if (map.isStyleLoaded()) fitToSelected(map);
+  }, [selectedId, choropleth, safetyMetric, layerFilter]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    if (!selectedId) {
+      fittedFor.current = null;
+      return;
     }
-    if (!selectedId) fittedFor.current = null;
-  }, [selectedId]);
+    const token = `${selectedId}:${focusSeq}`;
+    if (fittedFor.current === token) return;
+    fittedFor.current = token;
+    if (map.isStyleLoaded() && map.getLayer("suburbs-fill")) fitToSelected(map);
+  }, [selectedId, focusSeq]);
 
   const hovered = hoverId ? suburbsById[hoverId] : undefined;
 

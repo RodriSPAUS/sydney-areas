@@ -1,5 +1,6 @@
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from "geojson";
 import polygonFc from "@/data/suburb-polygons.json";
+import { bornBandById, familyBandById, housingBandById } from "@/lib/choropleth";
 import { suburbsById } from "@/data/suburbs";
 import type { BBox, Suburb } from "@/lib/suburb-types";
 
@@ -36,6 +37,14 @@ export function featureBBox(id: string): BBox | undefined {
   return [minX, minY, maxX, maxY];
 }
 
+/** Pad a tiny suburb so fitBounds centres it in the remaining map, not edge-on. */
+export function expandBBox(bbox: BBox, minSpan = 0.022): BBox {
+  const [west, south, east, north] = bbox;
+  const lngPad = Math.max((minSpan - (east - west)) / 2, (east - west) * 0.45, 0.004);
+  const latPad = Math.max((minSpan - (north - south)) / 2, (north - south) * 0.45, 0.004);
+  return [west - lngPad, south - latPad, east + lngPad, north + latPad];
+}
+
 export function projectGeometry(
   geom: PolyGeom,
   project: (lng: number, lat: number) => { x: number; y: number },
@@ -63,8 +72,11 @@ function propsFor(id: string, name: string, suburb?: Suburb) {
     bandDwelling: suburb?.safety?.bandDwelling ?? null,
     bandDomestic: suburb?.safety?.bandDomestic ?? null,
     rent: suburb?.housing?.medianWeeklyRent ?? null,
+    rentBand: housingBandById.get(id) ?? null,
     families: suburb?.households?.pctFamiliesWithChildren ?? null,
+    familyBand: familyBandById.get(id) ?? null,
     bornAu: suburb?.backgrounds?.pctBornAustralia ?? null,
+    bornBand: bornBandById.get(id) ?? null,
     topAncestry: suburb?.backgrounds?.topAncestries[0]?.name ?? "",
     hasFigures:
       suburb?.safety?.band || suburb?.safety?.bandCombined || suburb?.safety?.bandStreet ? 1 : 0,
@@ -113,16 +125,16 @@ export function fitPadding(sheetOpen: boolean): {
   const w = Math.max(typeof window === "undefined" ? 390 : window.innerWidth, 1);
   const h = Math.max(typeof window === "undefined" ? 640 : window.innerHeight, 1);
   const desktop = w >= 768;
-  const top = Math.min(88, Math.round(h * 0.14));
+  const top = Math.min(96, Math.round(h * 0.15));
   let bottom = sheetOpen
     ? desktop
-      ? Math.min(88, Math.round(h * 0.14))
-      : Math.round(h * 0.42)
-    : Math.min(104, Math.round(h * 0.16));
+      ? Math.min(96, Math.round(h * 0.14))
+      : Math.round(h * 0.44)
+    : Math.min(128, Math.round(h * 0.2));
   const left = 16;
   let right = desktop && sheetOpen ? Math.min(372, Math.round(w * 0.38)) : 16;
-  if (h - top - bottom < 90) bottom = Math.max(0, h - top - 90);
-  if (w - left - right < 90) right = Math.max(0, w - left - 90);
+  if (h - top - bottom < 120) bottom = Math.max(0, h - top - 120);
+  if (w - left - right < 120) right = Math.max(0, w - left - 120);
   return { top, bottom, left, right };
 }
 

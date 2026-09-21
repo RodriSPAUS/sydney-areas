@@ -1,11 +1,12 @@
 import { ChevronDown, X } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
+import type { Choropleth } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
 import { metricCount } from "@/lib/safety-counts";
-import type { SafetyBand, SafetyCounts } from "@/lib/suburb-types";
+import type { SafetyBand, SafetyCounts, Suburb } from "@/lib/suburb-types";
 import { cn } from "@/lib/utils";
 
 const COUNT_ROWS: { key: keyof SafetyCounts; label: string }[] = [
@@ -25,12 +26,37 @@ const COUNT_ROWS: { key: keyof SafetyCounts; label: string }[] = [
   { key: "stealRetail", label: "Retail theft" },
 ];
 
-function Block({ title, children }: { title: string; children: ReactNode }) {
+const SECTION_ORDER: Choropleth[] = ["safety", "housing", "households", "backgrounds"];
+
+function Block({
+  title,
+  featured,
+  children,
+}: {
+  title: string;
+  featured?: boolean;
+  children: ReactNode;
+}) {
+  if (featured) {
+    return (
+      <section>
+        <h3 className="text-[11px] font-semibold tracking-wide text-primary uppercase">{title}</h3>
+        <div className="mt-1.5 space-y-1 text-sm leading-snug text-fg">{children}</div>
+      </section>
+    );
+  }
   return (
-    <section className="border-t border-border pt-3">
-      <h3 className="text-[11px] font-semibold tracking-wide text-primary uppercase">{title}</h3>
-      <div className="mt-1.5 space-y-1 text-sm leading-snug text-fg">{children}</div>
-    </section>
+    <details className="group border-t border-border pt-1">
+      <summary className="flex h-11 cursor-pointer list-none items-center justify-between text-[11px] font-semibold tracking-wide text-primary uppercase">
+        {title}
+        <ChevronDown
+          className="size-4 text-muted transition-transform duration-150 group-open:rotate-180"
+          strokeWidth={2}
+          aria-hidden
+        />
+      </summary>
+      <div className="space-y-1 pb-2 text-sm leading-snug text-fg">{children}</div>
+    </details>
   );
 }
 
@@ -40,7 +66,10 @@ function BandBar({ band }: { band: SafetyBand }) {
       {([5, 4, 3, 2, 1] as const).map((b) => (
         <span
           key={b}
-          className={cn("h-full flex-1 first:rounded-l-full last:rounded-r-full", b === band && "ring-2 ring-fg ring-inset")}
+          className={cn(
+            "h-full flex-1 first:rounded-l-full last:rounded-r-full",
+            b === band && "ring-2 ring-fg ring-inset",
+          )}
           style={{ backgroundColor: SAFETY_FILL[b], opacity: b === band ? 1 : 0.45 }}
         />
       ))}
@@ -61,10 +90,237 @@ function rateLabel(value: number | null | undefined): string {
   return value == null ? "—" : String(value);
 }
 
+function headerNote(suburb: Suburb, layer: Choropleth): string {
+  if (layer === "housing" && suburb.housing) {
+    return suburb.housing.source === "dcj"
+      ? `New bonds · ${suburb.housing.period ?? "DCJ"}`
+      : "Census 2021 rent";
+  }
+  if (layer === "households") return "ABS Census 2021 · households";
+  if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
+  return suburb.safety?.period12
+    ? `BOCSAR · ${suburb.safety.period12}`
+    : "Suburb boundary · ABS SAL 2021";
+}
+
+function SafetyBody({
+  suburb,
+  period,
+  setPeriod,
+}: {
+  suburb: Suburb;
+  period: "12" | "6";
+  setPeriod: (p: "12" | "6") => void;
+}) {
+  const safetyMetric = useMapStore((s) => s.safetyMetric);
+  const metricBand = activeSafetyBand(suburb, safetyMetric);
+  const sRank = safetyRank(suburb.id, safetyMetric);
+  const counts = period === "6" ? suburb.safety?.last6Months : suburb.safety?.last12Months;
+  const count12 = suburb.safety?.last12Months;
+  const count6 = suburb.safety?.last6Months;
+
+  if (!suburb.safety) {
+    return (
+      <p className="text-muted">
+        No BOCSAR row in this extract. The boundary is from ABS Suburbs and Localities 2021.
+      </p>
+    );
+  }
+
+  return (
+    <>
+      {metricBand ? (
+        <div className="space-y-2">
+          <BandBar band={metricBand} />
+          <p className="font-medium">
+            Band {metricBand} of 5
+            {sRank ? (
+              <span className="text-muted">
+                {" "}
+                · #{sRank.rank} of {sRank.of}
+              </span>
+            ) : null}
+          </p>
+          <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
+        </div>
+      ) : (
+        <p className="font-medium">
+          No map colour — too few Census 2021 residents for a stable rate
+        </p>
+      )}
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        <Stat label="Street / 1,000" value={rateLabel(suburb.safety.streetPer1000)} />
+        <Stat label="Homes / 1,000" value={rateLabel(suburb.safety.dwellingPer1000)} />
+        <Stat label="Combined / 1,000" value={rateLabel(suburb.safety.combinedPer1000)} />
+        <Stat label="Domestic / 1,000" value={rateLabel(suburb.safety.domesticPer1000)} />
+      </div>
+      {suburb.safety.population ? (
+        <p className="text-xs text-muted">
+          Census 2021 usual residents {suburb.safety.population.toLocaleString("en-AU")}
+        </p>
+      ) : null}
+      {count12 && count6 ? (
+        <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+          <div className="rounded-xl bg-bg px-3 py-2">
+            <p className="text-[10px] tracking-wide text-muted uppercase">12 months</p>
+            <p className="font-semibold tabular-nums">{metricCount(count12, safetyMetric)}</p>
+            <p className="text-[10px] text-muted">recorded, this metric</p>
+          </div>
+          <div className="rounded-xl bg-bg px-3 py-2">
+            <p className="text-[10px] tracking-wide text-muted uppercase">6 months</p>
+            <p className="font-semibold tabular-nums">{metricCount(count6, safetyMetric)}</p>
+            <p className="text-[10px] text-muted">shorter window, not half-year rate</p>
+          </div>
+        </div>
+      ) : null}
+      <details className="group mt-2">
+        <summary className="flex h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-fg">
+          Recorded incidents
+          <ChevronDown
+            className="size-4 text-muted transition-transform duration-150 group-open:rotate-180"
+            strokeWidth={2}
+            aria-hidden
+          />
+        </summary>
+        <div role="radiogroup" aria-label="Incident period" className="mt-2 flex rounded-xl bg-bg p-1">
+          <button
+            type="button"
+            role="radio"
+            aria-checked={period === "12"}
+            onClick={() => setPeriod("12")}
+            className={cn(
+              "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
+              "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+              period === "12" ? "bg-ink text-bg" : "text-muted hover:text-fg",
+            )}
+          >
+            12 months
+          </button>
+          <button
+            type="button"
+            role="radio"
+            aria-checked={period === "6"}
+            onClick={() => setPeriod("6")}
+            className={cn(
+              "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
+              "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+              period === "6" ? "bg-ink text-bg" : "text-muted hover:text-fg",
+            )}
+          >
+            6 months
+          </button>
+        </div>
+        {counts ? (
+          <ul className="mt-2 divide-y divide-border">
+            {COUNT_ROWS.map(({ key, label }) => (
+              <li key={key} className="flex items-baseline justify-between gap-3 py-1.5 text-sm">
+                <span className="text-muted">{label}</span>
+                <span className="tabular-nums text-fg">{counts[key]}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <p className="mt-2 text-xs text-muted">
+          Combined is street + home and ignores retail theft and domestic assault. The list is raw
+          counts. NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU. Population:
+          ABS Census 2021.
+        </p>
+      </details>
+    </>
+  );
+}
+
+function HousingBody({ suburb }: { suburb: Suburb }) {
+  const hRank = layerRank(suburb.id, "housing", "combined");
+  if (!suburb.housing) return <p className="text-muted">No rent or sale figure for this suburb.</p>;
+  return (
+    <>
+      {suburb.housing.medianWeeklyRent != null ? (
+        <p className="text-2xl font-semibold tracking-tight tabular-nums">
+          {formatAud(suburb.housing.medianWeeklyRent)}
+          <span className="ml-1 text-sm font-medium text-muted">/ week</span>
+        </p>
+      ) : null}
+      {hRank ? (
+        <p className="text-xs text-muted">
+          #{hRank.rank} of {hRank.of} · {rankCaption("housing", "combined")}
+        </p>
+      ) : null}
+      <p className="text-muted">
+        {suburb.housing.source === "dcj"
+          ? `New bonds · postcode ${suburb.housing.postcode ?? "—"} · ${suburb.housing.period ?? ""}`
+          : "ABS Census 2021"}
+      </p>
+      {suburb.housing.medianPurchase != null ? (
+        <p>
+          Median purchase{" "}
+          <span className="font-semibold tabular-nums">{formatAud(suburb.housing.medianPurchase)}</span>
+          {suburb.housing.source === "dcj" ? " · DCJ sales" : ""}
+        </p>
+      ) : null}
+      {suburb.housing.source === "dcj" && suburb.housing.medianWeeklyRent2021 != null ? (
+        <p className="text-muted">
+          Census 2021 median rent {formatAud(suburb.housing.medianWeeklyRent2021)}
+        </p>
+      ) : null}
+      {suburb.housing.rentNote ? <p className="text-xs text-muted">{suburb.housing.rentNote}</p> : null}
+      <p className="text-xs text-muted">
+        {suburb.housing.source === "dcj"
+          ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
+          : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
+      </p>
+    </>
+  );
+}
+
+function HouseholdsBody({ suburb }: { suburb: Suburb }) {
+  const rank = layerRank(suburb.id, "households", "combined");
+  if (!suburb.households) return <p className="text-muted">No Census 2021 household figures.</p>;
+  return (
+    <>
+      <div className="grid grid-cols-3 gap-2">
+        <Stat label="Median age" value={String(suburb.households.medianAge)} />
+        <Stat label="Renting" value={`${suburb.households.pctRenting}%`} />
+        <Stat label="With children" value={`${suburb.households.pctFamiliesWithChildren}%`} />
+      </div>
+      {rank ? (
+        <p className="text-xs text-muted">
+          #{rank.rank} of {rank.of} · {rankCaption("households", "combined")}
+        </p>
+      ) : null}
+      <p className="text-xs text-muted">ABS Census 2021</p>
+    </>
+  );
+}
+
+function BackgroundsBody({ suburb }: { suburb: Suburb }) {
+  const rank = layerRank(suburb.id, "backgrounds", "combined");
+  if (!suburb.backgrounds) return <p className="text-muted">No Census 2021 ancestry figures.</p>;
+  return (
+    <>
+      <p className="text-2xl font-semibold tracking-tight tabular-nums">
+        {suburb.backgrounds.pctBornAustralia}%{" "}
+        <span className="text-sm font-medium text-muted">born in Australia</span>
+      </p>
+      {rank ? (
+        <p className="text-xs text-muted">
+          #{rank.rank} of {rank.of} · {rankCaption("backgrounds", "combined")}
+        </p>
+      ) : null}
+      <p>{suburb.backgrounds.topAncestries.map((a) => `${a.name} ${a.pct}%`).join(" · ")}</p>
+      <p className="text-muted">
+        Top language other than English: {suburb.backgrounds.topLanguageOther}
+      </p>
+      <p className="text-xs text-muted">
+        ABS Census 2021. Ancestry is self-reported; people can choose two.
+      </p>
+    </>
+  );
+}
+
 export function SuburbSheet() {
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
-  const safetyMetric = useMapStore((s) => s.safetyMetric);
   const choropleth = useMapStore((s) => s.choropleth);
   const feedback = useMapStore((s) => s.feedback);
   const setFeedback = useMapStore((s) => s.setFeedback);
@@ -72,17 +328,27 @@ export function SuburbSheet() {
   const open = Boolean(suburb);
   const vote = suburb ? feedback[suburb.id] : undefined;
   const [period, setPeriod] = useState<"12" | "6">("12");
+  const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setPeriod("12");
-  }, [suburb?.id]);
+    scroller.current?.scrollTo({ top: 0 });
+  }, [suburb?.id, choropleth]);
 
-  const counts = period === "6" ? suburb?.safety?.last6Months : suburb?.safety?.last12Months;
-  const metricBand = suburb ? activeSafetyBand(suburb, safetyMetric) : undefined;
-  const sRank = suburb ? safetyRank(suburb.id, safetyMetric) : undefined;
-  const lRank = suburb ? layerRank(suburb.id, choropleth, safetyMetric) : undefined;
-  const count12 = suburb?.safety?.last12Months;
-  const count6 = suburb?.safety?.last6Months;
+  const sections: { id: Choropleth; title: string; body: ReactNode }[] = suburb
+    ? [
+        { id: "safety", title: "Safety", body: <SafetyBody suburb={suburb} period={period} setPeriod={setPeriod} /> },
+        { id: "housing", title: "Housing", body: <HousingBody suburb={suburb} /> },
+        { id: "households", title: "Households", body: <HouseholdsBody suburb={suburb} /> },
+        { id: "backgrounds", title: "Backgrounds", body: <BackgroundsBody suburb={suburb} /> },
+      ]
+    : [];
+
+  const ordered = [...sections].sort((a, b) => {
+    if (a.id === choropleth) return -1;
+    if (b.id === choropleth) return 1;
+    return SECTION_ORDER.indexOf(a.id) - SECTION_ORDER.indexOf(b.id);
+  });
 
   return (
     <aside
@@ -104,11 +370,7 @@ export function SuburbSheet() {
           <header className="flex items-start justify-between gap-3 px-5 pt-3 pb-2">
             <div>
               <h2 className="text-xl font-semibold tracking-tight text-fg">{suburb.name}</h2>
-              <p className="text-xs text-muted">
-                {suburb.safety?.period12
-                  ? `BOCSAR · ${suburb.safety.period12}`
-                  : "Suburb boundary · ABS SAL 2021"}
-              </p>
+              <p className="text-xs text-muted">{headerNote(suburb, choropleth)}</p>
             </div>
             <button
               type="button"
@@ -120,213 +382,12 @@ export function SuburbSheet() {
             </button>
           </header>
 
-          <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 pb-4">
-            <Block title="Safety">
-              {suburb.safety ? (
-                <>
-                  {metricBand ? (
-                    <div className="space-y-2">
-                      <BandBar band={metricBand} />
-                      <p className="font-medium">
-                        Band {metricBand} of 5
-                        {sRank ? (
-                          <span className="text-muted">
-                            {" "}
-                            · #{sRank.rank} of {sRank.of}
-                          </span>
-                        ) : null}
-                      </p>
-                      <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
-                    </div>
-                  ) : (
-                    <p className="font-medium">
-                      No map colour — too few Census 2021 residents for a stable rate
-                    </p>
-                  )}
-                  <div className="mt-2 grid grid-cols-2 gap-2">
-                    <Stat label="Street / 1,000" value={rateLabel(suburb.safety.streetPer1000)} />
-                    <Stat label="Homes / 1,000" value={rateLabel(suburb.safety.dwellingPer1000)} />
-                    <Stat label="Combined / 1,000" value={rateLabel(suburb.safety.combinedPer1000)} />
-                    <Stat label="Domestic / 1,000" value={rateLabel(suburb.safety.domesticPer1000)} />
-                  </div>
-                  {suburb.safety.population ? (
-                    <p className="text-xs text-muted">
-                      Census 2021 usual residents {suburb.safety.population.toLocaleString("en-AU")}
-                    </p>
-                  ) : null}
-                  {count12 && count6 ? (
-                    <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
-                      <div className="rounded-xl bg-bg px-3 py-2">
-                        <p className="text-[10px] tracking-wide text-muted uppercase">12 months</p>
-                        <p className="font-semibold tabular-nums">
-                          {metricCount(count12, safetyMetric)}
-                        </p>
-                        <p className="text-[10px] text-muted">recorded, this metric</p>
-                      </div>
-                      <div className="rounded-xl bg-bg px-3 py-2">
-                        <p className="text-[10px] tracking-wide text-muted uppercase">6 months</p>
-                        <p className="font-semibold tabular-nums">
-                          {metricCount(count6, safetyMetric)}
-                        </p>
-                        <p className="text-[10px] text-muted">shorter window, not half-year rate</p>
-                      </div>
-                    </div>
-                  ) : null}
-                  <details className="group mt-2">
-                    <summary className="flex h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-fg">
-                      Recorded incidents
-                      <ChevronDown
-                        className="size-4 text-muted transition-transform duration-150 group-open:rotate-180"
-                        strokeWidth={2}
-                        aria-hidden
-                      />
-                    </summary>
-                    <div
-                      role="radiogroup"
-                      aria-label="Incident period"
-                      className="mt-2 flex rounded-xl bg-bg p-1"
-                    >
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked={period === "12"}
-                        onClick={() => setPeriod("12")}
-                        className={cn(
-                          "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
-                          "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-                          period === "12" ? "bg-ink text-bg" : "text-muted hover:text-fg",
-                        )}
-                      >
-                        12 months
-                      </button>
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked={period === "6"}
-                        onClick={() => setPeriod("6")}
-                        className={cn(
-                          "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
-                          "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-                          period === "6" ? "bg-ink text-bg" : "text-muted hover:text-fg",
-                        )}
-                      >
-                        6 months
-                      </button>
-                    </div>
-                    {counts ? (
-                      <ul className="mt-2 divide-y divide-border">
-                        {COUNT_ROWS.map(({ key, label }) => (
-                          <li
-                            key={key}
-                            className="flex items-baseline justify-between gap-3 py-1.5 text-sm"
-                          >
-                            <span className="text-muted">{label}</span>
-                            <span className="tabular-nums text-fg">{counts[key]}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    <p className="mt-2 text-xs text-muted">
-                      Combined is street + home and ignores retail theft and domestic assault. The
-                      list is raw counts. NSW Bureau of Crime Statistics and Research (BOCSAR).
-                      CC-BY 3.0 AU. Population: ABS Census 2021.
-                    </p>
-                  </details>
-                </>
-              ) : (
-                <p className="text-muted">
-                  No BOCSAR row in this extract. The boundary is from ABS Suburbs and Localities
-                  2021.
-                </p>
-              )}
-            </Block>
-
-            {suburb.housing ? (
-              <Block title="Housing">
-                {suburb.housing.medianWeeklyRent != null ? (
-                  <p className="text-2xl font-semibold tracking-tight tabular-nums">
-                    {formatAud(suburb.housing.medianWeeklyRent)}
-                    <span className="ml-1 text-sm font-medium text-muted">/ week</span>
-                  </p>
-                ) : null}
-                {lRank && choropleth === "housing" ? (
-                  <p className="text-xs text-muted">
-                    #{lRank.rank} of {lRank.of} · {rankCaption("housing", safetyMetric)}
-                  </p>
-                ) : null}
-                <p className="text-muted">
-                  {suburb.housing.source === "dcj"
-                    ? `New bonds · postcode ${suburb.housing.postcode ?? "—"} · ${suburb.housing.period ?? ""}`
-                    : "ABS Census 2021"}
-                </p>
-                {suburb.housing.medianPurchase != null ? (
-                  <p>
-                    Median purchase{" "}
-                    <span className="font-semibold tabular-nums">
-                      {formatAud(suburb.housing.medianPurchase)}
-                    </span>
-                    {suburb.housing.source === "dcj" ? " · DCJ sales" : ""}
-                  </p>
-                ) : null}
-                {suburb.housing.source === "dcj" && suburb.housing.medianWeeklyRent2021 != null ? (
-                  <p className="text-muted">
-                    Census 2021 median rent {formatAud(suburb.housing.medianWeeklyRent2021)}
-                  </p>
-                ) : null}
-                {suburb.housing.rentNote ? (
-                  <p className="text-xs text-muted">{suburb.housing.rentNote}</p>
-                ) : null}
-                <p className="text-xs text-muted">
-                  {suburb.housing.source === "dcj"
-                    ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
-                    : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
-                </p>
+          <div ref={scroller} className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 pb-4">
+            {ordered.map((section) => (
+              <Block key={section.id} title={section.title} featured={section.id === choropleth}>
+                {section.body}
               </Block>
-            ) : null}
-
-            {suburb.households ? (
-              <Block title="Households">
-                <div className="grid grid-cols-3 gap-2">
-                  <Stat label="Median age" value={String(suburb.households.medianAge)} />
-                  <Stat label="Renting" value={`${suburb.households.pctRenting}%`} />
-                  <Stat
-                    label="With children"
-                    value={`${suburb.households.pctFamiliesWithChildren}%`}
-                  />
-                </div>
-                {lRank && choropleth === "households" ? (
-                  <p className="text-xs text-muted">
-                    #{lRank.rank} of {lRank.of} · {rankCaption("households", safetyMetric)}
-                  </p>
-                ) : null}
-                <p className="text-xs text-muted">ABS Census 2021</p>
-              </Block>
-            ) : null}
-
-            {suburb.backgrounds ? (
-              <Block title="Backgrounds">
-                <p className="text-2xl font-semibold tracking-tight tabular-nums">
-                  {suburb.backgrounds.pctBornAustralia}%{" "}
-                  <span className="text-sm font-medium text-muted">born in Australia</span>
-                </p>
-                {lRank && choropleth === "backgrounds" ? (
-                  <p className="text-xs text-muted">
-                    #{lRank.rank} of {lRank.of} · {rankCaption("backgrounds", safetyMetric)}
-                  </p>
-                ) : null}
-                <p>
-                  {suburb.backgrounds.topAncestries
-                    .map((a) => `${a.name} ${a.pct}%`)
-                    .join(" · ")}
-                </p>
-                <p className="text-muted">
-                  Top language other than English: {suburb.backgrounds.topLanguageOther}
-                </p>
-                <p className="text-xs text-muted">
-                  ABS Census 2021. Ancestry is self-reported; people can choose two.
-                </p>
-              </Block>
-            ) : null}
+            ))}
           </div>
 
           <footer className="border-t border-border px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">

@@ -1,5 +1,6 @@
 import { Globe2, Home, Shield, Users } from "lucide-react";
-import type { Choropleth, SafetyMetric } from "@/lib/map-store";
+import { FILTER_CHIPS, filterMatchCount } from "@/lib/filters";
+import type { Choropleth, LayerFilter, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,10 @@ export function LayerBar() {
   const setChoropleth = useMapStore((s) => s.setChoropleth);
   const safetyMetric = useMapStore((s) => s.safetyMetric);
   const setSafetyMetric = useMapStore((s) => s.setSafetyMetric);
+  const layerFilter = useMapStore((s) => s.layerFilter);
+  const setLayerFilter = useMapStore((s) => s.setLayerFilter);
+  const chips = FILTER_CHIPS[choropleth];
+  const matchCount = filterMatchCount(choropleth, safetyMetric, layerFilter);
 
   return (
     <div className="pointer-events-auto flex max-w-full flex-col items-center gap-2 md:items-start">
@@ -78,6 +83,36 @@ export function LayerBar() {
             );
           })}
         </div>
+      ) : null}
+      <div
+        role="radiogroup"
+        aria-label="Filter suburbs"
+        className="flex max-w-full overflow-x-auto rounded-2xl bg-surface p-1 shadow-[var(--shadow-border)] no-scrollbar"
+      >
+        {chips.map(({ id, label }) => {
+          const on = layerFilter === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => setLayerFilter(id as LayerFilter)}
+              className={cn(
+                "flex h-9 min-w-11 shrink-0 items-center justify-center rounded-xl px-2.5 text-[11px] font-medium whitespace-nowrap sm:px-3 sm:text-xs",
+                "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+                on ? "bg-ink text-bg" : "text-muted hover:text-fg",
+              )}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+      {layerFilter !== "all" ? (
+        <p className="px-1 text-[10px] tracking-wide text-muted tabular-nums">
+          {matchCount} suburbs match
+        </p>
       ) : null}
     </div>
   );
