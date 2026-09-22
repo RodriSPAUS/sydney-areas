@@ -1,9 +1,8 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/copy";
 import appCss from "../styles.css?url";
-
-const APP_NAME = "Sydney Areas";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -13,7 +12,7 @@ export const Route = createRootRoute({
       { title: APP_NAME },
       {
         name: "description",
-        content: "No account. Official-style open data. Prototype map of Greater Sydney suburbs.",
+        content: APP_DESCRIPTION,
       },
       { name: "theme-color", content: "#F4F1EA" },
     ],

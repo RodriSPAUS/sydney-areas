@@ -2,6 +2,7 @@ import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
+import { SAFETY_DISCLAIMER } from "@/lib/copy";
 import type { Choropleth } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
@@ -142,6 +143,7 @@ function SafetyBody({
             ) : null}
           </p>
           <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
+          <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
         </div>
       ) : (
         <p className="font-medium">

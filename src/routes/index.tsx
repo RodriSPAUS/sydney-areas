@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect } from "react";
+import { FirstVisitCard } from "@/components/first-visit-card";
 import { LayerBar } from "@/components/layer-bar";
 import { MapLegend } from "@/components/map-legend";
 import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
+import { APP_NAME, TAGLINE } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -73,17 +75,26 @@ function Home() {
       <SydneyMap />
 
       <header className="pointer-events-none absolute inset-x-0 top-0 z-20 px-3 pt-[max(0.6rem,env(safe-area-inset-top))] md:px-4">
-        <div className="pointer-events-auto mx-auto flex max-w-lg items-center gap-2 md:block">
-          <h1 className="shrink-0 text-sm font-semibold tracking-tight text-fg md:text-xl">
-            Sydney Areas
-          </h1>
-          <div className="min-w-0 flex-1 md:mt-2">
+        <div className="pointer-events-auto mx-auto max-w-lg">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-sm font-semibold tracking-tight text-fg md:text-xl">{APP_NAME}</h1>
+              <p className="mt-0.5 text-[11px] leading-snug text-muted md:text-xs">{TAGLINE}</p>
+            </div>
+            <Link
+              to="/about"
+              className="mt-0.5 shrink-0 text-xs font-medium text-muted underline-offset-2 hover:text-fg hover:underline"
+            >
+              About
+            </Link>
+          </div>
+          <div className="mt-2">
             <SuburbSearch />
           </div>
         </div>
       </header>
 
-      <div className="pointer-events-none absolute top-[4.25rem] left-3 z-20 md:top-36">
+      <div className="pointer-events-none absolute top-[6.75rem] left-3 z-20 md:top-40">
         <MapLegend />
       </div>
 
@@ -104,6 +115,7 @@ function Home() {
         Census 2021.
       </p>
 
+      <FirstVisitCard />
       <SuburbSheet />
     </main>
   );
