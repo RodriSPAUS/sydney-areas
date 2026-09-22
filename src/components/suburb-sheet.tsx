@@ -361,11 +361,8 @@ export function SuburbSheet() {
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
   const choropleth = useMapStore((s) => s.choropleth);
-  const feedback = useMapStore((s) => s.feedback);
-  const setFeedback = useMapStore((s) => s.setFeedback);
   const suburb = selectedId ? suburbsById[selectedId] : undefined;
   const open = Boolean(suburb);
-  const vote = suburb ? feedback[suburb.id] : undefined;
   const [period, setPeriod] = useState<"12" | "6">("12");
   const scroller = useRef<HTMLDivElement>(null);
 
@@ -421,39 +418,16 @@ export function SuburbSheet() {
             </button>
           </header>
 
-          <div ref={scroller} className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 pb-4">
+          <div
+            ref={scroller}
+            className="min-h-0 flex-1 space-y-3 overflow-y-auto px-5 pb-[max(1rem,env(safe-area-inset-bottom))]"
+          >
             {ordered.map((section) => (
               <Block key={section.id} title={section.title} featured={section.id === choropleth}>
                 {section.body}
               </Block>
             ))}
           </div>
-
-          <footer className="border-t border-border px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            {vote ? (
-              <p className="py-2 text-center text-sm text-muted">Thanks — noted.</p>
-            ) : (
-              <div>
-                <p className="mb-2 text-center text-sm text-muted">Useful?</p>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setFeedback(suburb.id, "yes")}
-                    className="flex h-11 items-center justify-center rounded-xl bg-ink text-sm font-medium text-bg transition-transform duration-150 ease-out active:scale-[0.96]"
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setFeedback(suburb.id, "no")}
-                    className="flex h-11 items-center justify-center rounded-xl bg-bg text-sm font-medium text-fg shadow-[var(--shadow-border)] transition-transform duration-150 ease-out active:scale-[0.96]"
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-            )}
-          </footer>
         </div>
       ) : null}
     </aside>

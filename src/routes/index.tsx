@@ -7,7 +7,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_NAME, TAGLINE } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, TAGLINE } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -16,9 +16,23 @@ import {
   searchFromState,
   validateMapSearch,
 } from "@/lib/map-url";
+import { shareTitle } from "@/lib/share-title";
 
 export const Route = createFileRoute("/")({
   validateSearch: validateMapSearch,
+  head: ({ match }) => {
+    const title = shareTitle(match.search.s, layerFromSearch(match.search));
+    return {
+      meta: [
+        { title },
+        { property: "og:title", content: title },
+        { property: "og:description", content: APP_DESCRIPTION },
+        { property: "og:image", content: "/og.jpg" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    };
+  },
   component: Home,
 });
 

@@ -5,6 +5,22 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-22 — Drop sheet feedback; share titles follow suburb and layer
+
+**What:** Removed the suburb sheet “Useful? Yes / No” footer and the
+`feedback` / `setFeedback` store fields. Document title and Open Graph on `/`
+follow `{Suburb} · {Layer} · Sydney Areas`, or `{Layer} · Sydney Areas` when no
+known suburb is selected (`s=` missing or unknown). Layer labels are Safety,
+Housing, Households, Backgrounds. `/about` stays `About · Sydney Areas`. Helper:
+`src/lib/share-title.ts`. Image stays `/og.jpg`.
+
+**Why:** Issue #1 share titles. The footer was noise and was not stored.
+
+**What we did not add:** per-suburb URLs (`/suburb/bondi`), a new OG image,
+Domain/REA links, analytics, another sheet CTA.
+
+---
+
 ## 2026-09-22 — Phase 0 frame: tagline, first-visit, /about, Safety disclaimer
 
 **What:** Tagline under the title. First-visit card (3 bullets + source names),
