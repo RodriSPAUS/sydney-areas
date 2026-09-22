@@ -5,6 +5,21 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-22 — Phase 0 frame: tagline, first-visit, /about, Safety disclaimer
+
+**What:** Tagline under the title. First-visit card (3 bullets + source names),
+dismissed to `localStorage` key `sa-first-visit-v1`. New `/about` with BOCSAR,
+ABS Census 2021, DCJ, ABS SAL, licences, and “not a risk score”. Short disclaimer
+on the Safety sheet. About link in the header. Copy lives in `src/lib/copy.ts`.
+No marketing landing in front of the map.
+
+**Why:** Issue #1 / #5 item 1. The map still looked like a Build preview.
+
+**What we did not add:** OG `{Suburb} · {Layer}` titles, domain/deploy, OSM
+services (pins already gone), analytics, Domain/REA links, email capture.
+
+---
+
 ## 2026-09-22 — Drop filters; DCJ 1/2/3-bed and house/flat rents
 
 **What:** Filter chips are gone (too much chrome). Housing sheet now shows DCJ
