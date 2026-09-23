@@ -49,7 +49,7 @@ export const FAMILIES_LOW = FAMILIES_FILL[1];
 export const FAMILIES_HIGH = FAMILIES_FILL[5];
 export const BORN_AU_LOW = BORN_AU_FILL[1];
 export const BORN_AU_HIGH = BORN_AU_FILL[5];
-export const NEUTRAL_FILL = "#C9BBA8";
+export const NEUTRAL_FILL = "#B0A89C";
 
 function quintileBands(rows: { id: string; value: number }[]): Map<string, SafetyBand> {
   const sorted = [...rows].sort((a, b) => a.value - b.value || a.id.localeCompare(b.id));

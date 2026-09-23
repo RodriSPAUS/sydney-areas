@@ -39,14 +39,14 @@ review P0 list as this week’s sprint.
 
 Copy + data honesty only. No glass, no PMTiles, no hover redesign, no ads.
 
-- [ ] Strip “Official” from meta / description / any remaining chrome
-- [ ] Meta description (draft): “Crime, rent and who lives there — ranked among Greater Sydney suburbs. Independent map using ABS, BOCSAR and DCJ open data. Not a live risk score.”
-- [ ] First-visit + map chrome: independent / not affiliated with ABS, BOCSAR, DCJ
-- [ ] Map footer: `Sources (open data, unofficial)` + link to `/about`
-- [ ] Safety sheet one-liner: ranking on this map, not an official BOCSAR score; hero = active-layer metric, Band/# secondary
-- [ ] Housing sheet: say when the figure is DCJ new-bond (postcode) vs Census 2021
-- [ ] Clamp person-% fields to 0–100 or null (Scheyville `pctBornAustralia` 143 must not reach the legend). Ancestry items may *sum* over 100; no single item > 100
-- [ ] Missing / null / too-few: dead fill (not the light end of the ramp) + legend swatch “No data”. Fine hatch is nice-to-have if MapLibre is cheap; colour + swatch is enough to ship
+- [x] Strip “Official” from meta / description / any remaining chrome
+- [x] Meta description (draft): “Crime, rent and who lives there — ranked among Greater Sydney suburbs. Independent map using ABS, BOCSAR and DCJ open data. Not a live risk score.”
+- [x] First-visit + map chrome: independent / not affiliated with ABS, BOCSAR, DCJ
+- [x] Map footer: `Sources (open data, unofficial)` + link to `/about`
+- [x] Safety sheet one-liner: ranking on this map, not an official BOCSAR score; hero = active-layer metric, Band/# secondary
+- [x] Housing sheet: say when the figure is DCJ new-bond (postcode) vs Census 2021
+- [x] Clamp person-% fields to 0–100 or null (Scheyville `pctBornAustralia` 143 must not reach the legend). Ancestry items may *sum* over 100; no single item > 100
+- [x] Missing / null / too-few: dead fill (not the light end of the ramp) + legend swatch “No data”. Fine hatch is nice-to-have if MapLibre is cheap; colour + swatch is enough to ship
 - [ ] Optional: custom domain when it is ready (pages.dev is an acceptable Phase 0 host)
 
 Exit Phase 0: a screenshot of Safety or Backgrounds cannot be read as “BOCSAR/ABS official”, and no legend shows >100% for a person rate.

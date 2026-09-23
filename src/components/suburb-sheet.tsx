@@ -2,8 +2,15 @@ import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
-import { SAFETY_DISCLAIMER } from "@/lib/copy";
-import type { Choropleth } from "@/lib/map-store";
+import {
+  BACKGROUNDS_NOTE,
+  HOUSING_CENSUS_NOTE,
+  HOUSING_DCJ_NOTE,
+  NO_DATA_LABEL,
+  SAFETY_DISCLAIMER,
+  SAFETY_RANK_NOTE,
+} from "@/lib/copy";
+import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
 import { metricCount } from "@/lib/safety-counts";
@@ -91,6 +98,20 @@ function rateLabel(value: number | null | undefined): string {
   return value == null ? "—" : String(value);
 }
 
+function personPctLabel(value: number | null | undefined): string {
+  if (value == null || value < 0 || value > 100) return NO_DATA_LABEL;
+  return `${value}%`;
+}
+
+function metricRate(suburb: Suburb, metric: SafetyMetric): number | null | undefined {
+  const safety = suburb.safety;
+  if (!safety) return null;
+  if (metric === "street") return safety.streetPer1000;
+  if (metric === "dwelling") return safety.dwellingPer1000;
+  if (metric === "domestic") return safety.domesticPer1000;
+  return safety.combinedPer1000;
+}
+
 function headerNote(suburb: Suburb, layer: Choropleth): string {
   if (layer === "housing" && suburb.housing) {
     return suburb.housing.source === "dcj"
@@ -100,7 +121,7 @@ function headerNote(suburb: Suburb, layer: Choropleth): string {
   if (layer === "households") return "ABS Census 2021 · households";
   if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
   return suburb.safety?.period12
-    ? `BOCSAR · ${suburb.safety.period12}`
+    ? `BOCSAR recorded incidents · ${suburb.safety.period12}`
     : "Suburb boundary · ABS SAL 2021";
 }
 
@@ -132,18 +153,23 @@ function SafetyBody({
     <>
       {metricBand ? (
         <div className="space-y-2">
+          <p className="text-2xl font-semibold tracking-tight tabular-nums">
+            {rateLabel(metricRate(suburb, safetyMetric))}
+            <span className="ml-1 text-sm font-medium text-muted">/ 1,000</span>
+          </p>
+          <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
           <BandBar band={metricBand} />
           <p className="font-medium">
             Band {metricBand} of 5
             {sRank ? (
               <span className="text-muted">
                 {" "}
-                · #{sRank.rank} of {sRank.of}
+                · #{sRank.rank} of {sRank.of} on this map
               </span>
             ) : null}
           </p>
           <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
-          <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
+          <p className="text-xs text-muted">{SAFETY_RANK_NOTE}</p>
         </div>
       ) : (
         <p className="font-medium">
@@ -260,6 +286,7 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
       ) : (
         <p className="text-muted">ABS Census 2021</p>
       )}
+      <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p>
       {hRank ? (
         <p className="text-xs text-muted">
           #{hRank.rank} of {hRank.of} · {rankCaption("housing", "combined")}
@@ -318,9 +345,9 @@ function HouseholdsBody({ suburb }: { suburb: Suburb }) {
   return (
     <>
       <div className="grid grid-cols-3 gap-2">
-        <Stat label="Median age" value={String(suburb.households.medianAge)} />
-        <Stat label="Renting" value={`${suburb.households.pctRenting}%`} />
-        <Stat label="With children" value={`${suburb.households.pctFamiliesWithChildren}%`} />
+        <Stat label="Median age" value={suburb.households.medianAge == null ? NO_DATA_LABEL : String(suburb.households.medianAge)} />
+        <Stat label="Renting" value={personPctLabel(suburb.households.pctRenting)} />
+        <Stat label="With children" value={personPctLabel(suburb.households.pctFamiliesWithChildren)} />
       </div>
       {rank ? (
         <p className="text-xs text-muted">
@@ -335,12 +362,18 @@ function HouseholdsBody({ suburb }: { suburb: Suburb }) {
 function BackgroundsBody({ suburb }: { suburb: Suburb }) {
   const rank = layerRank(suburb.id, "backgrounds", "combined");
   if (!suburb.backgrounds) return <p className="text-muted">No Census 2021 ancestry figures.</p>;
+  const born = suburb.backgrounds.pctBornAustralia;
+  const bornOk = born != null && born >= 0 && born <= 100;
   return (
     <>
-      <p className="text-2xl font-semibold tracking-tight tabular-nums">
-        {suburb.backgrounds.pctBornAustralia}%{" "}
-        <span className="text-sm font-medium text-muted">born in Australia</span>
-      </p>
+      {bornOk ? (
+        <p className="text-2xl font-semibold tracking-tight tabular-nums">
+          {born}%{" "}
+          <span className="text-sm font-medium text-muted">born in Australia</span>
+        </p>
+      ) : (
+        <p className="text-2xl font-semibold tracking-tight">{NO_DATA_LABEL}</p>
+      )}
       {rank ? (
         <p className="text-xs text-muted">
           #{rank.rank} of {rank.of} · {rankCaption("backgrounds", "combined")}
@@ -350,9 +383,7 @@ function BackgroundsBody({ suburb }: { suburb: Suburb }) {
       <p className="text-muted">
         Top language other than English: {suburb.backgrounds.topLanguageOther}
       </p>
-      <p className="text-xs text-muted">
-        ABS Census 2021. Ancestry is self-reported; people can choose two.
-      </p>
+      <p className="text-xs text-muted">{BACKGROUNDS_NOTE}</p>
     </>
   );
 }

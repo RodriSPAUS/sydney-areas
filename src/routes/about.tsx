@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { APP_NAME, SAFETY_DISCLAIMER, SOURCE_LINES, TAGLINE } from "@/lib/copy";
+import { ABOUT_INTRO, APP_DESCRIPTION, APP_NAME, SOURCE_LINES, TAGLINE } from "@/lib/copy";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: `About · ${APP_NAME}` },
-      { name: "description", content: TAGLINE },
+      { name: "description", content: APP_DESCRIPTION },
     ],
   }),
   component: About,
@@ -23,10 +23,7 @@ function About() {
         <h1 className="mt-4 text-2xl font-semibold tracking-tight">{APP_NAME}</h1>
         <p className="mt-1 text-sm text-muted">{TAGLINE}</p>
 
-        <p className="mt-4 text-sm leading-relaxed">{SAFETY_DISCLAIMER}</p>
-        <p className="mt-2 text-sm leading-relaxed">
-          No account. The product is the map — this page is sources and limits, not a landing page.
-        </p>
+        <p className="mt-4 text-sm leading-relaxed">{ABOUT_INTRO}</p>
 
         <h2 className="mt-8 text-[11px] font-semibold tracking-wide text-primary uppercase">Sources</h2>
         <dl className="mt-3 space-y-4">

@@ -5,12 +5,14 @@ import {
   BORN_AU_FILL,
   FAMILIES_FILL,
   HOUSING_FILL,
+  NEUTRAL_FILL,
   SAFETY_FILL,
   bornAuRange,
   familyRange,
   formatAud,
   rentRange,
 } from "@/lib/choropleth";
+import { NO_DATA_LABEL } from "@/lib/copy";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import type { SafetyBand } from "@/lib/suburb-types";
@@ -27,6 +29,19 @@ function DiscreteRamp({ fills, order }: { fills: Record<SafetyBand, string>; ord
         />
       ))}
     </div>
+  );
+}
+
+function NoDataSwatch() {
+  return (
+    <p className="mt-1.5 flex items-center gap-1.5 text-[10px] leading-snug text-muted">
+      <span
+        className="inline-block size-2.5 shrink-0 rounded-sm"
+        style={{ backgroundColor: NEUTRAL_FILL }}
+        aria-hidden
+      />
+      {NO_DATA_LABEL} — too few residents or no figure
+    </p>
   );
 }
 
@@ -56,6 +71,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
             Recorded domestic-violence assaults. Different pattern from street crime.
           </p>
         ) : null}
+        <NoDataSwatch />
       </div>
     );
   }
@@ -76,6 +92,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
             ? "All dwellings, by postcode. Darker = higher rent. Neighbouring suburbs may share a colour."
             : "Darker = higher rent. Five equal groups. ABS Census 2021."}
         </p>
+        <NoDataSwatch />
       </div>
     );
   }
@@ -91,6 +108,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
           Darker = more families. Five equal groups. ABS Census 2021
         </p>
+        <NoDataSwatch />
       </div>
     );
   }
@@ -105,6 +123,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
       <p className="mt-1.5 text-[10px] leading-snug text-muted">
         Darker = higher share. Five equal groups. ABS Census 2021
       </p>
+      <NoDataSwatch />
     </div>
   );
 }

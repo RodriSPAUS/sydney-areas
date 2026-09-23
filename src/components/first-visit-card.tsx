@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   FIRST_VISIT_BULLETS,
+  FIRST_VISIT_CTA,
   FIRST_VISIT_KEY,
+  FIRST_VISIT_TITLE,
   SOURCE_LINES,
 } from "@/lib/copy";
 
@@ -36,7 +38,7 @@ export function FirstVisitCard() {
         className="pointer-events-auto w-full max-w-sm rounded-2xl bg-surface p-4 shadow-[var(--shadow-border)] md:p-5"
       >
         <h2 id="first-visit-title" className="text-base font-semibold tracking-tight text-fg">
-          How to read the map
+          {FIRST_VISIT_TITLE}
         </h2>
         <ul className="mt-3 list-disc space-y-1.5 pl-4 text-sm leading-snug text-fg">
           {FIRST_VISIT_BULLETS.map((line) => (
@@ -61,7 +63,7 @@ export function FirstVisitCard() {
             onClick={dismiss}
             className="flex h-11 items-center justify-center rounded-xl bg-ink px-4 text-sm font-medium text-bg transition-transform duration-150 ease-out active:scale-[0.96]"
           >
-            Got it
+            {FIRST_VISIT_CTA}
           </button>
         </div>
       </div>

@@ -69,6 +69,12 @@ function asBand(value: number | undefined): SafetyBand | undefined {
   return undefined;
 }
 
+function clampPersonPct(value: number | null | undefined): number | null {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  if (value < 0 || value > 100) return null;
+  return value;
+}
+
 export const suburbs: Suburb[] = (
   polygonFc as unknown as { features: PolygonFeature[] }
 ).features.map((f) => {
@@ -107,21 +113,23 @@ export const suburbs: Suburb[] = (
 
   const census = censusById.get(id);
   if (census) {
-    if (
-      census.medianAge != null &&
-      census.pctRenting != null &&
-      census.pctFamiliesWithChildren != null
-    ) {
+    const pctRenting = clampPersonPct(census.pctRenting);
+    const pctFamilies = clampPersonPct(census.pctFamiliesWithChildren);
+    if (census.medianAge != null && pctRenting != null && pctFamilies != null) {
       next.households = {
         medianAge: census.medianAge,
-        pctRenting: census.pctRenting,
-        pctFamiliesWithChildren: census.pctFamiliesWithChildren,
+        pctRenting,
+        pctFamiliesWithChildren: pctFamilies,
       };
     }
-    if (census.pctBornAustralia != null && census.topAncestries?.length) {
+    const born = clampPersonPct(census.pctBornAustralia);
+    const ancestries = (census.topAncestries ?? []).filter(
+      (item) => typeof item.pct === "number" && item.pct >= 0 && item.pct <= 100,
+    );
+    if (born != null && ancestries.length) {
       next.backgrounds = {
-        pctBornAustralia: census.pctBornAustralia,
-        topAncestries: census.topAncestries,
+        pctBornAustralia: born,
+        topAncestries: ancestries,
         topLanguageOther: census.topLanguageOther || "—",
       };
     }

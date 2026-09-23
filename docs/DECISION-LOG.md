@@ -5,6 +5,26 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Uvicus name and Phase 0 trust copy
+
+**What:** Visible name is Uvicus (`APP_NAME`). Greater Sydney stays the place
+line, not the product name. Meta, first-visit, footer, and `/about` say the
+map is independent and not affiliated with ABS, BOCSAR or DCJ. Footer is
+“Sources (open data, unofficial)” plus About. Safety sheet hero is the active
+rate per 1,000; band and rank sit under it. Housing says DCJ new-bond vs
+Census 2021. Person-% outside 0–100 become null and that households or
+backgrounds block is omitted (Scheyville 143 does not paint or reach the
+legend). Missing suburbs stay `#B0A89C` with a “No data” legend swatch.
+First-visit key is `uvicus-first-visit-v1`.
+
+**Why:** A screenshot must not read as a BOCSAR or ABS score, and a person
+rate must not show above 100%.
+
+**What we did not add:** glass, hover≠selected, PMTiles, custom-domain DNS,
+ads, Services pins, auth. Repo name stays `sydney-areas`.
+
+---
+
 ## 2026-09-23 — Phase 0 remainder is trust, not a visual rewrite
 
 **What:** Rewrote `ROADMAP.md`. Struck “Official open data” from the intro.

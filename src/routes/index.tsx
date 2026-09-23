@@ -7,7 +7,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_DESCRIPTION, APP_NAME, TAGLINE } from "@/lib/copy";
+import { AFFILIATION_LINE, APP_DESCRIPTION, APP_NAME, FOOTER_LINE, PLACE_LINE, TAGLINE } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -93,7 +93,11 @@ function Home() {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-sm font-semibold tracking-tight text-fg md:text-xl">{APP_NAME}</h1>
+              <p className="text-[10px] leading-tight text-muted">{PLACE_LINE}</p>
               <p className="mt-0.5 text-[11px] leading-snug text-muted md:text-xs">{TAGLINE}</p>
+              <p className="mt-0.5 text-[10px] leading-snug text-muted md:text-[11px]">
+                {AFFILIATION_LINE}
+              </p>
             </div>
             <Link
               to="/about"
@@ -108,7 +112,7 @@ function Home() {
         </div>
       </header>
 
-      <div className="pointer-events-none absolute top-[6.75rem] left-3 z-20 md:top-40">
+      <div className="pointer-events-none absolute top-[9.25rem] left-3 z-20 md:top-52">
         <MapLegend />
       </div>
 
@@ -125,8 +129,13 @@ function Home() {
       </div>
 
       <p className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-bg/90 px-3 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] text-center text-[10px] leading-tight text-muted md:bg-transparent md:text-left">
-        Boundaries: ABS SAL 2021. Safety: BOCSAR. Households and ancestry: Census 2021. Rent: DCJ or
-        Census 2021.
+        {FOOTER_LINE}{" "}
+        <Link
+          to="/about"
+          className="pointer-events-auto font-medium underline-offset-2 hover:text-fg hover:underline"
+        >
+          About
+        </Link>
       </p>
 
       <FirstVisitCard />
