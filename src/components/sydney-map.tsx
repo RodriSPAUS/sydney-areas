@@ -143,7 +143,6 @@ function fitToSelected(map: MapLibreMap) {
     }
   };
   run();
-  window.setTimeout(run, 120);
 }
 
 function addLayers(map: MapLibreMap) {
@@ -375,8 +374,15 @@ export function SydneyMap() {
     }
     const token = `${selectedId}:${focusSeq}`;
     if (fittedFor.current === token) return;
+    let layerReady = false;
+    try {
+      layerReady = !!map.getLayer("suburbs-fill");
+    } catch {
+      layerReady = false;
+    }
+    if (!layerReady) return;
     fittedFor.current = token;
-    if (map.isStyleLoaded() && map.getLayer("suburbs-fill")) fitToSelected(map);
+    fitToSelected(map);
   }, [selectedId, focusSeq]);
 
   const hovered = hoverId ? suburbsById[hoverId] : undefined;

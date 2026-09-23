@@ -125,16 +125,16 @@ export function fitPadding(sheetOpen: boolean): {
   const w = Math.max(typeof window === "undefined" ? 390 : window.innerWidth, 1);
   const h = Math.max(typeof window === "undefined" ? 640 : window.innerHeight, 1);
   const desktop = w >= 768;
-  const top = Math.min(96, Math.round(h * 0.15));
-  let bottom = sheetOpen
-    ? desktop
-      ? Math.min(96, Math.round(h * 0.14))
-      : Math.round(h * 0.44)
-    : Math.min(128, Math.round(h * 0.2));
+  const headerBottom =
+    typeof document === "undefined"
+      ? 148
+      : Math.round(document.querySelector("main > header")?.getBoundingClientRect().bottom ?? 148);
+  const top = headerBottom + 12;
+  let bottom = sheetOpen ? (desktop ? 64 : Math.round(h * 0.42) + 12) : 56;
   const left = 16;
-  let right = desktop && sheetOpen ? Math.min(372, Math.round(w * 0.38)) : 16;
-  if (h - top - bottom < 120) bottom = Math.max(0, h - top - 120);
-  if (w - left - right < 120) right = Math.max(0, w - left - 120);
+  let right = sheetOpen && desktop ? 376 : 16;
+  if (h - top - bottom < 120) bottom = Math.max(48, h - top - 120);
+  if (w - left - right < 120) right = Math.max(16, w - left - 120);
   return { top, bottom, left, right };
 }
 

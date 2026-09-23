@@ -5,6 +5,21 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Search list above the legend; suburb fits the leftover map
+
+**What:** The map header stacks above the legend, and the legend sits under the
+measured header, so suggestions are not covered on a phone. Selecting a suburb
+fits the camera even when MapLibre still reports the style as dirty. Padding
+uses the real header height and the sheet (42vh on a phone, 360px drawer on
+desktop) so the suburb lands in the gap, not under the sheet. One fit per
+select.
+
+**Why:** The legend painted over the first search row. The fit was skipped
+after `setPaintProperty`, so a search pick left the suburb at the overview
+zoom.
+
+---
+
 ## 2026-09-23 — Uvicus name and Phase 0 trust copy
 
 **What:** Visible name is Uvicus (`APP_NAME`). Greater Sydney stays the place

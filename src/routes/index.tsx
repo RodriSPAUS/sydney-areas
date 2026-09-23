@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FirstVisitCard } from "@/components/first-visit-card";
 import { LayerBar } from "@/components/layer-bar";
 import { MapLegend } from "@/components/map-legend";
@@ -74,6 +74,22 @@ function UrlSync() {
 
 function Home() {
   const selectedId = useMapStore((s) => s.selectedId);
+  const headerRef = useRef<HTMLElement>(null);
+  const [legendTop, setLegendTop] = useState(156);
+
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const update = () => setLegendTop(Math.round(el.getBoundingClientRect().bottom + 8));
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -88,7 +104,10 @@ function Home() {
       <UrlSync />
       <SydneyMap />
 
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-20 px-3 pt-[max(0.6rem,env(safe-area-inset-top))] md:px-4">
+      <header
+        ref={headerRef}
+        className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-[max(0.6rem,env(safe-area-inset-top))] md:px-4"
+      >
         <div className="pointer-events-auto mx-auto max-w-lg">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
@@ -112,7 +131,7 @@ function Home() {
         </div>
       </header>
 
-      <div className="pointer-events-none absolute top-[9.25rem] left-3 z-20 md:top-52">
+      <div className="pointer-events-none absolute left-3 z-20" style={{ top: legendTop }}>
         <MapLegend />
       </div>
 
