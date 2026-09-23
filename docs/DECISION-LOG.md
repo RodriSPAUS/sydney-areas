@@ -5,6 +5,31 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Phase 0 remainder is trust, not a visual rewrite
+
+**What:** Rewrote `ROADMAP.md`. Struck “Official open data” from the intro.
+Marked the 22 Sep frame (tagline, first-visit, `/about`, Safety disclaimer,
+no Services, OG titles, pages.dev) as done on main `d4fadd3`. Phase 0 now
+has only the trust slice: no Official, independent/not-affiliated chrome,
+unofficial footer, Safety “ranking on this map” line, DCJ vs Census label,
+clamp person-% (Scheyville 143), missing-data fill + “No data” swatch.
+Glass, hover≠selected, mobile layer chips, URL/search bugs, spinner, payload,
+analytics, testers, Domain links, email, SEO pages stay Phase 1–2.
+
+**Why:** Live review 22–23 Sep (Mateo / Nora / Leo / Vera / Rita) mixed
+reputation, taste, and architecture into one P0 queue. Shipping that queue
+would reopen the prototype. Risk that actually blocks showing the map:
+BOCSAR-looking screenshots and a 143% legend.
+
+**Job we are building:** before you open Domain, see how this suburb sits on
+incidents, rent, and who lives there versus the rest of Greater Sydney.
+
+**What we did not build in this commit:** app copy or data clamp. Docs only.
+Next product slice is a Build prompt for the Phase 0 trust list, after copy
+is agreed in chat.
+
+---
+
 ## 2026-09-22 — Drop sheet feedback; share titles follow suburb and layer
 
 **What:** Removed the suburb sheet “Useful? Yes / No” footer and the
