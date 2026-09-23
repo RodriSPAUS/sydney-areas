@@ -5,6 +5,17 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Analytics seed, no testers yet
+
+**What:** Optional Plausible pageviews plus `search`, `layer`, `suburb_open`,
+and `outbound`. The script loads only when `VITE_PLAUSIBLE_DOMAIN` is set;
+otherwise `track()` returns. No testers, email, or ads.
+
+**Why:** Phase 1 needs a privacy-friendly count before anyone is invited.
+The map must keep working on pages.dev with the variable unset.
+
+---
+
 ## 2026-09-23 — Safety colour and rates are the last 12 months
 
 **What:** The sheet, legend, and rank line say the map colour and the per-1,000

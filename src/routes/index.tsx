@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnalyticsBridge } from "@/components/analytics-bridge";
 import { FirstVisitCard } from "@/components/first-visit-card";
 import { LayerBar } from "@/components/layer-bar";
 import { MapLegend } from "@/components/map-legend";
@@ -102,6 +103,7 @@ function Home() {
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-bg text-fg">
       <UrlSync />
+      <AnalyticsBridge />
       <SydneyMap />
 
       <header

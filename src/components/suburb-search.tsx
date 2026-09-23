@@ -1,6 +1,7 @@
 import { Search, X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { suburbs } from "@/data/suburbs";
+import { track } from "@/lib/analytics";
 import { useMapStore } from "@/lib/map-store";
 import { cn } from "@/lib/utils";
 
@@ -33,8 +34,9 @@ export function SuburbSearch() {
   }, [query]);
 
   function choose(id: string) {
-    selectSuburb(id);
     const name = suburbs.find((s) => s.id === id)?.name ?? "";
+    track("search", { suburb: id, name });
+    selectSuburb(id);
     setQuery(name);
     setOpen(false);
     inputRef.current?.blur();

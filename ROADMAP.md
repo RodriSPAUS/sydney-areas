@@ -55,8 +55,8 @@ Exit Phase 0: a screenshot of Safety or Backgrounds cannot be read as “BOCSAR/
 
 Original beta plus the review items that are product, not taste.
 
-- [ ] Privacy-friendly analytics (Plausible or Umami)
-- [ ] Events: search, layer, suburb open, outbound click
+- [x] Privacy-friendly analytics (Plausible or Umami)
+- [x] Events: search, layer, suburb open, outbound click
 - [ ] 10–20 testers (Moving to Sydney groups, internationals)
 - [ ] Mobile: layer chips in the sheet header so a layer change does not require closing the sheet
 - [ ] Hover ≠ selected (no polygon scale). Sheet open + hover on another suburb must not look like two selections

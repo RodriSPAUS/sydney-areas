@@ -50,3 +50,8 @@ looks for `dist`. Set:
 Cloudflare sets `CF_PAGES=1`, which switches Nitro to `cloudflare_pages` and
 writes `dist/`. You can also force it with `NITRO_PRESET=cloudflare_pages`.
 `nodejs_compat` is in `wrangler.toml`.
+
+Analytics is off until Cloudflare Pages has `VITE_PLAUSIBLE_DOMAIN`.
+Set it to `uvicus.com`, or to `sydney-areas.pages.dev` until the custom domain
+is live. Create that site in Plausible first. With the variable empty, the
+app does not load the Plausible script and events are a no-op.
