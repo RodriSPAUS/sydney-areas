@@ -19,7 +19,7 @@ export const SAFETY_DISCLAIMER =
 export const SAFETY_WINDOW = "Last 12 months";
 
 export const SAFETY_WINDOW_NOTE =
-  "Map colour and the rates use the last 12 months. The 6-month list is counts only.";
+  "Map colour and the rates use the last 12 months. Not a live risk score.";
 
 export const SAFETY_RANK_NOTE =
   "Ranked among Greater Sydney suburbs. Darker = more incidents in the selected category. Not a live risk score.";
@@ -54,17 +54,17 @@ export const SOURCE_LINES = [
   {
     name: "Safety",
     detail:
-      "NSW Bureau of Crime Statistics and Research (BOCSAR) suburb recorded incidents. Map colour and the per-1,000 rates are the last 12 months, ranked among suburbs on this map. A 6-month list is raw counts only and does not change the colour. Combined = street + home. Retail theft never paints the map. Domestic assault only colours the Domestic chip. Uvicus ranks suburbs on this map; this is not an official BOCSAR safety score.",
+      "NSW Bureau of Crime Statistics and Research (BOCSAR) recorded incidents, last 12 months, per 1,000 Census 2021 residents. Violence: homicide, sexual offences, non-DV assault, assault on police, robbery, theft from person. Property: break-and-enter dwelling, theft from home / vehicle, stolen vehicles, malicious damage. All: violence + property. Not domestic. Not retail. Domestic: DV assault only, and it only colours the Domestic chip. Ranked on this map. Not an official BOCSAR score. Not a live risk score.",
   },
   {
     name: "Housing",
     detail:
-      "NSW Department of Communities and Justice Rent and Sales Report: median weekly rent of new bonds by postcode, with 1/2/3-bed and house/flat figures on the sheet when published. ABS Census 2021 rent if a postcode median is missing. Not Domain or CoreLogic prices.",
+      "NSW Department of Communities and Justice Rent and Sales Report: median weekly rent of new bonds by postcode, with 1/2/3-bed and house/flat figures on the sheet when published. ABS Census 2021 rent if a postcode median is missing. Not Domain or CoreLogic prices. Census 2021 median age, share renting, and families with children sit on the housing sheet, not on their own map layer.",
   },
   {
-    name: "Households and backgrounds",
+    name: "Backgrounds",
     detail:
-      "Australian Bureau of Statistics Census 2021, Suburbs and Localities (SAL). Age, tenure, families, birthplace, ancestry, and language. Ancestry is multi-response: items can add up to more than 100%.",
+      "Australian Bureau of Statistics Census 2021, Suburbs and Localities (SAL). Birthplace, ancestry, and language. Ancestry is multi-response: items can add up to more than 100%.",
   },
   {
     name: "Boundaries",

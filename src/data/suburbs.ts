@@ -6,7 +6,8 @@ import bocsarSafety from "@/data/bocsar-safety.json";
 import census2021 from "@/data/census-2021.json";
 import dcjHousing from "@/data/dcj-housing.json";
 import polygonFc from "@/data/suburb-polygons.json";
-import type { AncestryShare, BBox, SafetyBand, SafetyCounts, Suburb } from "@/lib/suburb-types";
+import type { AncestryShare, BBox, SafetyCounts, Suburb } from "@/lib/suburb-types";
+import { allCount, domesticCount, propertyCount, violenceCount } from "@/lib/safety-counts";
 
 type PolygonFeature = {
   properties: { id: string; name: string };
@@ -64,15 +65,17 @@ const bocsarById = new Map((bocsarSafety.suburbs as BocsarRow[]).map((row) => [r
 const censusById = new Map((census2021.suburbs as CensusRow[]).map((row) => [row.id, row]));
 const dcjById = new Map((dcjHousing.suburbs as DcjRow[]).map((row) => [row.id, row]));
 
-function asBand(value: number | undefined): SafetyBand | undefined {
-  if (value === 1 || value === 2 || value === 3 || value === 4 || value === 5) return value;
-  return undefined;
-}
-
 function clampPersonPct(value: number | null | undefined): number | null {
   if (typeof value !== "number" || !Number.isFinite(value)) return null;
   if (value < 0 || value > 100) return null;
   return value;
+}
+
+const MIN_POP = 100;
+
+function per1000(count: number, population: number | null | undefined): number | null {
+  if (population == null || population < MIN_POP) return null;
+  return Math.round((count / population) * 10000) / 10;
 }
 
 export const suburbs: Suburb[] = (
@@ -91,23 +94,20 @@ export const suburbs: Suburb[] = (
 
   const safetyRow = bocsarById.get(id);
   if (safetyRow) {
+    const counts = safetyRow.last12Months;
+    const population = safetyRow.population;
     next.safety = {
-      ...(asBand(safetyRow.band) ? { band: asBand(safetyRow.band) } : {}),
-      ...(asBand(safetyRow.bandStreet) ? { bandStreet: asBand(safetyRow.bandStreet) } : {}),
-      ...(asBand(safetyRow.bandDwelling) ? { bandDwelling: asBand(safetyRow.bandDwelling) } : {}),
-      ...(asBand(safetyRow.bandCombined) ? { bandCombined: asBand(safetyRow.bandCombined) } : {}),
-      ...(asBand(safetyRow.bandDomestic) ? { bandDomestic: asBand(safetyRow.bandDomestic) } : {}),
       summary: safetyRow.summary,
       period12: safetyRow.period12,
       period6: safetyRow.period6,
-      last12Months: safetyRow.last12Months,
+      last12Months: counts,
       last6Months: safetyRow.last6Months,
-      population: safetyRow.population,
+      population,
       populationYear: safetyRow.populationYear,
-      streetPer1000: safetyRow.streetPer1000,
-      dwellingPer1000: safetyRow.dwellingPer1000,
-      combinedPer1000: safetyRow.combinedPer1000,
-      domesticPer1000: safetyRow.domesticPer1000,
+      violencePer1000: counts ? per1000(violenceCount(counts), population) : null,
+      propertyPer1000: counts ? per1000(propertyCount(counts), population) : null,
+      allPer1000: counts ? per1000(allCount(counts), population) : null,
+      domesticPer1000: counts ? per1000(domesticCount(counts), population) : null,
     };
   }
 

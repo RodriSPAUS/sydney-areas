@@ -30,11 +30,6 @@ export type Suburb = {
   name: string;
   bbox: BBox;
   safety?: {
-    band?: SafetyBand;
-    bandStreet?: SafetyBand;
-    bandDwelling?: SafetyBand;
-    bandCombined?: SafetyBand;
-    bandDomestic?: SafetyBand;
     summary: string;
     period12?: string;
     period6?: string;
@@ -42,9 +37,9 @@ export type Suburb = {
     last6Months?: SafetyCounts;
     population?: number | null;
     populationYear?: string;
-    streetPer1000?: number | null;
-    dwellingPer1000?: number | null;
-    combinedPer1000?: number | null;
+    violencePer1000?: number | null;
+    propertyPer1000?: number | null;
+    allPer1000?: number | null;
     domesticPer1000?: number | null;
   };
   housing?: {

@@ -1,7 +1,7 @@
 import { ChevronDown, X } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
-import { LAYERS, METRICS } from "@/components/layer-bar";
+import { LAYERS } from "@/components/layer-bar";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
   BACKGROUNDS_NOTE,
@@ -16,7 +16,6 @@ import {
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
-import { metricCount } from "@/lib/safety-counts";
 import type { SafetyBand, SafetyCounts, Suburb } from "@/lib/suburb-types";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +36,7 @@ const COUNT_ROWS: { key: keyof SafetyCounts; label: string }[] = [
   { key: "stealRetail", label: "Retail theft" },
 ];
 
-const SECTION_ORDER: Choropleth[] = ["safety", "housing", "households", "backgrounds"];
+const SECTION_ORDER: Choropleth[] = ["safety", "housing", "backgrounds"];
 
 function Block({
   title,
@@ -109,10 +108,10 @@ function personPctLabel(value: number | null | undefined): string {
 function metricRate(suburb: Suburb, metric: SafetyMetric): number | null | undefined {
   const safety = suburb.safety;
   if (!safety) return null;
-  if (metric === "street") return safety.streetPer1000;
-  if (metric === "dwelling") return safety.dwellingPer1000;
+  if (metric === "violence") return safety.violencePer1000;
+  if (metric === "property") return safety.propertyPer1000;
   if (metric === "domestic") return safety.domesticPer1000;
-  return safety.combinedPer1000;
+  return safety.allPer1000;
 }
 
 function headerNote(suburb: Suburb, layer: Choropleth): string {
@@ -121,28 +120,17 @@ function headerNote(suburb: Suburb, layer: Choropleth): string {
       ? `New bonds · ${suburb.housing.period ?? "DCJ"}`
       : "Census 2021 rent";
   }
-  if (layer === "households") return "ABS Census 2021 · households";
   if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
   return suburb.safety?.period12
     ? `${SAFETY_WINDOW} · ${suburb.safety.period12}`
     : "Suburb boundary · ABS SAL 2021";
 }
 
-function SafetyBody({
-  suburb,
-  period,
-  setPeriod,
-}: {
-  suburb: Suburb;
-  period: "12" | "6";
-  setPeriod: (p: "12" | "6") => void;
-}) {
+function SafetyBody({ suburb }: { suburb: Suburb }) {
   const safetyMetric = useMapStore((s) => s.safetyMetric);
   const metricBand = activeSafetyBand(suburb, safetyMetric);
   const sRank = safetyRank(suburb.id, safetyMetric);
-  const counts = period === "6" ? suburb.safety?.last6Months : suburb.safety?.last12Months;
-  const count12 = suburb.safety?.last12Months;
-  const count6 = suburb.safety?.last6Months;
+  const counts = suburb.safety?.last12Months;
 
   if (!suburb.safety) {
     return (
@@ -154,62 +142,47 @@ function SafetyBody({
 
   return (
     <>
-      {metricBand ? (
-        <div className="space-y-2">
-          <p className="text-2xl font-semibold tracking-tight tabular-nums">
-            {rateLabel(metricRate(suburb, safetyMetric))}
-            <span className="ml-1 text-sm font-medium text-muted">/ 1,000</span>
-          </p>
-          <p className="text-xs text-muted">
-            {SAFETY_WINDOW}
-            {suburb.safety?.period12 ? ` · ${suburb.safety.period12}` : ""}. Colour uses this rate.
-          </p>
-          <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
-          <BandBar band={metricBand} />
-          <p className="font-medium">
-            Band {metricBand} of 5
-            {sRank ? (
-              <span className="text-muted">
-                {" "}
-                · #{sRank.rank} of {sRank.of} on this map
-              </span>
-            ) : null}
-          </p>
-          <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
-          <p className="text-xs text-muted">{SAFETY_RANK_NOTE}</p>
-        </div>
-      ) : (
-        <p className="font-medium">
-          No map colour — too few Census 2021 residents for a stable rate
+      <div className="space-y-2">
+        <p className="text-2xl font-semibold tracking-tight tabular-nums">
+          {rateLabel(metricRate(suburb, safetyMetric))}
+          <span className="ml-1 text-sm font-medium text-muted">/ 1,000</span>
         </p>
-      )}
-      <p className="mt-2 text-[10px] tracking-wide text-muted uppercase">
-        {SAFETY_WINDOW} · per 1,000
-      </p>
-      <div className="grid grid-cols-2 gap-2">
-        <Stat label="Street / 1,000" value={rateLabel(suburb.safety.streetPer1000)} />
-        <Stat label="Homes / 1,000" value={rateLabel(suburb.safety.dwellingPer1000)} />
-        <Stat label="Combined / 1,000" value={rateLabel(suburb.safety.combinedPer1000)} />
+        <p className="text-xs text-muted">
+          {SAFETY_WINDOW}
+          {suburb.safety?.period12 ? ` · ${suburb.safety.period12}` : ""}. Colour uses this rate.
+        </p>
+        <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
+        {metricBand ? (
+          <>
+            <BandBar band={metricBand} />
+            <p className="font-medium">
+              Band {metricBand} of 5
+              {sRank ? (
+                <span className="text-muted">
+                  {" "}
+                  · #{sRank.rank} of {sRank.of} on this map
+                </span>
+              ) : null}
+            </p>
+            <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
+            <p className="text-xs text-muted">{SAFETY_RANK_NOTE}</p>
+          </>
+        ) : (
+          <p className="font-medium">
+            No map colour — too few Census 2021 residents for a stable rate
+          </p>
+        )}
+      </div>
+      <div className="mt-2 hidden grid-cols-2 gap-2 md:grid">
+        <Stat label="All / 1,000" value={rateLabel(suburb.safety.allPer1000)} />
+        <Stat label="Violence / 1,000" value={rateLabel(suburb.safety.violencePer1000)} />
+        <Stat label="Property / 1,000" value={rateLabel(suburb.safety.propertyPer1000)} />
         <Stat label="Domestic / 1,000" value={rateLabel(suburb.safety.domesticPer1000)} />
       </div>
       {suburb.safety.population ? (
         <p className="text-xs text-muted">
           Census 2021 usual residents {suburb.safety.population.toLocaleString("en-AU")}
         </p>
-      ) : null}
-      {count12 && count6 ? (
-        <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
-          <div className="rounded-xl bg-bg px-3 py-2">
-            <p className="text-[10px] tracking-wide text-muted uppercase">12 months</p>
-            <p className="font-semibold tabular-nums">{metricCount(count12, safetyMetric)}</p>
-            <p className="text-[10px] text-muted">recorded, this metric</p>
-          </div>
-          <div className="rounded-xl bg-bg px-3 py-2">
-            <p className="text-[10px] tracking-wide text-muted uppercase">6 months</p>
-            <p className="font-semibold tabular-nums">{metricCount(count6, safetyMetric)}</p>
-            <p className="text-[10px] text-muted">counts only · not the colour</p>
-          </div>
-        </div>
       ) : null}
       <details className="group mt-2">
         <summary className="flex h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-fg">
@@ -220,34 +193,6 @@ function SafetyBody({
             aria-hidden
           />
         </summary>
-        <div role="radiogroup" aria-label="Incident period" className="mt-2 flex rounded-xl bg-bg p-1">
-          <button
-            type="button"
-            role="radio"
-            aria-checked={period === "12"}
-            onClick={() => setPeriod("12")}
-            className={cn(
-              "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
-              "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-              period === "12" ? "bg-ink text-bg" : "text-muted hover:text-fg",
-            )}
-          >
-            12-month counts
-          </button>
-          <button
-            type="button"
-            role="radio"
-            aria-checked={period === "6"}
-            onClick={() => setPeriod("6")}
-            className={cn(
-              "flex h-11 flex-1 items-center justify-center rounded-lg text-sm font-medium",
-              "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-              period === "6" ? "bg-ink text-bg" : "text-muted hover:text-fg",
-            )}
-          >
-            6-month counts
-          </button>
-        </div>
         {counts ? (
           <ul className="mt-2 divide-y divide-border">
             {COUNT_ROWS.map(({ key, label }) => (
@@ -260,9 +205,9 @@ function SafetyBody({
         ) : null}
         <p className="mt-2 text-xs text-muted">{SAFETY_WINDOW_NOTE}</p>
         <p className="mt-2 text-xs text-muted">
-          Combined is street + home and ignores retail theft and domestic assault. The list is raw
-          counts. NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU. Population:
-          ABS Census 2021.
+          All is violence + property. Retail theft and domestic assault are not in All. The list is
+          the last 12 months. NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU.
+          Population: ABS Census 2021.
         </p>
       </details>
     </>
@@ -271,37 +216,53 @@ function SafetyBody({
 
 function HousingBody({ suburb }: { suburb: Suburb }) {
   const h = suburb.housing;
-  const hRank = layerRank(suburb.id, "housing", "combined");
-  if (!h) return <p className="text-muted">No rent or sale figure for this suburb.</p>;
-  const dcj = h.source === "dcj";
+  const hh = suburb.households;
+  const hRank = layerRank(suburb.id, "housing", "all");
+  if (!h && !hh) return <p className="text-muted">No rent or sale figure for this suburb.</p>;
+  const dcj = h?.source === "dcj";
   const beds: { label: string; value: number }[] = [];
-  if (dcj) {
+  if (dcj && h) {
     if (h.rent1Br != null) beds.push({ label: "1 bed", value: h.rent1Br });
     if (h.rent2Br != null) beds.push({ label: "2 bed", value: h.rent2Br });
     if (h.rent3Br != null) beds.push({ label: "3 bed", value: h.rent3Br });
   }
-  const showHouseFlat = dcj && (h.rentHouse != null || h.rentFlat != null);
+  const showHouseFlat = Boolean(dcj && h && (h.rentHouse != null || h.rentFlat != null));
 
   return (
     <>
-      {h.medianWeeklyRent != null ? (
+      {h?.medianWeeklyRent != null ? (
         <p className="text-2xl font-semibold tracking-tight tabular-nums">
           {formatAud(h.medianWeeklyRent)}
           <span className="ml-1 text-sm font-medium text-muted">/ week</span>
         </p>
-      ) : null}
-      {dcj ? (
+      ) : (
+        <p className="text-muted">No rent figure for this suburb.</p>
+      )}
+      {dcj && h ? (
         <p className="text-sm text-muted">
           All dwellings · postcode {h.postcode ?? "—"} · {h.period ?? ""}
         </p>
-      ) : (
+      ) : h ? (
         <p className="text-muted">ABS Census 2021</p>
-      )}
-      <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p>
+      ) : null}
+      {h ? <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p> : null}
       {hRank ? (
         <p className="text-xs text-muted">
-          #{hRank.rank} of {hRank.of} · {rankCaption("housing", "combined")}
+          #{hRank.rank} of {hRank.of} · {rankCaption("housing", "all")}
         </p>
+      ) : null}
+      {hh ? (
+        <>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <Stat
+              label="Median age"
+              value={hh.medianAge == null ? NO_DATA_LABEL : String(hh.medianAge)}
+            />
+            <Stat label="Renting" value={personPctLabel(hh.pctRenting)} />
+            <Stat label="With children" value={personPctLabel(hh.pctFamiliesWithChildren)} />
+          </div>
+          <p className="text-xs text-muted">ABS Census 2021</p>
+        </>
       ) : null}
       {beds.length ? (
         <div className="mt-1 grid grid-cols-3 gap-2">
@@ -310,7 +271,7 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
           ))}
         </div>
       ) : null}
-      {showHouseFlat ? (
+      {showHouseFlat && h ? (
         <p>
           {h.rentHouse != null ? (
             <>
@@ -325,14 +286,14 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
           ) : null}
         </p>
       ) : null}
-      {h.medianPurchase != null ? (
+      {h?.medianPurchase != null ? (
         <p>
           Median purchase{" "}
           <span className="font-semibold tabular-nums">{formatAud(h.medianPurchase)}</span>
           {dcj ? " · DCJ sales" : ""}
         </p>
       ) : null}
-      {dcj && h.medianWeeklyRent2021 != null ? (
+      {dcj && h?.medianWeeklyRent2021 != null ? (
         <p className="text-muted">Census 2021 median rent {formatAud(h.medianWeeklyRent2021)}</p>
       ) : null}
       {dcj ? (
@@ -341,37 +302,19 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
           omitted.
         </p>
       ) : null}
-      <p className="text-xs text-muted">
-        {dcj
-          ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
-          : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
-      </p>
-    </>
-  );
-}
-
-function HouseholdsBody({ suburb }: { suburb: Suburb }) {
-  const rank = layerRank(suburb.id, "households", "combined");
-  if (!suburb.households) return <p className="text-muted">No Census 2021 household figures.</p>;
-  return (
-    <>
-      <div className="grid grid-cols-3 gap-2">
-        <Stat label="Median age" value={suburb.households.medianAge == null ? NO_DATA_LABEL : String(suburb.households.medianAge)} />
-        <Stat label="Renting" value={personPctLabel(suburb.households.pctRenting)} />
-        <Stat label="With children" value={personPctLabel(suburb.households.pctFamiliesWithChildren)} />
-      </div>
-      {rank ? (
+      {h ? (
         <p className="text-xs text-muted">
-          #{rank.rank} of {rank.of} · {rankCaption("households", "combined")}
+          {dcj
+            ? "NSW Department of Communities and Justice, Rent and Sales Report. CC BY."
+            : "Australian Bureau of Statistics, Census 2021. CC BY 4.0."}
         </p>
       ) : null}
-      <p className="text-xs text-muted">ABS Census 2021</p>
     </>
   );
 }
 
 function BackgroundsBody({ suburb }: { suburb: Suburb }) {
-  const rank = layerRank(suburb.id, "backgrounds", "combined");
+  const rank = layerRank(suburb.id, "backgrounds", "all");
   if (!suburb.backgrounds) return <p className="text-muted">No Census 2021 ancestry figures.</p>;
   const born = suburb.backgrounds.pctBornAustralia;
   const bornOk = born != null && born >= 0 && born <= 100;
@@ -387,7 +330,7 @@ function BackgroundsBody({ suburb }: { suburb: Suburb }) {
       )}
       {rank ? (
         <p className="text-xs text-muted">
-          #{rank.rank} of {rank.of} · {rankCaption("backgrounds", "combined")}
+          #{rank.rank} of {rank.of} · {rankCaption("backgrounds", "all")}
         </p>
       ) : null}
       <p>{suburb.backgrounds.topAncestries.map((a) => `${a.name} ${a.pct}%`).join(" · ")}</p>
@@ -404,23 +347,18 @@ export function SuburbSheet() {
   const selectSuburb = useMapStore((s) => s.selectSuburb);
   const choropleth = useMapStore((s) => s.choropleth);
   const setChoropleth = useMapStore((s) => s.setChoropleth);
-  const safetyMetric = useMapStore((s) => s.safetyMetric);
-  const setSafetyMetric = useMapStore((s) => s.setSafetyMetric);
   const suburb = selectedId ? suburbsById[selectedId] : undefined;
   const open = Boolean(suburb);
-  const [period, setPeriod] = useState<"12" | "6">("12");
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setPeriod("12");
     scroller.current?.scrollTo({ top: 0 });
   }, [suburb?.id, choropleth]);
 
   const sections: { id: Choropleth; title: string; body: ReactNode }[] = suburb
     ? [
-        { id: "safety", title: "Safety", body: <SafetyBody suburb={suburb} period={period} setPeriod={setPeriod} /> },
+        { id: "safety", title: "Safety", body: <SafetyBody suburb={suburb} /> },
         { id: "housing", title: "Housing", body: <HousingBody suburb={suburb} /> },
-        { id: "households", title: "Households", body: <HouseholdsBody suburb={suburb} /> },
         { id: "backgrounds", title: "Backgrounds", body: <BackgroundsBody suburb={suburb} /> },
       ]
     : [];
@@ -464,51 +402,26 @@ export function SuburbSheet() {
           </header>
 
           <div className="px-5 pb-2 md:hidden">
-            <div className="flex gap-1 overflow-x-auto no-scrollbar">
-              <div role="radiogroup" aria-label="Map layer" className="flex shrink-0 gap-1">
-                {LAYERS.map(({ id, label }) => {
-                  const on = choropleth === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      role="radio"
-                      aria-checked={on}
-                      onClick={() => setChoropleth(id)}
-                      className={cn(
-                        "flex h-11 shrink-0 items-center rounded-xl px-2.5 text-xs font-medium whitespace-nowrap",
-                        "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-                        on ? "bg-ink text-bg" : "bg-bg text-muted",
-                      )}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-              {choropleth === "safety" ? (
-                <div role="radiogroup" aria-label="Safety metric" className="flex shrink-0 gap-1">
-                  {METRICS.map(({ id, label }) => {
-                    const on = safetyMetric === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        role="radio"
-                        aria-checked={on}
-                        onClick={() => setSafetyMetric(id)}
-                        className={cn(
-                          "flex h-11 shrink-0 items-center rounded-xl px-2.5 text-xs font-medium whitespace-nowrap",
-                          "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
-                          on ? "bg-ink text-bg" : "bg-bg text-muted",
-                        )}
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : null}
+            <div role="radiogroup" aria-label="Map layer" className="flex gap-1 overflow-x-auto no-scrollbar">
+              {LAYERS.map(({ id, label }) => {
+                const on = choropleth === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => setChoropleth(id)}
+                    className={cn(
+                      "flex h-11 shrink-0 items-center rounded-xl px-2.5 text-xs font-medium whitespace-nowrap",
+                      "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+                      on ? "bg-ink text-bg" : "bg-bg text-muted",
+                    )}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

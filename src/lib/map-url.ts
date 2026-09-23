@@ -1,7 +1,7 @@
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 
-export const LAYER_IDS = ["safety", "housing", "households", "backgrounds"] as const;
-export const METRIC_IDS = ["combined", "street", "dwelling", "domestic"] as const;
+export const LAYER_IDS = ["safety", "housing", "backgrounds"] as const;
+export const METRIC_IDS = ["all", "violence", "property", "domestic"] as const;
 
 export type MapSearch = {
   s?: string;
@@ -9,12 +9,17 @@ export type MapSearch = {
   metric?: SafetyMetric;
 };
 
-function isLayer(value: unknown): value is Choropleth {
-  return typeof value === "string" && (LAYER_IDS as readonly string[]).includes(value);
+function readLayer(value: unknown): Choropleth | undefined {
+  if (value === "households" || value === "housing") return "housing";
+  if (value === "backgrounds") return "backgrounds";
+  return undefined;
 }
 
-function isMetric(value: unknown): value is SafetyMetric {
-  return typeof value === "string" && (METRIC_IDS as readonly string[]).includes(value);
+function readMetric(value: unknown): SafetyMetric {
+  if (value === "street" || value === "violence") return "violence";
+  if (value === "dwelling" || value === "property") return "property";
+  if (value === "domestic") return "domestic";
+  return "all";
 }
 
 export function validateMapSearch(search: Record<string, unknown>): MapSearch {
@@ -22,10 +27,10 @@ export function validateMapSearch(search: Record<string, unknown>): MapSearch {
   if (typeof search.s === "string" && search.s.length > 0 && search.s.length < 80) {
     next.s = search.s;
   }
-  if (isLayer(search.layer) && search.layer !== "safety") next.layer = search.layer;
-  if (!next.layer && isMetric(search.metric) && search.metric !== "combined") {
-    next.metric = search.metric;
-  }
+  const layer = readLayer(search.layer);
+  if (layer) next.layer = layer;
+  const metric = readMetric(search.metric);
+  if (!next.layer && metric !== "all") next.metric = metric;
   return next;
 }
 
@@ -41,14 +46,11 @@ export function searchFromState(state: {
   });
 }
 
-export function sameSearch(a: MapSearch, b: MapSearch): boolean {
-  return a.s === b.s && a.layer === b.layer && a.metric === b.metric;
-}
-
 export function layerFromSearch(search: MapSearch): Choropleth {
-  return search.layer ?? "safety";
+  return readLayer(search.layer) ?? "safety";
 }
 
 export function metricFromSearch(search: MapSearch): SafetyMetric {
-  return search.metric ?? "combined";
+  if (readLayer(search.layer)) return "all";
+  return readMetric(search.metric);
 }

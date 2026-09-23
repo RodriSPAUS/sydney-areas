@@ -28,13 +28,13 @@ function rate(suburb: Suburb, metric: SafetyMetric): number | null {
   const s = suburb.safety;
   if (!s) return null;
   const value =
-    metric === "street"
-      ? s.streetPer1000
-      : metric === "dwelling"
-        ? s.dwellingPer1000
+    metric === "violence"
+      ? s.violencePer1000
+      : metric === "property"
+        ? s.propertyPer1000
         : metric === "domestic"
           ? s.domesticPer1000
-          : s.combinedPer1000;
+          : s.allPer1000;
   return value == null ? null : value;
 }
 
@@ -49,9 +49,9 @@ function buildSafety(metric: SafetyMetric): Map<string, Rank> {
 }
 
 const safetyRanks: Record<SafetyMetric, Map<string, Rank>> = {
-  combined: buildSafety("combined"),
-  street: buildSafety("street"),
-  dwelling: buildSafety("dwelling"),
+  all: buildSafety("all"),
+  violence: buildSafety("violence"),
+  property: buildSafety("property"),
   domestic: buildSafety("domestic"),
 };
 
@@ -60,13 +60,6 @@ const housingRanks = rankMap(
     s.housing?.medianWeeklyRent != null
       ? [{ id: s.id, value: s.housing.medianWeeklyRent }]
       : [],
-  ),
-  "asc",
-);
-
-const familyRanks = rankMap(
-  suburbs.flatMap((s) =>
-    s.households ? [{ id: s.id, value: s.households.pctFamiliesWithChildren }] : [],
   ),
   "asc",
 );
@@ -85,23 +78,21 @@ export function safetyRank(id: string, metric: SafetyMetric): Rank | undefined {
 export function layerRank(id: string, layer: Choropleth, metric: SafetyMetric): Rank | undefined {
   if (layer === "safety") return safetyRank(id, metric);
   if (layer === "housing") return housingRanks.get(id);
-  if (layer === "households") return familyRanks.get(id);
   return bornAuRanks.get(id);
 }
 
 export function rankCaption(layer: Choropleth, metric: SafetyMetric): string {
   if (layer === "safety") {
     const what =
-      metric === "street"
-        ? "street incidents"
-        : metric === "dwelling"
-          ? "home break-ins and theft"
+      metric === "violence"
+        ? "recorded violent incidents"
+        : metric === "property"
+          ? "recorded property incidents"
           : metric === "domestic"
             ? "domestic assault"
-            : "combined street and home incidents";
-    return `1 = fewest ${what} per 1,000 in the last 12 months`;
+            : "violence + property incidents";
+    return `1 = fewest ${what} per 1,000`;
   }
   if (layer === "housing") return "1 = lowest weekly rent";
-  if (layer === "households") return "1 = fewest families with children";
   return "1 = lowest share born in Australia";
 }

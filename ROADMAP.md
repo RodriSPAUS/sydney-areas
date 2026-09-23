@@ -70,6 +70,8 @@ Original beta plus the review items that are product, not taste.
 
 Exit: ~200 visits/week or 50 distinct suburb opens, and no “this calls X a slum” complaint.
 
+Map layers on the beta are Safety, Housing, and Backgrounds. Households is not a layer: Census median age, % renting, and % families with children sit on the Housing sheet. Safety chips are All, Violence, Property, and Domestic (not Street / Homes / Combined). Header, search, legend, and layer pills use a light blur so type stays readable on dark fills. The suburb sheet stays solid. Dark mode is still out.
+
 ## Phase 2 — site an advertiser can buy (3–6 weeks)
 
 Acquisition before compare-UI. Per-suburb pages beat a 2–4 suburb comparator.
@@ -97,7 +99,7 @@ Exit to paid ads: ~1,000 visits/month or ~200 Domain clicks/month.
 From the 22–23 Sep live review. Logged so it is not re-litigated as Phase 0.
 
 - Paid ads, B2B agent outreach, or Social posts of Safety screenshots with BOCSAR chrome
-- Glass / backdrop-blur chrome, dark mode, basemap opacity pass (Phase 1 taste, not trust)
+- Dark mode and a basemap opacity pass (chrome blur on the header, search, legend, and layer pills already shipped)
 - PMTiles / vector tiles as a Phase 0 blocker
 - Fake Services pins
 - Marketing landing in front of the map

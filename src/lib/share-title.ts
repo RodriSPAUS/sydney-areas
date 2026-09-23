@@ -5,7 +5,6 @@ import type { Choropleth } from "@/lib/map-store";
 const LAYER_LABELS: Record<Choropleth, string> = {
   safety: "Safety",
   housing: "Housing",
-  households: "Households",
   backgrounds: "Backgrounds",
 };
 

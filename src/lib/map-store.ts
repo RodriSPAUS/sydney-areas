@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-export type Choropleth = "safety" | "housing" | "households" | "backgrounds";
+export type Choropleth = "safety" | "housing" | "backgrounds";
 
-export type SafetyMetric = "combined" | "street" | "dwelling" | "domestic";
+export type SafetyMetric = "all" | "violence" | "property" | "domestic";
 
 type MapStore = {
   choropleth: Choropleth;
@@ -16,7 +16,7 @@ type MapStore = {
 
 export const useMapStore = create<MapStore>((set) => ({
   choropleth: "safety",
-  safetyMetric: "combined",
+  safetyMetric: "all",
   selectedId: null,
   focusSeq: 0,
   setChoropleth: (layer) => set({ choropleth: layer }),

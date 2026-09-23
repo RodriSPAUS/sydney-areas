@@ -5,6 +5,23 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-24 — Three layers, new safety groups, readable chrome
+
+**What:** Map layers are Safety, Housing, and Backgrounds. Household Census
+stats (median age, % renting, % families with children) sit on the Housing
+sheet. Safety chips are All, Violence, Property, and Domestic. Rates and
+quintiles are computed in the client from last-12-month counts and population.
+Old `layer=households` opens Housing. Old `metric=street` opens Violence.
+Header, search, legend, and layer pills use surface/80 and blur. The sheet
+stays solid. Mobile Safety shows one rate, not four tiles, and no 6-month
+toggle.
+
+**Why:** Street / Homes / Combined did not match the offences people ask
+about, a fourth Households layer hid those figures, and the title washed out
+on dark fills.
+
+---
+
 ## 2026-09-23 — Mobile sheet layers, URL metric, search zoom
 
 **What:** The suburb sheet has a layer row on small screens, so Housing can be

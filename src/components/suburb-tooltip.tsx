@@ -5,7 +5,7 @@ import type { Suburb } from "@/lib/suburb-types";
 export function SuburbTooltip({
   suburb,
   layer,
-  metric = "combined",
+  metric = "all",
   x,
   y,
 }: {
@@ -27,13 +27,9 @@ export function SuburbTooltip({
         ? suburb.housing?.medianWeeklyRent != null
           ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
           : "No rent figure in this extract"
-        : layer === "households"
-          ? suburb.households
-            ? `${suburb.households.pctFamiliesWithChildren}% families with children`
-            : "No Census 2021 household figures"
-          : suburb.backgrounds
-            ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
-            : "No Census 2021 ancestry figures";
+        : suburb.backgrounds
+          ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
+          : "No Census 2021 ancestry figures";
 
   const secondary =
     layer === "safety"
@@ -50,11 +46,7 @@ export function SuburbTooltip({
             : suburb.housing
               ? "ABS Census 2021"
               : "Click for the name"
-        : layer === "households"
-          ? suburb.households
-            ? `Median age ${suburb.households.medianAge} · ${suburb.households.pctRenting}% renting`
-            : "Click for the name"
-          : suburb.backgrounds
+        : suburb.backgrounds
             ? `${suburb.backgrounds.topAncestries[0]?.name ?? ""} ${suburb.backgrounds.topAncestries[0]?.pct ?? ""}% · ${suburb.backgrounds.topLanguageOther}`
             : "Click for the name";
 

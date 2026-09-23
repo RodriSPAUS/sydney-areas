@@ -13,7 +13,6 @@ import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
   metricFromSearch,
-  sameSearch,
   searchFromState,
   validateMapSearch,
 } from "@/lib/map-url";
@@ -61,13 +60,20 @@ function UrlSync() {
   }, [search.s, search.layer, search.metric]);
 
   useEffect(() => {
-    return useMapStore.subscribe((state) => {
-      const next = searchFromState(state);
+    const write = () => {
+      const next = searchFromState(useMapStore.getState());
+      const params = new URLSearchParams(window.location.search);
+      const rawLayer = params.get("layer") ?? undefined;
+      const rawMetric = params.get("metric") ?? undefined;
+      const rawId = params.get("s") ?? undefined;
+      if (rawId === next.s && rawLayer === next.layer && rawMetric === next.metric) return;
       void navigate({
-        search: (prev) => (sameSearch(prev, next) ? prev : next),
+        search: next,
         replace: true,
       });
-    });
+    };
+    write();
+    return useMapStore.subscribe(write);
   }, [navigate]);
 
   return null;
@@ -110,7 +116,7 @@ function Home() {
         ref={headerRef}
         className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-[max(0.6rem,env(safe-area-inset-top))] md:px-4"
       >
-        <div className="pointer-events-auto mx-auto max-w-lg">
+        <div className="pointer-events-auto mx-auto max-w-lg rounded-2xl bg-surface/80 px-3 py-2 shadow-[var(--shadow-border)] backdrop-blur-md">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-sm font-semibold tracking-tight text-fg md:text-xl">{APP_NAME}</h1>

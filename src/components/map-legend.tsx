@@ -3,12 +3,10 @@ import { useState } from "react";
 import { suburbs } from "@/data/suburbs";
 import {
   BORN_AU_FILL,
-  FAMILIES_FILL,
   HOUSING_FILL,
   NEUTRAL_FILL,
   SAFETY_FILL,
   bornAuRange,
-  familyRange,
   formatAud,
   rentRange,
 } from "@/lib/choropleth";
@@ -46,9 +44,9 @@ function NoDataSwatch() {
 }
 
 const SAFETY_TITLE: Record<SafetyMetric, string> = {
-  combined: "Street + home incidents / 1,000",
-  street: "Street incidents / 1,000",
-  dwelling: "Break-ins and theft from homes / 1,000",
+  all: "Violence + property / 1,000",
+  violence: "Violent incidents / 1,000",
+  property: "Property incidents / 1,000",
   domestic: "Domestic assault / 1,000",
 };
 
@@ -70,7 +68,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
         </p>
         {metric === "domestic" ? (
           <p className="mt-1 text-[10px] leading-snug text-muted">
-            Recorded domestic-violence assaults. Different pattern from street crime.
+            Recorded domestic-violence assaults. Different pattern from violence and property.
           </p>
         ) : null}
         <NoDataSwatch />
@@ -93,22 +91,6 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           {dcj
             ? "All dwellings, by postcode. Darker = higher rent. Neighbouring suburbs may share a colour."
             : "Darker = higher rent. Five equal groups. ABS Census 2021."}
-        </p>
-        <NoDataSwatch />
-      </div>
-    );
-  }
-  if (layer === "households") {
-    return (
-      <div>
-        <p className="mb-1.5 text-[11px] font-medium text-fg">Families with children</p>
-        <DiscreteRamp fills={FAMILIES_FILL} order={[1, 2, 3, 4, 5]} />
-        <div className="mt-1 flex justify-between text-[10px] text-muted tabular-nums">
-          <span>{familyRange.min}%</span>
-          <span>{familyRange.max}%</span>
-        </div>
-        <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Darker = more families. Five equal groups. ABS Census 2021
         </p>
         <NoDataSwatch />
       </div>
@@ -139,13 +121,11 @@ export function MapLegend() {
       ? SAFETY_FILL
       : layer === "housing"
         ? HOUSING_FILL
-        : layer === "households"
-          ? FAMILIES_FILL
-          : BORN_AU_FILL;
+        : BORN_AU_FILL;
   const miniOrder: SafetyBand[] = layer === "safety" ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
 
   return (
-    <div className="pointer-events-auto w-[196px] rounded-xl bg-surface/95 px-3 py-2 shadow-[var(--shadow-border)]">
+    <div className="pointer-events-auto w-[196px] rounded-xl bg-surface/80 px-3 py-2 shadow-[var(--shadow-border)] backdrop-blur-md">
       <button
         type="button"
         className="flex h-8 w-full items-center justify-between text-[11px] font-medium text-fg md:hidden"

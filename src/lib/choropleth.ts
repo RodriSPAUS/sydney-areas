@@ -5,7 +5,7 @@ import type { SafetyBand, Suburb } from "@/lib/suburb-types";
 
 /**
  * Colorblind-safe 5-class sequential fills. Darker = more of the mapped value.
- * Safety is orange-brown (no red/green). Housing / households / backgrounds
+ * Safety is orange-brown (no red/green). Housing / backgrounds
  * use quintiles so neighbouring suburbs do not wash into one mid-tone.
  */
 export const SAFETY_FILL: Record<SafetyBand, string> = {
@@ -62,27 +62,53 @@ function quintileBands(rows: { id: string; value: number }[]): Map<string, Safet
   return map;
 }
 
+/** Band 1 = most incidents (darkest). Band 5 = fewest. */
+function safetyQuintileBands(rows: { id: string; value: number }[]): Map<string, SafetyBand> {
+  const sorted = [...rows].sort((a, b) => b.value - a.value || a.id.localeCompare(b.id));
+  const n = sorted.length;
+  const map = new Map<string, SafetyBand>();
+  sorted.forEach((row, i) => {
+    const band = Math.min(5, Math.floor((i / Math.max(n, 1)) * 5) + 1) as SafetyBand;
+    map.set(row.id, band);
+  });
+  return map;
+}
+
+function rateRows(pick: (s: Suburb) => number | null | undefined): { id: string; value: number }[] {
+  return suburbs.flatMap((s) => {
+    const value = pick(s);
+    return value == null ? [] : [{ id: s.id, value }];
+  });
+}
+
 const rents = suburbs.flatMap((s) =>
   s.housing?.medianWeeklyRent != null ? [{ id: s.id, value: s.housing.medianWeeklyRent }] : [],
-);
-const families = suburbs.flatMap((s) =>
-  s.households ? [{ id: s.id, value: s.households.pctFamiliesWithChildren }] : [],
 );
 const bornAu = suburbs.flatMap((s) =>
   s.backgrounds ? [{ id: s.id, value: s.backgrounds.pctBornAustralia }] : [],
 );
+const violenceRates = rateRows((s) => s.safety?.violencePer1000);
+const propertyRates = rateRows((s) => s.safety?.propertyPer1000);
+const allRates = rateRows((s) => s.safety?.allPer1000);
+const domesticRates = rateRows((s) => s.safety?.domesticPer1000);
 
 export const housingBandById = quintileBands(rents);
-export const familyBandById = quintileBands(families);
 export const bornBandById = quintileBands(bornAu);
+export const violenceBandById = safetyQuintileBands(violenceRates);
+export const propertyBandById = safetyQuintileBands(propertyRates);
+export const allBandById = safetyQuintileBands(allRates);
+export const domesticBandById = safetyQuintileBands(domesticRates);
+
+const SAFETY_BANDS: Record<SafetyMetric, Map<string, SafetyBand>> = {
+  all: allBandById,
+  violence: violenceBandById,
+  property: propertyBandById,
+  domestic: domesticBandById,
+};
 
 export const rentRange = {
   min: rents.length ? Math.min(...rents.map((r) => r.value)) : 0,
   max: rents.length ? Math.max(...rents.map((r) => r.value)) : 1,
-};
-export const familyRange = {
-  min: families.length ? Math.min(...families.map((r) => r.value)) : 0,
-  max: families.length ? Math.max(...families.map((r) => r.value)) : 1,
 };
 export const bornAuRange = {
   min: bornAu.length ? Math.min(...bornAu.map((r) => r.value)) : 0,
@@ -90,9 +116,9 @@ export const bornAuRange = {
 };
 
 const BAND_PROP: Record<SafetyMetric, string> = {
-  combined: "safetyBand",
-  street: "bandStreet",
-  dwelling: "bandDwelling",
+  all: "bandAll",
+  violence: "bandViolence",
+  property: "bandProperty",
   domestic: "bandDomestic",
 };
 
@@ -121,11 +147,10 @@ function discreteFill(prop: string, fills: Record<SafetyBand, string>): Expressi
 
 export function fillColorExpression(
   layer: Choropleth,
-  metric: SafetyMetric = "combined",
+  metric: SafetyMetric = "all",
 ): ExpressionSpecification {
   if (layer === "safety") return discreteFill(BAND_PROP[metric], SAFETY_FILL);
   if (layer === "housing") return discreteFill("rentBand", HOUSING_FILL);
-  if (layer === "households") return discreteFill("familyBand", FAMILIES_FILL);
   return discreteFill("bornBand", BORN_AU_FILL);
 }
 
@@ -145,10 +170,7 @@ export function safetyBandLabel(band: SafetyBand): string {
 }
 
 export function activeSafetyBand(suburb: Suburb, metric: SafetyMetric): SafetyBand | undefined {
-  if (metric === "street") return suburb.safety?.bandStreet;
-  if (metric === "dwelling") return suburb.safety?.bandDwelling;
-  if (metric === "domestic") return suburb.safety?.bandDomestic;
-  return suburb.safety?.bandCombined ?? suburb.safety?.band;
+  return SAFETY_BANDS[metric].get(suburb.id);
 }
 
 export function formatAud(amount: number): string {
@@ -162,7 +184,7 @@ export function formatAud(amount: number): string {
 export function suburbFill(
   suburb: Suburb,
   layer: Choropleth,
-  metric: SafetyMetric = "combined",
+  metric: SafetyMetric = "all",
 ): string {
   if (layer === "safety") {
     const band = activeSafetyBand(suburb, metric);
@@ -171,10 +193,6 @@ export function suburbFill(
   if (layer === "housing") {
     const band = housingBandById.get(suburb.id);
     return band ? HOUSING_FILL[band] : NEUTRAL_FILL;
-  }
-  if (layer === "households") {
-    const band = familyBandById.get(suburb.id);
-    return band ? FAMILIES_FILL[band] : NEUTRAL_FILL;
   }
   const band = bornBandById.get(suburb.id);
   return band ? BORN_AU_FILL[band] : NEUTRAL_FILL;

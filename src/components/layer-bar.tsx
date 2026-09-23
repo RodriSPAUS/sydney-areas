@@ -1,4 +1,4 @@
-import { Globe2, Home, Shield, Users } from "lucide-react";
+import { Globe2, Home, Shield } from "lucide-react";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { cn } from "@/lib/utils";
@@ -6,14 +6,13 @@ import { cn } from "@/lib/utils";
 export const LAYERS: { id: Choropleth; label: string; icon: typeof Shield }[] = [
   { id: "safety", label: "Safety", icon: Shield },
   { id: "housing", label: "Housing", icon: Home },
-  { id: "households", label: "Households", icon: Users },
   { id: "backgrounds", label: "Backgrounds", icon: Globe2 },
 ];
 
 export const METRICS: { id: SafetyMetric; label: string }[] = [
-  { id: "combined", label: "Combined" },
-  { id: "street", label: "Street" },
-  { id: "dwelling", label: "Homes" },
+  { id: "all", label: "All" },
+  { id: "violence", label: "Violence" },
+  { id: "property", label: "Property" },
   { id: "domestic", label: "Domestic" },
 ];
 
@@ -28,7 +27,7 @@ export function LayerBar() {
       <div
         role="radiogroup"
         aria-label="Map layer"
-        className="flex max-w-full shrink-0 overflow-x-auto rounded-2xl bg-surface p-1 shadow-[var(--shadow-border)] no-scrollbar"
+        className="flex max-w-full shrink-0 overflow-x-auto rounded-2xl bg-surface/80 p-1 shadow-[var(--shadow-border)] backdrop-blur-md no-scrollbar"
       >
         {LAYERS.map(({ id, label, icon: Icon }) => {
           const on = choropleth === id;
@@ -56,7 +55,7 @@ export function LayerBar() {
         <div
           role="radiogroup"
           aria-label="Safety metric"
-          className="flex rounded-2xl bg-surface p-1 shadow-[var(--shadow-border)]"
+          className="flex rounded-2xl bg-surface/80 p-1 shadow-[var(--shadow-border)] backdrop-blur-md"
         >
           {METRICS.map(({ id, label }) => {
             const on = safetyMetric === id;

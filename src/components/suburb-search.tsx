@@ -103,7 +103,7 @@ export function SuburbSearch() {
           }
         }}
         className={cn(
-          "h-11 w-full rounded-xl bg-surface pr-10 pl-10 text-base text-fg md:text-sm",
+          "h-11 w-full rounded-xl bg-surface/80 pr-10 pl-10 text-base text-fg backdrop-blur-md md:text-sm",
           "shadow-[var(--shadow-border)] outline-none",
           "placeholder:text-subtle",
           "transition-[box-shadow] duration-150 ease-out",
