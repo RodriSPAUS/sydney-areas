@@ -58,9 +58,9 @@ Original beta plus the review items that are product, not taste.
 - [x] Privacy-friendly analytics (Plausible or Umami)
 - [x] Events: search, layer, suburb open, outbound click
 - [ ] 10–20 testers (Moving to Sydney groups, internationals)
-- [ ] Mobile: layer chips in the sheet header so a layer change does not require closing the sheet
+- [x] Mobile: layer chips in the sheet header so a layer change does not require closing the sheet
 - [ ] Hover ≠ selected (no polygon scale). Sheet open + hover on another suburb must not look like two selections
-- [ ] Clear search query on deselect; do not serialise `metric=` when `layer !== safety`
+- [x] Clear search query on deselect; do not serialise `metric=` when `layer !== safety`
 - [ ] One `fitBounds` per select (no double-fit camera shake)
 - [ ] Spinner / skeleton before the map load (2.3 MB cold start)
 - [ ] Backgrounds: one ethical line — ancestry is multi-response Census 2021, not a character judgement

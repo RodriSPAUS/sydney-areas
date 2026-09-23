@@ -5,6 +5,18 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Mobile sheet layers, URL metric, search zoom
+
+**What:** The suburb sheet has a layer row on small screens, so Housing can be
+opened without closing the sheet. Closing the sheet clears the search box.
+`metric` is omitted from the URL unless the layer is Safety. The search field
+is 16px below `md` so iOS does not zoom the page on focus.
+
+**Why:** The map bar hides while the sheet is open, a leftover `metric=` made
+shared Housing links look like Safety, and a 14px input cropped the sheet.
+
+---
+
 ## 2026-09-23 — Analytics seed, no testers yet
 
 **What:** Optional Plausible pageviews plus `search`, `layer`, `suburb_open`,

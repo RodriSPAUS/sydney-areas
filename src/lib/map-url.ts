@@ -23,7 +23,9 @@ export function validateMapSearch(search: Record<string, unknown>): MapSearch {
     next.s = search.s;
   }
   if (isLayer(search.layer) && search.layer !== "safety") next.layer = search.layer;
-  if (isMetric(search.metric) && search.metric !== "combined") next.metric = search.metric;
+  if (!next.layer && isMetric(search.metric) && search.metric !== "combined") {
+    next.metric = search.metric;
+  }
   return next;
 }
 
@@ -35,7 +37,7 @@ export function searchFromState(state: {
   return validateMapSearch({
     s: state.selectedId ?? undefined,
     layer: state.choropleth,
-    metric: state.safetyMetric,
+    ...(state.choropleth === "safety" ? { metric: state.safetyMetric } : {}),
   });
 }
 

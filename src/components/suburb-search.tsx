@@ -43,10 +43,14 @@ export function SuburbSearch() {
   }
 
   useEffect(() => {
-    if (!selectedId) return;
+    if (!selectedId) {
+      setQuery("");
+      setOpen(false);
+      return;
+    }
     const name = suburbs.find((s) => s.id === selectedId)?.name;
     if (name && query !== name) setQuery(name);
-    // Only sync when the map selection changes, not on every keystroke.
+    // Only sync when the selection changes, not on each keystroke.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
 
@@ -99,7 +103,7 @@ export function SuburbSearch() {
           }
         }}
         className={cn(
-          "h-11 w-full rounded-xl bg-surface pr-10 pl-10 text-sm text-fg",
+          "h-11 w-full rounded-xl bg-surface pr-10 pl-10 text-base text-fg md:text-sm",
           "shadow-[var(--shadow-border)] outline-none",
           "placeholder:text-subtle",
           "transition-[box-shadow] duration-150 ease-out",

@@ -3,14 +3,14 @@ import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { cn } from "@/lib/utils";
 
-const LAYERS: { id: Choropleth; label: string; icon: typeof Shield }[] = [
+export const LAYERS: { id: Choropleth; label: string; icon: typeof Shield }[] = [
   { id: "safety", label: "Safety", icon: Shield },
   { id: "housing", label: "Housing", icon: Home },
   { id: "households", label: "Households", icon: Users },
   { id: "backgrounds", label: "Backgrounds", icon: Globe2 },
 ];
 
-const METRICS: { id: SafetyMetric; label: string }[] = [
+export const METRICS: { id: SafetyMetric; label: string }[] = [
   { id: "combined", label: "Combined" },
   { id: "street", label: "Street" },
   { id: "dwelling", label: "Homes" },

@@ -1,6 +1,7 @@
 import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
+import { LAYERS, METRICS } from "@/components/layer-bar";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
   BACKGROUNDS_NOTE,
@@ -402,6 +403,9 @@ export function SuburbSheet() {
   const selectedId = useMapStore((s) => s.selectedId);
   const selectSuburb = useMapStore((s) => s.selectSuburb);
   const choropleth = useMapStore((s) => s.choropleth);
+  const setChoropleth = useMapStore((s) => s.setChoropleth);
+  const safetyMetric = useMapStore((s) => s.safetyMetric);
+  const setSafetyMetric = useMapStore((s) => s.setSafetyMetric);
   const suburb = selectedId ? suburbsById[selectedId] : undefined;
   const open = Boolean(suburb);
   const [period, setPeriod] = useState<"12" | "6">("12");
@@ -458,6 +462,55 @@ export function SuburbSheet() {
               <X className="size-5" strokeWidth={2} />
             </button>
           </header>
+
+          <div className="px-5 pb-2 md:hidden">
+            <div className="flex gap-1 overflow-x-auto no-scrollbar">
+              <div role="radiogroup" aria-label="Map layer" className="flex shrink-0 gap-1">
+                {LAYERS.map(({ id, label }) => {
+                  const on = choropleth === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      role="radio"
+                      aria-checked={on}
+                      onClick={() => setChoropleth(id)}
+                      className={cn(
+                        "flex h-11 shrink-0 items-center rounded-xl px-2.5 text-xs font-medium whitespace-nowrap",
+                        "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+                        on ? "bg-ink text-bg" : "bg-bg text-muted",
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              {choropleth === "safety" ? (
+                <div role="radiogroup" aria-label="Safety metric" className="flex shrink-0 gap-1">
+                  {METRICS.map(({ id, label }) => {
+                    const on = safetyMetric === id;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        role="radio"
+                        aria-checked={on}
+                        onClick={() => setSafetyMetric(id)}
+                        className={cn(
+                          "flex h-11 shrink-0 items-center rounded-xl px-2.5 text-xs font-medium whitespace-nowrap",
+                          "transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.96]",
+                          on ? "bg-ink text-bg" : "bg-bg text-muted",
+                        )}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+          </div>
 
           <div
             ref={scroller}
