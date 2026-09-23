@@ -99,7 +99,7 @@ export function rankCaption(layer: Choropleth, metric: SafetyMetric): string {
           : metric === "domestic"
             ? "domestic assault"
             : "combined street and home incidents";
-    return `1 = fewest ${what} per 1,000`;
+    return `1 = fewest ${what} per 1,000 in the last 12 months`;
   }
   if (layer === "housing") return "1 = lowest weekly rent";
   if (layer === "households") return "1 = fewest families with children";

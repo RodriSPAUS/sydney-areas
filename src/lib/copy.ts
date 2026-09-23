@@ -16,6 +16,11 @@ export const FOOTER_LINE =
 export const SAFETY_DISCLAIMER =
   "Recorded incidents per 1,000 residents on this map. Not an official BOCSAR score.";
 
+export const SAFETY_WINDOW = "Last 12 months";
+
+export const SAFETY_WINDOW_NOTE =
+  "Map colour and the rates use the last 12 months. The 6-month list is counts only.";
+
 export const SAFETY_RANK_NOTE =
   "Ranked among Greater Sydney suburbs. Darker = more incidents in the selected category. Not a live risk score.";
 
@@ -49,7 +54,7 @@ export const SOURCE_LINES = [
   {
     name: "Safety",
     detail:
-      "NSW Bureau of Crime Statistics and Research (BOCSAR) suburb recorded incidents. Map colour is the rate per 1,000 usual residents (Census 2021), ranked among suburbs on this map. Combined = street + home. Retail theft never paints the map. Domestic assault only colours the Domestic chip. Uvicus ranks suburbs on this map; this is not an official BOCSAR safety score.",
+      "NSW Bureau of Crime Statistics and Research (BOCSAR) suburb recorded incidents. Map colour and the per-1,000 rates are the last 12 months, ranked among suburbs on this map. A 6-month list is raw counts only and does not change the colour. Combined = street + home. Retail theft never paints the map. Domestic assault only colours the Domestic chip. Uvicus ranks suburbs on this map; this is not an official BOCSAR safety score.",
   },
   {
     name: "Housing",

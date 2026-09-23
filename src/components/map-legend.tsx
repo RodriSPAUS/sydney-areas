@@ -12,7 +12,7 @@ import {
   formatAud,
   rentRange,
 } from "@/lib/choropleth";
-import { NO_DATA_LABEL } from "@/lib/copy";
+import { NO_DATA_LABEL, SAFETY_WINDOW } from "@/lib/copy";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import type { SafetyBand } from "@/lib/suburb-types";
@@ -54,6 +54,7 @@ const SAFETY_TITLE: Record<SafetyMetric, string> = {
 
 function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric }) {
   if (layer === "safety") {
+    const safetyPeriod = suburbs.find((s) => s.safety?.period12)?.safety?.period12;
     return (
       <div>
         <p className="mb-1.5 text-[11px] font-medium text-fg">{SAFETY_TITLE[metric]}</p>
@@ -63,8 +64,9 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           <span>More</span>
         </div>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Darker = more incidents. Quintiles among Greater Sydney suburbs on this map. Not a live
-          risk score.
+          {SAFETY_WINDOW}
+          {safetyPeriod ? ` · ${safetyPeriod}` : ""}. Darker = more incidents. Quintiles among Greater
+          Sydney suburbs on this map. Not a live risk score.
         </p>
         {metric === "domestic" ? (
           <p className="mt-1 text-[10px] leading-snug text-muted">

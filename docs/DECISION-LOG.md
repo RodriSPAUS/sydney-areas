@@ -5,6 +5,17 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-23 — Safety colour and rates are the last 12 months
+
+**What:** The sheet, legend, and rank line say the map colour and the per-1,000
+figures are the last 12 months (the extract’s `period12`). The 6-month control
+is labelled as counts only and does not recolour the map.
+
+**Why:** The 12- and 6-month count tiles sat next to the rate, so it was unclear
+which window the colour used. The pipeline already ranks on the 12-month totals.
+
+---
+
 ## 2026-09-23 — Search list above the legend; suburb fits the leftover map
 
 **What:** The map header stacks above the legend, and the legend sits under the

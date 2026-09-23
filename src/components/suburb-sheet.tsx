@@ -9,6 +9,8 @@ import {
   NO_DATA_LABEL,
   SAFETY_DISCLAIMER,
   SAFETY_RANK_NOTE,
+  SAFETY_WINDOW,
+  SAFETY_WINDOW_NOTE,
 } from "@/lib/copy";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
@@ -121,7 +123,7 @@ function headerNote(suburb: Suburb, layer: Choropleth): string {
   if (layer === "households") return "ABS Census 2021 · households";
   if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
   return suburb.safety?.period12
-    ? `BOCSAR recorded incidents · ${suburb.safety.period12}`
+    ? `${SAFETY_WINDOW} · ${suburb.safety.period12}`
     : "Suburb boundary · ABS SAL 2021";
 }
 
@@ -157,6 +159,10 @@ function SafetyBody({
             {rateLabel(metricRate(suburb, safetyMetric))}
             <span className="ml-1 text-sm font-medium text-muted">/ 1,000</span>
           </p>
+          <p className="text-xs text-muted">
+            {SAFETY_WINDOW}
+            {suburb.safety?.period12 ? ` · ${suburb.safety.period12}` : ""}. Colour uses this rate.
+          </p>
           <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
           <BandBar band={metricBand} />
           <p className="font-medium">
@@ -176,7 +182,10 @@ function SafetyBody({
           No map colour — too few Census 2021 residents for a stable rate
         </p>
       )}
-      <div className="mt-2 grid grid-cols-2 gap-2">
+      <p className="mt-2 text-[10px] tracking-wide text-muted uppercase">
+        {SAFETY_WINDOW} · per 1,000
+      </p>
+      <div className="grid grid-cols-2 gap-2">
         <Stat label="Street / 1,000" value={rateLabel(suburb.safety.streetPer1000)} />
         <Stat label="Homes / 1,000" value={rateLabel(suburb.safety.dwellingPer1000)} />
         <Stat label="Combined / 1,000" value={rateLabel(suburb.safety.combinedPer1000)} />
@@ -197,7 +206,7 @@ function SafetyBody({
           <div className="rounded-xl bg-bg px-3 py-2">
             <p className="text-[10px] tracking-wide text-muted uppercase">6 months</p>
             <p className="font-semibold tabular-nums">{metricCount(count6, safetyMetric)}</p>
-            <p className="text-[10px] text-muted">shorter window, not half-year rate</p>
+            <p className="text-[10px] text-muted">counts only · not the colour</p>
           </div>
         </div>
       ) : null}
@@ -222,7 +231,7 @@ function SafetyBody({
               period === "12" ? "bg-ink text-bg" : "text-muted hover:text-fg",
             )}
           >
-            12 months
+            12-month counts
           </button>
           <button
             type="button"
@@ -235,7 +244,7 @@ function SafetyBody({
               period === "6" ? "bg-ink text-bg" : "text-muted hover:text-fg",
             )}
           >
-            6 months
+            6-month counts
           </button>
         </div>
         {counts ? (
@@ -248,6 +257,7 @@ function SafetyBody({
             ))}
           </ul>
         ) : null}
+        <p className="mt-2 text-xs text-muted">{SAFETY_WINDOW_NOTE}</p>
         <p className="mt-2 text-xs text-muted">
           Combined is street + home and ignores retail theft and domestic assault. The list is raw
           counts. NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU. Population:
