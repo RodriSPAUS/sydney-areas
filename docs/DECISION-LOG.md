@@ -5,6 +5,21 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-24 — Access v1: stops inside the suburb
+
+**What:** Access is a fourth map layer. 310 TfNSW Complete GTFS points (rail
+including metro, light rail, ferry) are drawn as dots from zoom 10. A suburb’s
+colour is how many of those points fall inside its ABS boundary. Quintiles are
+only among suburbs with at least one stop; zero stays the neutral fill. No bus,
+no metres, no line strings, and no line letter on a stop. Circles are not
+clickable.
+
+**Why:** “Is there a station?” is the question. Counting the point inside the
+polygon is the honest first cut. A buffer or a T4 join would invent a network
+this extract does not have.
+
+---
+
 ## 2026-09-24 — Three layers, new safety groups, readable chrome
 
 **What:** Map layers are Safety, Housing, and Backgrounds. Household Census

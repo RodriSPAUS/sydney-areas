@@ -43,6 +43,15 @@ export const BORN_AU_FILL: Record<SafetyBand, string> = {
   5: "#022E2A",
 };
 
+/** 1 = fewest stops (light), 5 = most (dark). Not the safety ramp. */
+export const ACCESS_FILL: Record<SafetyBand, string> = {
+  1: "#E7DFF2",
+  2: "#C4B0DE",
+  3: "#9674C4",
+  4: "#6A45A0",
+  5: "#3C2268",
+};
+
 export const HOUSING_LOW = HOUSING_FILL[1];
 export const HOUSING_HIGH = HOUSING_FILL[5];
 export const FAMILIES_LOW = FAMILIES_FILL[1];
@@ -87,6 +96,9 @@ const rents = suburbs.flatMap((s) =>
 const bornAu = suburbs.flatMap((s) =>
   s.backgrounds ? [{ id: s.id, value: s.backgrounds.pctBornAustralia }] : [],
 );
+const accessCounts = suburbs.flatMap((s) =>
+  s.access.total > 0 ? [{ id: s.id, value: s.access.total }] : [],
+);
 const violenceRates = rateRows((s) => s.safety?.violencePer1000);
 const propertyRates = rateRows((s) => s.safety?.propertyPer1000);
 const allRates = rateRows((s) => s.safety?.allPer1000);
@@ -94,6 +106,7 @@ const domesticRates = rateRows((s) => s.safety?.domesticPer1000);
 
 export const housingBandById = quintileBands(rents);
 export const bornBandById = quintileBands(bornAu);
+export const accessBandById = quintileBands(accessCounts);
 export const violenceBandById = safetyQuintileBands(violenceRates);
 export const propertyBandById = safetyQuintileBands(propertyRates);
 export const allBandById = safetyQuintileBands(allRates);
@@ -151,6 +164,7 @@ export function fillColorExpression(
 ): ExpressionSpecification {
   if (layer === "safety") return discreteFill(BAND_PROP[metric], SAFETY_FILL);
   if (layer === "housing") return discreteFill("rentBand", HOUSING_FILL);
+  if (layer === "access") return discreteFill("accessBand", ACCESS_FILL);
   return discreteFill("bornBand", BORN_AU_FILL);
 }
 
@@ -193,6 +207,10 @@ export function suburbFill(
   if (layer === "housing") {
     const band = housingBandById.get(suburb.id);
     return band ? HOUSING_FILL[band] : NEUTRAL_FILL;
+  }
+  if (layer === "access") {
+    const band = accessBandById.get(suburb.id);
+    return band ? ACCESS_FILL[band] : NEUTRAL_FILL;
   }
   const band = bornBandById.get(suburb.id);
   return band ? BORN_AU_FILL[band] : NEUTRAL_FILL;

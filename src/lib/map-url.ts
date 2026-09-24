@@ -12,6 +12,7 @@ export type MapSearch = {
 function readLayer(value: unknown): Choropleth | undefined {
   if (value === "households" || value === "housing") return "housing";
   if (value === "backgrounds") return "backgrounds";
+  if (value === "access") return "access";
   return undefined;
 }
 

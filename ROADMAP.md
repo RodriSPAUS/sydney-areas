@@ -72,6 +72,8 @@ Exit: ~200 visits/week or 50 distinct suburb opens, and no “this calls X a slu
 
 Map layers on the beta are Safety, Housing, and Backgrounds. Households is not a layer: Census median age, % renting, and % families with children sit on the Housing sheet. Safety chips are All, Violence, Property, and Domestic (not Street / Homes / Combined). Header, search, legend, and layer pills use a light blur so type stays readable on dark fills. The suburb sheet stays solid. Dark mode is still out.
 
+Access v1 (points and counts; lines later): rail, light rail, and ferry stop points plus a count per suburb. Bus, metres-to-station, and drawn lines stay out.
+
 ## Phase 2 — site an advertiser can buy (3–6 weeks)
 
 Acquisition before compare-UI. Per-suburb pages beat a 2–4 suburb comparator.

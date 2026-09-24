@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
+import { accessPointsGeoJSON, ACCESS_MODE_COLOR } from "@/lib/access";
 import { fillColorExpression } from "@/lib/choropleth";
 import {
   bboxCorners,
@@ -204,6 +205,37 @@ function addLayers(map: MapLibreMap) {
       "text-halo-width": 1.2,
     },
   });
+
+  map.addSource("access-stops", {
+    type: "geojson",
+    data: accessPointsGeoJSON(),
+  });
+  map.addLayer({
+    id: "access-stops",
+    type: "circle",
+    source: "access-stops",
+    minzoom: 10,
+    layout: {
+      visibility: st.choropleth === "access" ? "visible" : "none",
+    },
+    paint: {
+      "circle-color": [
+        "match",
+        ["get", "mode"],
+        "rail",
+        ACCESS_MODE_COLOR.rail,
+        "lightrail",
+        ACCESS_MODE_COLOR.lightrail,
+        "ferry",
+        ACCESS_MODE_COLOR.ferry,
+        ACCESS_MODE_COLOR.rail,
+      ],
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 3, 13, 5.5, 16, 9],
+      "circle-stroke-width": 1.25,
+      "circle-stroke-color": "#FFFCFF",
+      "circle-opacity": 0.95,
+    },
+  }, "suburb-labels");
 }
 
 export function SydneyMap() {
@@ -278,18 +310,17 @@ export function SydneyMap() {
         instance.on("load", onStyleReady);
         if (instance.loaded()) onStyleReady();
 
-        let skipDeselect = false;
-        instance.on("click", "suburbs-fill", (e) => {
-          skipDeselect = true;
-          const id = e.features?.[0]?.properties?.id as string | undefined;
-          useMapStore.getState().selectSuburb(id ?? null);
-        });
-        instance.on("click", () => {
-          if (skipDeselect) {
-            skipDeselect = false;
-            return;
+        instance.on("click", (e) => {
+          let id: string | undefined;
+          try {
+            if (instance.getLayer("suburbs-fill")) {
+              id = instance.queryRenderedFeatures(e.point, { layers: ["suburbs-fill"] })[0]?.properties
+                ?.id as string | undefined;
+            }
+          } catch {
+            id = undefined;
           }
-          useMapStore.getState().selectSuburb(null);
+          useMapStore.getState().selectSuburb(id ?? null);
         });
         instance.on("mousemove", "suburbs-fill", (e) => {
           if (!canHover()) return;
@@ -354,6 +385,13 @@ export function SydneyMap() {
     const map = mapRef.current;
     if (!map?.getLayer("suburbs-fill")) return;
     map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth, safetyMetric));
+    if (map.getLayer("access-stops")) {
+      map.setLayoutProperty(
+        "access-stops",
+        "visibility",
+        choropleth === "access" ? "visible" : "none",
+      );
+    }
   }, [choropleth, safetyMetric]);
 
   useEffect(() => {

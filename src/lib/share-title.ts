@@ -6,6 +6,7 @@ const LAYER_LABELS: Record<Choropleth, string> = {
   safety: "Safety",
   housing: "Housing",
   backgrounds: "Backgrounds",
+  access: "Access",
 };
 
 export function shareTitle(

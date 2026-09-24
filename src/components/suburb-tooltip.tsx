@@ -16,6 +16,17 @@ export function SuburbTooltip({
   y: number;
 }) {
   const safetyBand = activeSafetyBand(suburb, metric);
+  const accessLine = (suburb: Suburb) => {
+    const access = suburb.access;
+    if (access.total === 0) return "No rail, light rail or ferry stop";
+    const parts = [
+      access.rail ? `${access.rail} rail` : null,
+      access.lightrail ? `${access.lightrail} light rail` : null,
+      access.ferry ? `${access.ferry} ferry` : null,
+    ].filter(Boolean);
+    return parts.join(" · ");
+  };
+
   const primary =
     layer === "safety"
       ? safetyBand
@@ -27,9 +38,15 @@ export function SuburbTooltip({
         ? suburb.housing?.medianWeeklyRent != null
           ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
           : "No rent figure in this extract"
-        : suburb.backgrounds
-          ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
-          : "No Census 2021 ancestry figures";
+        : layer === "access"
+          ? suburb.access.total === 0
+            ? "No stop in this suburb"
+            : suburb.access.total === 1
+              ? "1 stop"
+              : `${suburb.access.total} stops`
+          : suburb.backgrounds
+            ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
+            : "No Census 2021 ancestry figures";
 
   const secondary =
     layer === "safety"
@@ -46,7 +63,9 @@ export function SuburbTooltip({
             : suburb.housing
               ? "ABS Census 2021"
               : "Click for the name"
-        : suburb.backgrounds
+        : layer === "access"
+          ? accessLine(suburb)
+          : suburb.backgrounds
             ? `${suburb.backgrounds.topAncestries[0]?.name ?? ""} ${suburb.backgrounds.topAncestries[0]?.pct ?? ""}% · ${suburb.backgrounds.topLanguageOther}`
             : "Click for the name";
 
