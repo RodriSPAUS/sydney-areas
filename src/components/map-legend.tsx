@@ -102,13 +102,11 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
     const modes: TransitMode[] = ["metro", "rail", "lightrail", "ferry"];
     return (
       <div>
-        <p className="mb-1.5 text-[11px] font-medium text-fg">
-          Stops inside the suburb (rail, metro, light rail, ferry)
-        </p>
+        <p className="mb-1.5 text-[11px] font-medium text-fg">Transit</p>
         <DiscreteRamp fills={TRANSIT_FILL} order={[1, 2, 3, 4, 5]} />
-        <div className="mt-1 flex justify-between text-[10px] text-muted">
-          <span>Fewer</span>
-          <span>More</span>
+        <div className="mt-1 flex items-start justify-between gap-3 text-[10px] leading-snug text-muted">
+          <span>Less of the suburb is a short walk to rail / metro / light rail / ferry</span>
+          <span className="shrink-0">More</span>
         </div>
         <ul className="mt-1.5 space-y-0.5">
           {modes.map((mode) => (
@@ -123,9 +121,10 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           ))}
         </ul>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Darker = more stops. Lines from zoom 9, dots from zoom 10. Simplified TfNSW GTFS shapes, CC-BY.
+          Darker = more of the suburb is a short walk. Two or more modes within a short walk sit one
+          step darker. Lines from zoom 9, dots from zoom 10. Simplified TfNSW GTFS shapes, CC-BY.
         </p>
-        <NoDataSwatch text="No data — no rail, metro, light rail or ferry stop in this suburb" />
+        <NoDataSwatch text="No rail, metro, light rail or ferry within a short walk" />
       </div>
     );
   }

@@ -123,7 +123,7 @@ function headerNote(suburb: Suburb, layer: Choropleth): string {
       : "Census 2021 rent";
   }
   if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
-  if (layer === "transit") return "Stops inside the suburb";
+  if (layer === "transit") return "Within a short walk";
   return suburb.safety?.period12
     ? `${SAFETY_WINDOW} · ${suburb.safety.period12}`
     : "Suburb boundary · ABS SAL 2021";
@@ -319,12 +319,7 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
 function TransitBody({ suburb }: { suburb: Suburb }) {
   const transit = suburb.transit;
   const rank = layerRank(suburb.id, "transit", "all");
-  const parts = [
-    transit.metro ? `${transit.metro} metro` : null,
-    transit.rail ? `${transit.rail} rail` : null,
-    transit.lightrail ? `${transit.lightrail} light rail` : null,
-    transit.ferry ? `${transit.ferry} ferry` : null,
-  ].filter((part): part is string => part != null);
+  const modes = transit.modesNearby.map((mode) => TRANSIT_MODE_LABEL[mode]);
   const shown = transit.names.slice(0, 12);
   const extra = transit.names.length - shown.length;
   const groups = (["metro", "rail", "lightrail", "ferry"] as const)
@@ -334,13 +329,13 @@ function TransitBody({ suburb }: { suburb: Suburb }) {
   return (
     <>
       <p className="text-2xl font-semibold tracking-tight">
-        {transit.total === 0
-          ? "No stop in this suburb"
-          : transit.total === 1
-            ? "1 stop"
-            : `${transit.total} stops`}
+        {transit.walkPct === 0 ? (
+          "No stop within a short walk"
+        ) : (
+          <span className="tabular-nums">{transit.walkPct}% within a short walk</span>
+        )}
       </p>
-      {parts.length ? <p className="text-sm text-muted">{parts.join(" · ")}</p> : null}
+      {modes.length ? <p className="text-sm text-muted">{modes.join(" · ")}</p> : null}
       {rank ? (
         <p className="text-xs text-muted">
           #{rank.rank} of {rank.of} · {rankCaption("transit", "all")}

@@ -73,6 +73,8 @@ export type Suburb = {
     lightrail: number;
     ferry: number;
     total: number;
+    walkPct: number;
+    modesNearby: ("rail" | "metro" | "lightrail" | "ferry")[];
     names: { name: string; mode: "rail" | "metro" | "lightrail" | "ferry" }[];
   };
 };

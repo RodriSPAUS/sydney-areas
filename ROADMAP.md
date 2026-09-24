@@ -72,7 +72,7 @@ Exit: ~200 visits/week or 50 distinct suburb opens, and no “this calls X a slu
 
 Map layers on the beta are Safety, Housing, and Backgrounds. Households is not a layer: Census median age, % renting, and % families with children sit on the Housing sheet. Safety chips are All, Violence, Property, and Domestic (not Street / Homes / Combined). Header, search, legend, and layer pills use a light blur so type stays readable on dark fills. The suburb sheet stays solid. Dark mode is still out.
 
-Transit v1 (points, metro colour, simplified GTFS lines in `src/data/transit-lines.json`): rail, metro, light rail, and ferry stop points plus a count per suburb. Lines are real GTFS shapes, not straight joins between stops. Bus and metres-to-station stay out.
+Transit colour is the share of each suburb within 800 m of a rail, metro, light rail or ferry stop (a station across the boundary still counts). Two or more of those modes sit one quintile darker. Dots and simplified GTFS lines stay. Bus stays out.
 
 ## Phase 2 — site an advertiser can buy (3–6 weeks)
 

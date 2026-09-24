@@ -5,6 +5,23 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-24 — Transit colour is a short walk, not a point count
+
+**What:** Transit fill and rank use the share of each suburb within 800 m of a
+rail, metro, light rail or ferry stop. A ~200 m grid is kept only where it
+falls inside the ABS polygon; a tiny polygon uses its centre or a vertex.
+`walkPct === 0` stays the neutral fill. Quintiles are among suburbs with some
+coverage (1 = lowest). Two or more modes within that walk sit one band darker,
+capped at 5. The sheet hero is the percentage, then the modes and the stop
+names. Inside-polygon counts are still stored and are not used for colour or
+rank. Lines and stop dots are unchanged.
+
+**Why:** Kingsgrove station sits just over the Bexley North boundary, so a
+point-in-polygon count painted the neighbour as unserved. A large suburb with
+one edge station looked as well served as a small one that is all station.
+
+---
+
 ## 2026-09-24 — Transit lines from GTFS shapes
 
 **What:** The Transit layer draws simplified line strings from zoom 9, under the

@@ -15,6 +15,8 @@ export type SuburbTransit = {
   lightrail: number;
   ferry: number;
   total: number;
+  walkPct: number;
+  modesNearby: TransitMode[];
   names: TransitStop[];
 };
 
@@ -191,25 +193,115 @@ function suburbAt(lon: number, lat: number): string | undefined {
   return undefined;
 }
 
-const EMPTY: SuburbTransit = { rail: 0, metro: 0, lightrail: 0, ferry: 0, total: 0, names: [] };
+const EMPTY: SuburbTransit = {
+  rail: 0,
+  metro: 0,
+  lightrail: 0,
+  ferry: 0,
+  total: 0,
+  walkPct: 0,
+  modesNearby: [],
+  names: [],
+};
+
+const LAT_STEP = 0.0018;
+const WALK_M = 800;
+const M_PER_DEG = 111_320;
+
+type PlacedStop = TransitStop & { lon: number; lat: number };
+
+function gridSamples(poly: IndexedPoly): { lon: number; lat: number }[] {
+  const pts: { lon: number; lat: number }[] = [];
+  const meanLat = (poly.south + poly.north) / 2;
+  const cos = Math.cos((meanLat * Math.PI) / 180) || 1;
+  const lonStep = LAT_STEP / cos;
+  for (let lat = poly.south + LAT_STEP / 2; lat <= poly.north + 1e-12; lat += LAT_STEP) {
+    for (let lon = poly.west + lonStep / 2; lon <= poly.east + 1e-12; lon += lonStep) {
+      if (contains(lon, lat, poly.geom)) pts.push({ lon, lat });
+    }
+  }
+  if (pts.length > 0) return pts;
+  const midLon = (poly.west + poly.east) / 2;
+  const midLat = (poly.south + poly.north) / 2;
+  if (contains(midLon, midLat, poly.geom)) return [{ lon: midLon, lat: midLat }];
+  const polys = poly.geom.type === "Polygon" ? [poly.geom.coordinates] : poly.geom.coordinates;
+  for (const rings of polys) {
+    const outer = rings[0];
+    const n = ringLength(outer);
+    for (let i = 0; i < n; i++) {
+      const lon = outer[i][0];
+      const lat = outer[i][1];
+      if (contains(lon, lat, poly.geom)) return [{ lon, lat }];
+    }
+  }
+  return pts;
+}
+
+function walkshed(
+  poly: IndexedPoly,
+  places: PlacedStop[],
+): Pick<SuburbTransit, "walkPct" | "modesNearby" | "names"> {
+  const samples = gridSamples(poly);
+  if (samples.length === 0) return { walkPct: 0, modesNearby: [], names: [] };
+  const meanLat = (poly.south + poly.north) / 2;
+  const cos = Math.cos((meanLat * Math.PI) / 180) || 1;
+  const latPad = WALK_M / M_PER_DEG;
+  const lonPad = latPad / cos;
+  const nearby: PlacedStop[] = [];
+  for (const place of places) {
+    if (
+      place.lon < poly.west - lonPad ||
+      place.lon > poly.east + lonPad ||
+      place.lat < poly.south - latPad ||
+      place.lat > poly.north + latPad
+    ) {
+      continue;
+    }
+    nearby.push(place);
+  }
+  const hit = new Set<PlacedStop>();
+  let served = 0;
+  const limit = WALK_M * WALK_M;
+  for (const sample of samples) {
+    let ok = false;
+    for (const place of nearby) {
+      const dy = (place.lat - sample.lat) * M_PER_DEG;
+      const dx = (place.lon - sample.lon) * M_PER_DEG * cos;
+      if (dx * dx + dy * dy > limit) continue;
+      ok = true;
+      hit.add(place);
+    }
+    if (ok) served += 1;
+  }
+  const names = [...hit].map((place) => ({ name: place.name, mode: place.mode }));
+  names.sort(
+    (a, b) => MODE_ORDER[a.mode] - MODE_ORDER[b.mode] || a.name.localeCompare(b.name, "en"),
+  );
+  const modesNearby: TransitMode[] = [];
+  for (const stop of names) {
+    if (!modesNearby.includes(stop.mode)) modesNearby.push(stop.mode);
+  }
+  return { walkPct: Math.round((served / samples.length) * 100), modesNearby, names };
+}
 
 const bySuburb = new Map<string, SuburbTransit>();
 
 {
-  const buckets = new Map<string, TransitStop[]>();
+  const placed: PlacedStop[] = [];
+  const inside = new Map<string, TransitStop[]>();
   for (const place of accessPlaces.places) {
     const mode = transitMode(place.name, place.mode);
     if (!mode) continue;
+    const stop = { name: place.name, mode, lon: place.lon, lat: place.lat };
+    placed.push(stop);
     const id = suburbAt(place.lon, place.lat);
     if (!id) continue;
-    const list = buckets.get(id) ?? [];
+    const list = inside.get(id) ?? [];
     list.push({ name: place.name, mode });
-    buckets.set(id, list);
+    inside.set(id, list);
   }
-  for (const [id, names] of buckets) {
-    names.sort(
-      (a, b) => MODE_ORDER[a.mode] - MODE_ORDER[b.mode] || a.name.localeCompare(b.name, "en"),
-    );
+  for (const poly of indexed) {
+    const names = inside.get(poly.id) ?? [];
     let rail = 0;
     let metro = 0;
     let lightrail = 0;
@@ -220,7 +312,15 @@ const bySuburb = new Map<string, SuburbTransit>();
       else if (stop.mode === "lightrail") lightrail += 1;
       else ferry += 1;
     }
-    bySuburb.set(id, { rail, metro, lightrail, ferry, total: names.length, names });
+    const walk = walkshed(poly, placed);
+    bySuburb.set(poly.id, {
+      rail,
+      metro,
+      lightrail,
+      ferry,
+      total: names.length,
+      ...walk,
+    });
   }
 }
 

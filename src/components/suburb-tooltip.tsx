@@ -1,4 +1,5 @@
 import { activeSafetyBand, formatAud, safetyBandLabel } from "@/lib/choropleth";
+import { TRANSIT_MODE_LABEL } from "@/lib/access";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import type { Suburb } from "@/lib/suburb-types";
 
@@ -17,15 +18,9 @@ export function SuburbTooltip({
 }) {
   const safetyBand = activeSafetyBand(suburb, metric);
   const transitLine = (suburb: Suburb) => {
-    const transit = suburb.transit;
-    if (transit.total === 0) return "No rail, metro, light rail or ferry stop";
-    const parts = [
-      transit.metro ? `${transit.metro} metro` : null,
-      transit.rail ? `${transit.rail} rail` : null,
-      transit.lightrail ? `${transit.lightrail} light rail` : null,
-      transit.ferry ? `${transit.ferry} ferry` : null,
-    ].filter(Boolean);
-    return parts.join(" · ");
+    const modes = suburb.transit.modesNearby.map((mode) => TRANSIT_MODE_LABEL[mode]);
+    if (modes.length === 0) return "No rail, metro, light rail or ferry within a short walk";
+    return modes.join(" · ");
   };
 
   const primary =
@@ -40,11 +35,9 @@ export function SuburbTooltip({
           ? `${formatAud(suburb.housing.medianWeeklyRent)} / week`
           : "No rent figure in this extract"
         : layer === "transit"
-          ? suburb.transit.total === 0
-            ? "No stop in this suburb"
-            : suburb.transit.total === 1
-              ? "1 stop"
-              : `${suburb.transit.total} stops`
+          ? suburb.transit.walkPct === 0
+            ? "No stop within a short walk"
+            : `${suburb.transit.walkPct}% within a short walk`
           : suburb.backgrounds
             ? `${suburb.backgrounds.pctBornAustralia}% born in Australia`
             : "No Census 2021 ancestry figures";

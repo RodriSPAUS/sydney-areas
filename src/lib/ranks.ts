@@ -72,7 +72,9 @@ const bornAuRanks = rankMap(
 );
 
 const transitRanks = rankMap(
-  suburbs.flatMap((s) => (s.transit.total > 0 ? [{ id: s.id, value: s.transit.total }] : [])),
+  suburbs.flatMap((s) =>
+    s.transit.walkPct > 0 ? [{ id: s.id, value: s.transit.walkPct }] : [],
+  ),
   "asc",
 );
 
@@ -100,6 +102,6 @@ export function rankCaption(layer: Choropleth, metric: SafetyMetric): string {
     return `1 = fewest ${what} per 1,000`;
   }
   if (layer === "housing") return "1 = lowest weekly rent";
-  if (layer === "transit") return "1 = fewest stops";
+  if (layer === "transit") return "1 = lowest short-walk coverage";
   return "1 = lowest share born in Australia";
 }

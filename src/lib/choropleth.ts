@@ -43,7 +43,7 @@ export const BORN_AU_FILL: Record<SafetyBand, string> = {
   5: "#022E2A",
 };
 
-/** 1 = fewest stops (light), 5 = most (dark). Not the safety ramp. */
+/** 1 = lowest short-walk share (light), 5 = highest (dark). Not the safety ramp. */
 export const TRANSIT_FILL: Record<SafetyBand, string> = {
   1: "#E7DFF2",
   2: "#C4B0DE",
@@ -96,8 +96,8 @@ const rents = suburbs.flatMap((s) =>
 const bornAu = suburbs.flatMap((s) =>
   s.backgrounds ? [{ id: s.id, value: s.backgrounds.pctBornAustralia }] : [],
 );
-const transitCounts = suburbs.flatMap((s) =>
-  s.transit.total > 0 ? [{ id: s.id, value: s.transit.total }] : [],
+const transitWalks = suburbs.flatMap((s) =>
+  s.transit.walkPct > 0 ? [{ id: s.id, value: s.transit.walkPct }] : [],
 );
 const violenceRates = rateRows((s) => s.safety?.violencePer1000);
 const propertyRates = rateRows((s) => s.safety?.propertyPer1000);
@@ -106,7 +106,14 @@ const domesticRates = rateRows((s) => s.safety?.domesticPer1000);
 
 export const housingBandById = quintileBands(rents);
 export const bornBandById = quintileBands(bornAu);
-export const transitBandById = quintileBands(transitCounts);
+const transitBaseBands = quintileBands(transitWalks);
+export const transitBandById = new Map<string, SafetyBand>();
+for (const suburb of suburbs) {
+  const band = transitBaseBands.get(suburb.id);
+  if (!band) continue;
+  const bump = suburb.transit.modesNearby.length >= 2 && band < 5;
+  transitBandById.set(suburb.id, bump ? ((band + 1) as SafetyBand) : band);
+}
 export const violenceBandById = safetyQuintileBands(violenceRates);
 export const propertyBandById = safetyQuintileBands(propertyRates);
 export const allBandById = safetyQuintileBands(allRates);
