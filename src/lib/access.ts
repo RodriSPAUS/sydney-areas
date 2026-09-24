@@ -250,7 +250,7 @@ const lineModules = import.meta.glob("../data/transit-lines.json", {
   import: "default",
 }) as Record<string, FeatureCollection<LineString>>;
 
-/** Null when shapes were not shipped. Do not invent straight segments between stops. */
+/** Simplified GTFS shapes when src/data/transit-lines.json is present. */
 export function transitLinesGeoJSON(): FeatureCollection<LineString> | null {
   const data = Object.values(lineModules)[0];
   if (!data || data.type !== "FeatureCollection" || !data.features?.length) return null;

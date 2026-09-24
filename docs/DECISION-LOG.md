@@ -5,6 +5,24 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-24 — Transit lines from GTFS shapes
+
+**What:** The Transit layer draws simplified line strings from zoom 9, under the
+stop dots. Geometry is TfNSW Complete GTFS `shapes.txt` (bundle 23 Sep 2026),
+kept only for the 2,518 shape ids in the supplied index — every id matched.
+Clipped to longitude 150.62–151.34 and latitude −34.12–−33.34, then
+Douglas-Peucker at 0.00025°. Near-duplicate corridors of the same mode are
+collapsed. 746 lines, about 967 KB, in `src/data/transit-lines.json`. M1 stays
+metro, not rail. Hunter, Stockton, Newcastle light rail, and the CRF ferry
+shapes in that index never enter the window, so they are not drawn. `shapes.txt`
+and the id index are not committed.
+
+**Why:** The attached file was shape ids, shorts, and modes — no coordinates.
+Drawing a segment between stops would invent a network. These are the published
+shapes for those ids.
+
+---
+
 ## 2026-09-24 — Transit v1: metro colour, no invented lines
 
 **What:** The fourth map layer is Transit, not Access. Old `layer=access` still

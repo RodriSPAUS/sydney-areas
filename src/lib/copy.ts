@@ -72,7 +72,7 @@ export const SOURCE_LINES = [
   {
     name: "Transit",
     detail:
-      "Transport for NSW Complete GTFS (train, metro, light rail, ferry). Bus omitted. Colour is how many of those stops sit inside the suburb polygon. Lines are simplified GTFS shapes when that file is included. Independent map; not affiliated with TfNSW.",
+      "Transport for NSW Complete GTFS (train, metro, light rail, ferry). Bus omitted. Colour is how many of those stops sit inside the suburb polygon. Lines are simplified GTFS shapes, clipped to Greater Sydney. Independent map; not affiliated with TfNSW.",
   },
   {
     name: "Boundaries",

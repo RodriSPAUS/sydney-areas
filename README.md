@@ -22,7 +22,7 @@ npm run dev
 - Safety for mapped suburbs: `src/data/bocsar-safety.json`, generated from the BOCSAR SuburbData.csv (CC-BY 3.0 AU). Map colour is incidents per 1,000 usual residents (ABS Census 2021), ranked among Greater Sydney suburbs on this map. All = violence + property; retail theft is never used; domestic assault only colours the Domestic chip. Darker fill = more incidents.
 - Census 2021: `src/data/census-2021.json` (ABS GCP, SAL). Backgrounds colour is share born in Australia. Median age, % renting, and % families with children are on the Housing sheet. CC BY 4.0.
 - Housing: `src/data/dcj-housing.json` (NSW DCJ Rent and Sales Report, postcode). All-dwellings median colours the map; 1/2/3-bed and house/flat medians appear on the profile when published. Census 2021 rent if a postcode median is missing. CC BY.
-- Transit: `src/data/access-places.json` (Transport for NSW Complete GTFS, CC-BY). Rail, metro, light rail, and ferry stops only. Metro is a named subset of the rail points, drawn in its own colour, and is not double-counted as rail. A stop counts when its point is inside the suburb polygon. No bus, no metres. Line strings are drawn only if `src/data/transit-lines.json` is present; it is not in this cut, so no tracks are drawn.
+- Transit: `src/data/access-places.json` (stops) and `src/data/transit-lines.json` (simplified shapes). Transport for NSW Complete GTFS, CC-BY. Rail, metro, light rail, and ferry only. Metro is a named subset of the rail points, drawn in its own colour, and is not double-counted as rail. A stop counts when its point is inside the suburb polygon. Lines are the GTFS shapes for those services, clipped to Greater Sydney and simplified. No bus, no metres.
 - Refresh:
 
 ```bash

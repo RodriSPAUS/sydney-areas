@@ -123,7 +123,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           ))}
         </ul>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Darker = more stops. Dots from zoom 10. TfNSW Complete GTFS, CC-BY.
+          Darker = more stops. Lines from zoom 9, dots from zoom 10. Simplified TfNSW GTFS shapes, CC-BY.
         </p>
         <NoDataSwatch text="No data — no rail, metro, light rail or ferry stop in this suburb" />
       </div>
