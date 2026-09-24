@@ -5,6 +5,14 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — Contact is a mailto, not a form
+
+**What:** About, after Licences, and the map footer link to c8labs@agentmail.to.
+
+**Why:** A wrong suburb or a question needs an email. No form, no ticket queue.
+
+---
+
 ## 2026-09-24 — Transit colour is a short walk, not a point count
 
 **What:** Transit fill and rank use the share of each suburb within 800 m of a

@@ -8,7 +8,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_DESCRIPTION, APP_NAME, FOOTER_LINE, PLACE_LINE } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, PLACE_LINE } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -157,6 +157,13 @@ function Home() {
         >
           About
         </Link>
+        {" · "}
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="pointer-events-auto font-medium underline-offset-2 hover:text-fg hover:underline"
+        >
+          Contact
+        </a>
       </p>
 
       <FirstVisitCard />

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ABOUT_INTRO, APP_DESCRIPTION, APP_NAME, SOURCE_LINES, TAGLINE } from "@/lib/copy";
+import { ABOUT_INTRO, APP_DESCRIPTION, APP_NAME, CONTACT_BLURB, CONTACT_EMAIL, CONTACT_HEADING, SOURCE_LINES, TAGLINE } from "@/lib/copy";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -38,6 +38,19 @@ function About() {
         <h2 className="mt-8 text-[11px] font-semibold tracking-wide text-primary uppercase">Licences</h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           BOCSAR CC-BY 3.0 AU. ABS Census 2021 and SAL CC BY 4.0. DCJ Rent and Sales Report CC BY.
+        </p>
+
+        <h2 className="mt-8 text-[11px] font-semibold tracking-wide text-primary uppercase">
+          {CONTACT_HEADING}
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{CONTACT_BLURB}</p>
+        <p className="mt-2 text-sm">
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="font-medium text-primary underline-offset-2 hover:underline"
+          >
+            {CONTACT_EMAIL}
+          </a>
         </p>
       </article>
     </main>

@@ -53,6 +53,13 @@ export const FIRST_VISIT_CTA = "Show the map";
 
 export const NO_DATA_LABEL = "No data";
 
+export const CONTACT_EMAIL = "c8labs@agentmail.to";
+
+export const CONTACT_HEADING = "Contact";
+
+export const CONTACT_BLURB =
+  "Questions or something that looks wrong on the map — email and say which suburb.";
+
 export const SOURCE_LINES = [
   {
     name: "Safety",
