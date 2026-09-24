@@ -5,6 +5,26 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-24 — Transit v1: metro colour, no invented lines
+
+**What:** The fourth map layer is Transit, not Access. Old `layer=access` still
+opens it and is rewritten to `layer=transit`. The same 310 TfNSW points are
+drawn from zoom 10 in four colours: rail, metro, light rail, ferry. Metro is
+only the named City & Southwest / Northwest stations after stripping a trailing
+“ Station” (21 of those names are in this extract; Pitt Street is not, so it is
+not drawn). A metro stop is not also counted as rail. Suburb colour is how many
+stops fall inside the ABS boundary. Quintiles are only among suburbs with at
+least one stop (1 = fewest); zero stays the neutral fill. Line strings are
+drawn only when `src/data/transit-lines.json` is present. That file is not in
+this cut, so the map shows circles and does not join stations with invented
+tracks. `shapes.txt` is not in the repo.
+
+**Why:** “Access” hid that metro is a different service from suburban rail, and
+a shape-id index has no coordinates. Drawing a line between stops would invent
+a network this extract does not have.
+
+---
+
 ## 2026-09-24 — Access v1: stops inside the suburb
 
 **What:** Access is a fourth map layer. 310 TfNSW Complete GTFS points (rail
@@ -16,7 +36,8 @@ clickable.
 
 **Why:** “Is there a station?” is the question. Counting the point inside the
 polygon is the honest first cut. A buffer or a T4 join would invent a network
-this extract does not have.
+this extract does not have. Superseded the same day by Transit v1 (rename,
+metro colour). The point-in-polygon rule is unchanged.
 
 ---
 

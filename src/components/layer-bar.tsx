@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const LAYERS: { id: Choropleth; label: string; icon: typeof Shield }[] = [
   { id: "safety", label: "Safety", icon: Shield },
   { id: "housing", label: "Housing", icon: Home },
-  { id: "access", label: "Access", icon: TrainFront },
+  { id: "transit", label: "Transit", icon: TrainFront },
   { id: "backgrounds", label: "Backgrounds", icon: Globe2 },
 ];
 

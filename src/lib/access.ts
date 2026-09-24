@@ -1,20 +1,21 @@
 import accessPlaces from "@/data/access-places.json";
 import polygonFc from "@/data/suburb-polygons.json";
-import type { FeatureCollection, MultiPolygon, Point, Polygon } from "geojson";
+import type { FeatureCollection, LineString, MultiPolygon, Point, Polygon } from "geojson";
 
-export type AccessMode = "rail" | "lightrail" | "ferry";
+export type TransitMode = "rail" | "metro" | "lightrail" | "ferry";
 
-export type AccessStop = {
+export type TransitStop = {
   name: string;
-  mode: AccessMode;
+  mode: TransitMode;
 };
 
-export type SuburbAccess = {
+export type SuburbTransit = {
   rail: number;
+  metro: number;
   lightrail: number;
   ferry: number;
   total: number;
-  names: AccessStop[];
+  names: TransitStop[];
 };
 
 type Ring = number[][];
@@ -29,22 +30,59 @@ type IndexedPoly = {
   geom: PolyGeom;
 };
 
-const MODE_ORDER: Record<AccessMode, number> = { rail: 0, lightrail: 1, ferry: 2 };
+const MODE_ORDER: Record<TransitMode, number> = { metro: 0, rail: 1, lightrail: 2, ferry: 3 };
 
-export const ACCESS_MODE_COLOR: Record<AccessMode, string> = {
+const METRO_NAMES = new Set([
+  "Tallawong",
+  "Rouse Hill",
+  "Kellyville",
+  "Bella Vista",
+  "Norwest",
+  "Hills Showground",
+  "Castle Hill",
+  "Cherrybrook",
+  "Epping",
+  "Macquarie University",
+  "Macquarie Park",
+  "North Ryde",
+  "Chatswood",
+  "Crows Nest",
+  "Victoria Cross",
+  "Barangaroo",
+  "Martin Place",
+  "Gadigal",
+  "Pitt Street",
+  "Central",
+  "Waterloo",
+  "Sydenham",
+]);
+
+export const TRANSIT_MODE_COLOR: Record<TransitMode, string> = {
   rail: "#1C1917",
+  metro: "#DB2777",
   lightrail: "#C2410C",
   ferry: "#0369A1",
 };
 
-export const ACCESS_MODE_LABEL: Record<AccessMode, string> = {
+export const TRANSIT_MODE_LABEL: Record<TransitMode, string> = {
+  metro: "Metro",
   rail: "Rail",
   lightrail: "Light rail",
   ferry: "Ferry",
 };
 
-function isMode(value: string): value is AccessMode {
+function isRawMode(value: string): value is "rail" | "lightrail" | "ferry" {
   return value === "rail" || value === "lightrail" || value === "ferry";
+}
+
+/** Metro is a named subset of rail stops. Strip only a trailing " Station". */
+export function transitMode(name: string, raw: string): TransitMode | null {
+  if (!isRawMode(raw)) return null;
+  if (raw === "rail") {
+    const base = name.endsWith(" Station") ? name.slice(0, -" Station".length) : name;
+    if (METRO_NAMES.has(base)) return "metro";
+  }
+  return raw;
 }
 
 function ringLength(ring: Ring): number {
@@ -153,18 +191,19 @@ function suburbAt(lon: number, lat: number): string | undefined {
   return undefined;
 }
 
-const EMPTY: SuburbAccess = { rail: 0, lightrail: 0, ferry: 0, total: 0, names: [] };
+const EMPTY: SuburbTransit = { rail: 0, metro: 0, lightrail: 0, ferry: 0, total: 0, names: [] };
 
-const bySuburb = new Map<string, SuburbAccess>();
+const bySuburb = new Map<string, SuburbTransit>();
 
 {
-  const buckets = new Map<string, AccessStop[]>();
+  const buckets = new Map<string, TransitStop[]>();
   for (const place of accessPlaces.places) {
-    if (!isMode(place.mode)) continue;
+    const mode = transitMode(place.name, place.mode);
+    if (!mode) continue;
     const id = suburbAt(place.lon, place.lat);
     if (!id) continue;
     const list = buckets.get(id) ?? [];
-    list.push({ name: place.name, mode: place.mode });
+    list.push({ name: place.name, mode });
     buckets.set(id, list);
   }
   for (const [id, names] of buckets) {
@@ -172,28 +211,48 @@ const bySuburb = new Map<string, SuburbAccess>();
       (a, b) => MODE_ORDER[a.mode] - MODE_ORDER[b.mode] || a.name.localeCompare(b.name, "en"),
     );
     let rail = 0;
+    let metro = 0;
     let lightrail = 0;
     let ferry = 0;
     for (const stop of names) {
       if (stop.mode === "rail") rail += 1;
+      else if (stop.mode === "metro") metro += 1;
       else if (stop.mode === "lightrail") lightrail += 1;
       else ferry += 1;
     }
-    bySuburb.set(id, { rail, lightrail, ferry, total: names.length, names });
+    bySuburb.set(id, { rail, metro, lightrail, ferry, total: names.length, names });
   }
 }
 
-export function accessFor(id: string): SuburbAccess {
+export function transitFor(id: string): SuburbTransit {
   return bySuburb.get(id) ?? EMPTY;
 }
 
-export function accessPointsGeoJSON(): FeatureCollection<Point> {
+export function transitPointsGeoJSON(): FeatureCollection<Point> {
   return {
     type: "FeatureCollection",
-    features: accessPlaces.places.filter((place) => isMode(place.mode)).map((place) => ({
-      type: "Feature" as const,
-      properties: { name: place.name, mode: place.mode },
-      geometry: { type: "Point" as const, coordinates: [place.lon, place.lat] },
-    })),
+    features: accessPlaces.places.flatMap((place) => {
+      const mode = transitMode(place.name, place.mode);
+      if (!mode) return [];
+      return [
+        {
+          type: "Feature" as const,
+          properties: { name: place.name, mode },
+          geometry: { type: "Point" as const, coordinates: [place.lon, place.lat] },
+        },
+      ];
+    }),
   };
+}
+
+const lineModules = import.meta.glob("../data/transit-lines.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, FeatureCollection<LineString>>;
+
+/** Null when shapes were not shipped. Do not invent straight segments between stops. */
+export function transitLinesGeoJSON(): FeatureCollection<LineString> | null {
+  const data = Object.values(lineModules)[0];
+  if (!data || data.type !== "FeatureCollection" || !data.features?.length) return null;
+  return data;
 }

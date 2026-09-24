@@ -67,11 +67,12 @@ export type Suburb = {
     topAncestries: AncestryShare[];
     topLanguageOther: string;
   };
-  access: {
+  transit: {
     rail: number;
+    metro: number;
     lightrail: number;
     ferry: number;
     total: number;
-    names: { name: string; mode: "rail" | "lightrail" | "ferry" }[];
+    names: { name: string; mode: "rail" | "metro" | "lightrail" | "ferry" }[];
   };
 };

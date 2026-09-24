@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
-import { accessPointsGeoJSON, ACCESS_MODE_COLOR } from "@/lib/access";
+import { TRANSIT_MODE_COLOR, transitLinesGeoJSON, transitPointsGeoJSON } from "@/lib/access";
 import { fillColorExpression } from "@/lib/choropleth";
 import {
   bboxCorners,
@@ -146,6 +146,22 @@ function fitToSelected(map: MapLibreMap) {
   run();
 }
 
+function transitPaint(): ExpressionSpecification {
+  return [
+    "match",
+    ["get", "mode"],
+    "rail",
+    TRANSIT_MODE_COLOR.rail,
+    "metro",
+    TRANSIT_MODE_COLOR.metro,
+    "lightrail",
+    TRANSIT_MODE_COLOR.lightrail,
+    "ferry",
+    TRANSIT_MODE_COLOR.ferry,
+    TRANSIT_MODE_COLOR.rail,
+  ];
+}
+
 function addLayers(map: MapLibreMap) {
   if (map.getSource("suburbs")) return;
   map.addSource("suburbs", {
@@ -206,36 +222,71 @@ function addLayers(map: MapLibreMap) {
     },
   });
 
-  map.addSource("access-stops", {
+  const showTransit = st.choropleth === "transit" ? "visible" : "none";
+  const lines = transitLinesGeoJSON();
+  if (lines) {
+    map.addSource("transit-lines", { type: "geojson", data: lines });
+    map.addLayer(
+      {
+        id: "transit-lines-casing",
+        type: "line",
+        source: "transit-lines",
+        minzoom: 9,
+        layout: {
+          visibility: showTransit,
+          "line-cap": "round",
+          "line-join": "round",
+        },
+        paint: {
+          "line-color": "#FFFCFF",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 3.5, 14, 7],
+          "line-opacity": 0.85,
+        },
+      },
+      "suburb-labels",
+    );
+    map.addLayer(
+      {
+        id: "transit-lines",
+        type: "line",
+        source: "transit-lines",
+        minzoom: 9,
+        layout: {
+          visibility: showTransit,
+          "line-cap": "round",
+          "line-join": "round",
+        },
+        paint: {
+          "line-color": transitPaint(),
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 14, 3.4],
+          "line-opacity": 0.92,
+        },
+      },
+      "suburb-labels",
+    );
+  }
+
+  map.addSource("transit-stops", {
     type: "geojson",
-    data: accessPointsGeoJSON(),
+    data: transitPointsGeoJSON(),
   });
-  map.addLayer({
-    id: "access-stops",
-    type: "circle",
-    source: "access-stops",
-    minzoom: 10,
-    layout: {
-      visibility: st.choropleth === "access" ? "visible" : "none",
+  map.addLayer(
+    {
+      id: "transit-stops",
+      type: "circle",
+      source: "transit-stops",
+      minzoom: 10,
+      layout: { visibility: showTransit },
+      paint: {
+        "circle-color": transitPaint(),
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 3, 13, 5.5, 16, 9],
+        "circle-stroke-width": 1.25,
+        "circle-stroke-color": "#FFFCFF",
+        "circle-opacity": 0.95,
+      },
     },
-    paint: {
-      "circle-color": [
-        "match",
-        ["get", "mode"],
-        "rail",
-        ACCESS_MODE_COLOR.rail,
-        "lightrail",
-        ACCESS_MODE_COLOR.lightrail,
-        "ferry",
-        ACCESS_MODE_COLOR.ferry,
-        ACCESS_MODE_COLOR.rail,
-      ],
-      "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 3, 13, 5.5, 16, 9],
-      "circle-stroke-width": 1.25,
-      "circle-stroke-color": "#FFFCFF",
-      "circle-opacity": 0.95,
-    },
-  }, "suburb-labels");
+    "suburb-labels",
+  );
 }
 
 export function SydneyMap() {
@@ -385,12 +436,9 @@ export function SydneyMap() {
     const map = mapRef.current;
     if (!map?.getLayer("suburbs-fill")) return;
     map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth, safetyMetric));
-    if (map.getLayer("access-stops")) {
-      map.setLayoutProperty(
-        "access-stops",
-        "visibility",
-        choropleth === "access" ? "visible" : "none",
-      );
+    const visibility = choropleth === "transit" ? "visible" : "none";
+    for (const id of ["transit-stops", "transit-lines", "transit-lines-casing"]) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
     }
   }, [choropleth, safetyMetric]);
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type Choropleth = "safety" | "housing" | "backgrounds" | "access";
+export type Choropleth = "safety" | "housing" | "backgrounds" | "transit";
 
 export type SafetyMetric = "all" | "violence" | "property" | "domestic";
 

@@ -4,7 +4,7 @@ import { suburbsById } from "@/data/suburbs";
 import { LAYERS } from "@/components/layer-bar";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
-  ACCESS_NOTE,
+  TRANSIT_NOTE,
   BACKGROUNDS_NOTE,
   HOUSING_CENSUS_NOTE,
   HOUSING_DCJ_NOTE,
@@ -14,7 +14,7 @@ import {
   SAFETY_WINDOW,
   SAFETY_WINDOW_NOTE,
 } from "@/lib/copy";
-import { ACCESS_MODE_LABEL } from "@/lib/access";
+import { TRANSIT_MODE_LABEL } from "@/lib/access";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
@@ -38,7 +38,7 @@ const COUNT_ROWS: { key: keyof SafetyCounts; label: string }[] = [
   { key: "stealRetail", label: "Retail theft" },
 ];
 
-const SECTION_ORDER: Choropleth[] = ["safety", "housing", "access", "backgrounds"];
+const SECTION_ORDER: Choropleth[] = ["safety", "housing", "transit", "backgrounds"];
 
 function Block({
   title,
@@ -123,7 +123,7 @@ function headerNote(suburb: Suburb, layer: Choropleth): string {
       : "Census 2021 rent";
   }
   if (layer === "backgrounds") return "ABS Census 2021 · ancestry";
-  if (layer === "access") return "Stops inside the suburb";
+  if (layer === "transit") return "Stops inside the suburb";
   return suburb.safety?.period12
     ? `${SAFETY_WINDOW} · ${suburb.safety.period12}`
     : "Suburb boundary · ABS SAL 2021";
@@ -316,34 +316,39 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
   );
 }
 
-function AccessBody({ suburb }: { suburb: Suburb }) {
-  const access = suburb.access;
-  const rank = layerRank(suburb.id, "access", "all");
+function TransitBody({ suburb }: { suburb: Suburb }) {
+  const transit = suburb.transit;
+  const rank = layerRank(suburb.id, "transit", "all");
   const parts = [
-    access.rail ? `${access.rail} rail` : null,
-    access.lightrail ? `${access.lightrail} light rail` : null,
-    access.ferry ? `${access.ferry} ferry` : null,
+    transit.metro ? `${transit.metro} metro` : null,
+    transit.rail ? `${transit.rail} rail` : null,
+    transit.lightrail ? `${transit.lightrail} light rail` : null,
+    transit.ferry ? `${transit.ferry} ferry` : null,
   ].filter((part): part is string => part != null);
-  const shown = access.names.slice(0, 12);
-  const extra = access.names.length - shown.length;
-  const groups = (["rail", "lightrail", "ferry"] as const)
+  const shown = transit.names.slice(0, 12);
+  const extra = transit.names.length - shown.length;
+  const groups = (["metro", "rail", "lightrail", "ferry"] as const)
     .map((mode) => ({ mode, items: shown.filter((stop) => stop.mode === mode) }))
     .filter((group) => group.items.length > 0);
 
   return (
     <>
       <p className="text-2xl font-semibold tracking-tight">
-        {access.total === 0 ? "No stop in this suburb" : access.total === 1 ? "1 stop" : `${access.total} stops`}
+        {transit.total === 0
+          ? "No stop in this suburb"
+          : transit.total === 1
+            ? "1 stop"
+            : `${transit.total} stops`}
       </p>
       {parts.length ? <p className="text-sm text-muted">{parts.join(" · ")}</p> : null}
       {rank ? (
         <p className="text-xs text-muted">
-          #{rank.rank} of {rank.of} · {rankCaption("access", "all")}
+          #{rank.rank} of {rank.of} · {rankCaption("transit", "all")}
         </p>
       ) : null}
       {groups.map((group) => (
         <div key={group.mode}>
-          <p className="text-[10px] tracking-wide text-muted uppercase">{ACCESS_MODE_LABEL[group.mode]}</p>
+          <p className="text-[10px] tracking-wide text-muted uppercase">{TRANSIT_MODE_LABEL[group.mode]}</p>
           <ul className="mt-0.5">
             {group.items.map((stop) => (
               <li key={`${group.mode}-${stop.name}`}>{stop.name}</li>
@@ -352,7 +357,7 @@ function AccessBody({ suburb }: { suburb: Suburb }) {
         </div>
       ))}
       {extra > 0 ? <p className="text-xs text-muted">+{extra} more</p> : null}
-      <p className="text-xs text-muted">{ACCESS_NOTE}</p>
+      <p className="text-xs text-muted">{TRANSIT_NOTE}</p>
     </>
   );
 }
@@ -403,7 +408,7 @@ export function SuburbSheet() {
     ? [
         { id: "safety", title: "Safety", body: <SafetyBody suburb={suburb} /> },
         { id: "housing", title: "Housing", body: <HousingBody suburb={suburb} /> },
-        { id: "access", title: "Access", body: <AccessBody suburb={suburb} /> },
+        { id: "transit", title: "Transit", body: <TransitBody suburb={suburb} /> },
         { id: "backgrounds", title: "Backgrounds", body: <BackgroundsBody suburb={suburb} /> },
       ]
     : [];

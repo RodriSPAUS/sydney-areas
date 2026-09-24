@@ -2,16 +2,16 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { suburbs } from "@/data/suburbs";
 import {
-  ACCESS_FILL,
   BORN_AU_FILL,
   HOUSING_FILL,
   NEUTRAL_FILL,
   SAFETY_FILL,
+  TRANSIT_FILL,
   bornAuRange,
   formatAud,
   rentRange,
 } from "@/lib/choropleth";
-import { ACCESS_MODE_COLOR, ACCESS_MODE_LABEL, type AccessMode } from "@/lib/access";
+import { TRANSIT_MODE_COLOR, TRANSIT_MODE_LABEL, type TransitMode } from "@/lib/access";
 import { NO_DATA_LABEL, SAFETY_WINDOW } from "@/lib/copy";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
@@ -98,14 +98,14 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
       </div>
     );
   }
-  if (layer === "access") {
-    const modes: AccessMode[] = ["rail", "lightrail", "ferry"];
+  if (layer === "transit") {
+    const modes: TransitMode[] = ["metro", "rail", "lightrail", "ferry"];
     return (
       <div>
         <p className="mb-1.5 text-[11px] font-medium text-fg">
-          Stops inside the suburb (rail, light rail, ferry)
+          Stops inside the suburb (rail, metro, light rail, ferry)
         </p>
-        <DiscreteRamp fills={ACCESS_FILL} order={[1, 2, 3, 4, 5]} />
+        <DiscreteRamp fills={TRANSIT_FILL} order={[1, 2, 3, 4, 5]} />
         <div className="mt-1 flex justify-between text-[10px] text-muted">
           <span>Fewer</span>
           <span>More</span>
@@ -115,17 +115,17 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
             <li key={mode} className="flex items-center gap-1.5 text-[10px] text-muted">
               <span
                 className="inline-block size-2.5 shrink-0 rounded-full border border-white"
-                style={{ backgroundColor: ACCESS_MODE_COLOR[mode] }}
+                style={{ backgroundColor: TRANSIT_MODE_COLOR[mode] }}
                 aria-hidden
               />
-              {ACCESS_MODE_LABEL[mode]}
+              {TRANSIT_MODE_LABEL[mode]}
             </li>
           ))}
         </ul>
         <p className="mt-1.5 text-[10px] leading-snug text-muted">
-          Darker = more stops. Dots from zoom 10. Lines are not drawn. TfNSW Complete GTFS, CC-BY.
+          Darker = more stops. Dots from zoom 10. TfNSW Complete GTFS, CC-BY.
         </p>
-        <NoDataSwatch text="No data — no rail, light rail or ferry stop in this suburb" />
+        <NoDataSwatch text="No data — no rail, metro, light rail or ferry stop in this suburb" />
       </div>
     );
   }
@@ -154,8 +154,8 @@ export function MapLegend() {
       ? SAFETY_FILL
       : layer === "housing"
         ? HOUSING_FILL
-        : layer === "access"
-          ? ACCESS_FILL
+        : layer === "transit"
+          ? TRANSIT_FILL
           : BORN_AU_FILL;
   const miniOrder: SafetyBand[] = layer === "safety" ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
 

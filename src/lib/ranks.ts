@@ -71,8 +71,8 @@ const bornAuRanks = rankMap(
   "asc",
 );
 
-const accessRanks = rankMap(
-  suburbs.flatMap((s) => (s.access.total > 0 ? [{ id: s.id, value: s.access.total }] : [])),
+const transitRanks = rankMap(
+  suburbs.flatMap((s) => (s.transit.total > 0 ? [{ id: s.id, value: s.transit.total }] : [])),
   "asc",
 );
 
@@ -83,7 +83,7 @@ export function safetyRank(id: string, metric: SafetyMetric): Rank | undefined {
 export function layerRank(id: string, layer: Choropleth, metric: SafetyMetric): Rank | undefined {
   if (layer === "safety") return safetyRank(id, metric);
   if (layer === "housing") return housingRanks.get(id);
-  if (layer === "access") return accessRanks.get(id);
+  if (layer === "transit") return transitRanks.get(id);
   return bornAuRanks.get(id);
 }
 
@@ -100,6 +100,6 @@ export function rankCaption(layer: Choropleth, metric: SafetyMetric): string {
     return `1 = fewest ${what} per 1,000`;
   }
   if (layer === "housing") return "1 = lowest weekly rent";
-  if (layer === "access") return "1 = fewest stops";
+  if (layer === "transit") return "1 = fewest stops";
   return "1 = lowest share born in Australia";
 }

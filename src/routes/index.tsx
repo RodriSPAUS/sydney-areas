@@ -8,7 +8,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { AFFILIATION_LINE, APP_DESCRIPTION, APP_NAME, FOOTER_LINE, PLACE_LINE, TAGLINE } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, FOOTER_LINE, PLACE_LINE } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -116,24 +116,18 @@ function Home() {
         ref={headerRef}
         className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-[max(0.6rem,env(safe-area-inset-top))] md:px-4"
       >
-        <div className="pointer-events-auto mx-auto max-w-lg rounded-2xl bg-surface/80 px-3 py-2 shadow-[var(--shadow-border)] backdrop-blur-md">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-sm font-semibold tracking-tight text-fg md:text-xl">{APP_NAME}</h1>
-              <p className="text-[10px] leading-tight text-muted">{PLACE_LINE}</p>
-              <p className="mt-0.5 text-[11px] leading-snug text-muted md:text-xs">{TAGLINE}</p>
-              <p className="mt-0.5 text-[10px] leading-snug text-muted md:text-[11px]">
-                {AFFILIATION_LINE}
-              </p>
-            </div>
+        <div className="pointer-events-auto mx-auto max-w-lg rounded-2xl bg-surface/80 px-3 py-1.5 shadow-[var(--shadow-border)] backdrop-blur-md">
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="text-sm font-semibold tracking-tight text-fg md:text-base">{APP_NAME}</h1>
             <Link
               to="/about"
-              className="mt-0.5 shrink-0 text-xs font-medium text-muted underline-offset-2 hover:text-fg hover:underline"
+              className="shrink-0 text-xs font-medium text-muted underline-offset-2 hover:text-fg hover:underline"
             >
               About
             </Link>
           </div>
-          <div className="mt-2">
+          <p className="text-[10px] leading-tight text-muted">{PLACE_LINE}</p>
+          <div className="mt-1">
             <SuburbSearch />
           </div>
         </div>

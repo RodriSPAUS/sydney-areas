@@ -7,7 +7,7 @@ import census2021 from "@/data/census-2021.json";
 import dcjHousing from "@/data/dcj-housing.json";
 import polygonFc from "@/data/suburb-polygons.json";
 import type { AncestryShare, BBox, SafetyCounts, Suburb } from "@/lib/suburb-types";
-import { accessFor } from "@/lib/access";
+import { transitFor } from "@/lib/access";
 import { allCount, domesticCount, propertyCount, violenceCount } from "@/lib/safety-counts";
 
 type PolygonFeature = {
@@ -91,7 +91,7 @@ export const suburbs: Suburb[] = (
     id,
     name: f.properties.name,
     bbox,
-    access: accessFor(id),
+    transit: transitFor(id),
   };
 
   const safetyRow = bocsarById.get(id);

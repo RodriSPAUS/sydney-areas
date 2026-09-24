@@ -1,6 +1,6 @@
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from "geojson";
 import polygonFc from "@/data/suburb-polygons.json";
-import { allBandById, accessBandById, bornBandById, domesticBandById, housingBandById, propertyBandById, violenceBandById } from "@/lib/choropleth";
+import { allBandById, bornBandById, domesticBandById, housingBandById, propertyBandById, transitBandById, violenceBandById } from "@/lib/choropleth";
 import { suburbsById } from "@/data/suburbs";
 import type { BBox, Suburb } from "@/lib/suburb-types";
 
@@ -75,7 +75,7 @@ function propsFor(id: string, name: string, suburb?: Suburb) {
     rentBand: housingBandById.get(id) ?? null,
     bornAu: suburb?.backgrounds?.pctBornAustralia ?? null,
     bornBand: bornBandById.get(id) ?? null,
-    accessBand: accessBandById.get(id) ?? null,
+    transitBand: transitBandById.get(id) ?? null,
     topAncestry: suburb?.backgrounds?.topAncestries[0]?.name ?? "",
     hasFigures:
       allBandById.has(id) ||

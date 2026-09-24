@@ -1,6 +1,6 @@
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 
-export const LAYER_IDS = ["safety", "housing", "backgrounds"] as const;
+export const LAYER_IDS = ["safety", "housing", "transit", "backgrounds"] as const;
 export const METRIC_IDS = ["all", "violence", "property", "domestic"] as const;
 
 export type MapSearch = {
@@ -12,7 +12,7 @@ export type MapSearch = {
 function readLayer(value: unknown): Choropleth | undefined {
   if (value === "households" || value === "housing") return "housing";
   if (value === "backgrounds") return "backgrounds";
-  if (value === "access") return "access";
+  if (value === "access" || value === "transit") return "transit";
   return undefined;
 }
 

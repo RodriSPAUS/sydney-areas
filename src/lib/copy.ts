@@ -33,8 +33,8 @@ export const HOUSING_CENSUS_NOTE =
 export const BACKGROUNDS_NOTE =
   "Ancestry is Census 2021. People can report more than one origin. This is not a judgement of the suburb.";
 
-export const ACCESS_NOTE =
-  "Count is stops whose point falls inside this ABS suburb boundary. A station just over the line is counted in the neighbour. Not a trip planner. TfNSW GTFS, CC-BY.";
+export const TRANSIT_NOTE =
+  "Counted if the point is inside this ABS suburb boundary. A station just over the line is counted in the neighbour. Not a trip planner. TfNSW GTFS, CC-BY.";
 
 export const ABOUT_INTRO =
   "Uvicus is an independent map of Greater Sydney suburbs. It is not affiliated with, or endorsed by, the ABS, BOCSAR or DCJ. Colours rank suburbs on this map. They are not a live risk score and not an official safety rating. No account. This page is sources and limits, not a landing page.";
@@ -70,9 +70,9 @@ export const SOURCE_LINES = [
       "Australian Bureau of Statistics Census 2021, Suburbs and Localities (SAL). Birthplace, ancestry, and language. Ancestry is multi-response: items can add up to more than 100%.",
   },
   {
-    name: "Access",
+    name: "Transit",
     detail:
-      "Transport for NSW Complete GTFS stops (train and metro as rail, light rail, ferry). Bus omitted. Ranked by how many of those stops sit inside the suburb polygon. Independent map; not affiliated with TfNSW. Line letters are not joined to a stop.",
+      "Transport for NSW Complete GTFS (train, metro, light rail, ferry). Bus omitted. Colour is how many of those stops sit inside the suburb polygon. Lines are simplified GTFS shapes when that file is included. Independent map; not affiliated with TfNSW.",
   },
   {
     name: "Boundaries",
