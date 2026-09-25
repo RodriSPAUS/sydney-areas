@@ -21,9 +21,15 @@ export const useMapStore = create<MapStore>((set) => ({
   focusSeq: 0,
   setChoropleth: (layer) => set({ choropleth: layer }),
   setSafetyMetric: (metric) => set({ safetyMetric: metric }),
+  // Re-selecting the open suburb must not bump focusSeq: that re-ran fitBounds
+  // and the camera jumped back while the person was panning around it.
   selectSuburb: (id) =>
-    set((s) => ({
-      selectedId: id,
-      focusSeq: id ? s.focusSeq + 1 : s.focusSeq,
-    })),
+    set((s) =>
+      id === s.selectedId
+        ? s
+        : {
+            selectedId: id,
+            focusSeq: id ? s.focusSeq + 1 : s.focusSeq,
+          },
+    ),
 }));

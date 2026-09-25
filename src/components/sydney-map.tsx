@@ -60,40 +60,42 @@ async function loadBasemap(): Promise<StyleSpecification> {
   }
 }
 
+/*
+ * Selected and hovered must never look alike: the selected suburb gets the
+ * strongest fill and a thick near-black outline; a hovered one only lifts its
+ * fill a little and gets a medium outline, so with the sheet open there is
+ * still exactly one suburb that reads as "chosen".
+ */
 function fillOpacity(selectedId: string): ExpressionSpecification {
   return [
     "case",
     ["==", ["get", "id"], selectedId],
-    0.9,
+    0.92,
     ["boolean", ["feature-state", "hover"], false],
-    0.86,
+    selectedId ? 0.7 : 0.82,
     ["==", ["get", "hasFigures"], 1],
     selectedId ? 0.62 : 0.72,
     selectedId ? 0.48 : 0.58,
   ];
 }
 
-function lineWidth(selectedId: string): ExpressionSpecification {
-  return [
-    "case",
-    ["==", ["get", "id"], selectedId],
-    2.55,
-    ["boolean", ["feature-state", "hover"], false],
-    2.25,
-    1.15,
-  ];
+function selectedFilter(selectedId: string): ExpressionSpecification {
+  return ["==", ["get", "id"], selectedId];
 }
 
-function lineColor(selectedId: string): ExpressionSpecification {
-  return [
-    "case",
-    ["==", ["get", "id"], selectedId],
-    "#1C1917",
-    ["boolean", ["feature-state", "hover"], false],
-    "#1C1917",
-    "#4A433C",
-  ];
-}
+const LINE_WIDTH: ExpressionSpecification = [
+  "case",
+  ["boolean", ["feature-state", "hover"], false],
+  1.8,
+  1.15,
+];
+
+const LINE_COLOR: ExpressionSpecification = [
+  "case",
+  ["boolean", ["feature-state", "hover"], false],
+  "#6B645C",
+  "#4A433C",
+];
 
 function canHover() {
   return (
@@ -225,10 +227,19 @@ function addLayers(map: MapLibreMap) {
     type: "line",
     source: "suburbs",
     paint: {
-      "line-color": lineColor(selectedId),
-      "line-width": lineWidth(selectedId),
+      "line-color": LINE_COLOR,
+      "line-width": LINE_WIDTH,
       "line-opacity": 0.95,
     },
+  });
+  // Drawn last among the lines so a neighbour's edge never paints over it.
+  map.addLayer({
+    id: "suburbs-selected",
+    type: "line",
+    source: "suburbs",
+    filter: selectedFilter(selectedId),
+    layout: { "line-join": "round" },
+    paint: { "line-color": "#1C1917", "line-width": 3.2 },
   });
   map.addLayer({
     id: "suburb-labels",
@@ -445,8 +456,7 @@ export function SydneyMap() {
     if (!map?.getLayer("suburbs-fill")) return;
     const id = selectedId ?? "";
     map.setPaintProperty("suburbs-fill", "fill-opacity", fillOpacity(id));
-    map.setPaintProperty("suburbs-outline", "line-color", lineColor(id));
-    map.setPaintProperty("suburbs-outline", "line-width", lineWidth(id));
+    map.setFilter("suburbs-selected", selectedFilter(id));
   }, [selectedId]);
 
   useEffect(() => {
