@@ -2,6 +2,7 @@ import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
 import { LAYERS } from "@/components/layer-bar";
+import { ShareButton } from "@/components/share-button";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
   TRANSIT_NO_BUS,
@@ -251,12 +252,10 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
       ) : h ? (
         <p className="text-muted">ABS Census 2021</p>
       ) : null}
-      {h ? <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p> : null}
-      {hRank ? (
-        <p className="text-xs text-muted">
-          {rankSentence("housing", hRank)}
-        </p>
+      {h ? (
+        <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p>
       ) : null}
+      {hRank ? <p className="text-xs text-muted">{rankSentence("housing", hRank)}</p> : null}
       {hh ? (
         <>
           <div className="mt-2 grid grid-cols-3 gap-2">
@@ -339,14 +338,12 @@ function TransitBody({ suburb }: { suburb: Suburb }) {
         )}
       </p>
       {modes.length ? <p className="text-sm text-muted">{modes.join(" · ")}</p> : null}
-      {rank ? (
-        <p className="text-xs text-muted">
-          {rankSentence("transit", rank)}
-        </p>
-      ) : null}
+      {rank ? <p className="text-xs text-muted">{rankSentence("transit", rank)}</p> : null}
       {groups.map((group) => (
         <div key={group.mode}>
-          <p className="text-[10px] tracking-wide text-muted uppercase">{TRANSIT_MODE_LABEL[group.mode]}</p>
+          <p className="text-[10px] tracking-wide text-muted uppercase">
+            {TRANSIT_MODE_LABEL[group.mode]}
+          </p>
           <ul className="mt-0.5">
             {group.items.map((stop) => (
               <li key={`${group.mode}-${stop.name}`}>{stop.name}</li>
@@ -370,17 +367,12 @@ function BackgroundsBody({ suburb }: { suburb: Suburb }) {
     <>
       {bornOk ? (
         <p className="text-2xl font-semibold tracking-tight tabular-nums">
-          {born}%{" "}
-          <span className="text-sm font-medium text-muted">born in Australia</span>
+          {born}% <span className="text-sm font-medium text-muted">born in Australia</span>
         </p>
       ) : (
         <p className="text-2xl font-semibold tracking-tight">{NO_DATA_LABEL}</p>
       )}
-      {rank ? (
-        <p className="text-xs text-muted">
-          {rankSentence("backgrounds", rank)}
-        </p>
-      ) : null}
+      {rank ? <p className="text-xs text-muted">{rankSentence("backgrounds", rank)}</p> : null}
       <p>{suburb.backgrounds.topAncestries.map((a) => `${a.name} ${a.pct}%`).join(" · ")}</p>
       <p className="text-muted">
         Top language other than English: {suburb.backgrounds.topLanguageOther}
@@ -440,18 +432,25 @@ export function SuburbSheet() {
               <h2 className="text-xl font-semibold tracking-tight text-fg">{suburb.name}</h2>
               <p className="text-xs text-muted">{headerNote(suburb, choropleth)}</p>
             </div>
-            <button
-              type="button"
-              aria-label="Close"
-              onClick={() => selectSuburb(null)}
-              className="flex size-11 shrink-0 items-center justify-center rounded-xl text-muted transition-colors hover:bg-bg hover:text-fg"
-            >
-              <X className="size-5" strokeWidth={2} />
-            </button>
+            <div className="flex shrink-0 items-center">
+              <ShareButton label="Share" />
+              <button
+                type="button"
+                aria-label="Close"
+                onClick={() => selectSuburb(null)}
+                className="flex size-11 shrink-0 items-center justify-center rounded-xl text-muted transition-colors hover:bg-bg hover:text-fg"
+              >
+                <X className="size-5" strokeWidth={2} />
+              </button>
+            </div>
           </header>
 
           <div className="px-5 pb-2 md:hidden">
-            <div role="radiogroup" aria-label="Map layer" className="flex gap-1 overflow-x-auto no-scrollbar">
+            <div
+              role="radiogroup"
+              aria-label="Map layer"
+              className="flex gap-1 overflow-x-auto no-scrollbar"
+            >
               {LAYERS.map(({ id, label }) => {
                 const on = choropleth === id;
                 return (

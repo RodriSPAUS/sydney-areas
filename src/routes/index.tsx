@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnalyticsBridge } from "@/components/analytics-bridge";
 import { FirstVisitCard } from "@/components/first-visit-card";
 import { LayerBar } from "@/components/layer-bar";
+import { ShareButton } from "@/components/share-button";
 import { MapLegend } from "@/components/map-legend";
 import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
@@ -126,12 +127,15 @@ function Home() {
         <div className="pointer-events-auto mx-auto max-w-lg rounded-2xl bg-surface/80 px-3 py-1.5 shadow-[var(--shadow-border)] backdrop-blur-md">
           <div className="flex items-center justify-between gap-3">
             <h1 className="text-sm font-semibold tracking-tight text-fg md:text-base">{APP_NAME}</h1>
-            <Link
-              to="/about"
-              className="shrink-0 text-xs font-medium text-muted underline-offset-2 hover:text-fg hover:underline"
-            >
-              About
-            </Link>
+            <div className="flex shrink-0 items-center gap-1">
+              <ShareButton label="Share" className="-my-2 h-8 px-2" />
+              <Link
+                to="/about"
+                className="text-xs font-medium text-muted underline-offset-2 hover:text-fg hover:underline"
+              >
+                About
+              </Link>
+            </div>
           </div>
           <p className="text-[10px] leading-tight text-muted">{PLACE_LINE}</p>
           <div className="mt-1">
