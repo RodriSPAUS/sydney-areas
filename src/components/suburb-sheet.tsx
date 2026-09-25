@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
@@ -482,6 +483,15 @@ export function SuburbSheet() {
                 {section.body}
               </Block>
             ))}
+            <p className="border-t border-border pt-3 text-sm">
+              <Link
+                to="/suburb/$id"
+                params={{ id: suburb.id }}
+                className="font-medium text-primary underline-offset-2 hover:underline"
+              >
+                Full page for {suburb.name} →
+              </Link>
+            </p>
           </div>
         </div>
       ) : null}

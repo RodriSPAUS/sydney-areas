@@ -5,6 +5,18 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — A text page per suburb
+
+**What:** `/suburb/<id>` is a server-rendered page for each of the 663
+suburbs: Safety, Housing, Transit and Backgrounds as plain text with the
+same figures, rank sentences and caveats as the sheet, a “See on the map”
+button, its own title, description and canonical. Unknown ids return 404.
+The sheet links to it. `npm run data:sitemap` writes all 665 URLs.
+
+**Why:** The map is one URL with query strings, so search engines had one
+page and almost no text. Phase 2 needs pages people can land on from a
+search for “Bondi crime rate” or “Parramatta rent”.
+
 ## 2026-09-25 — Basemap: OpenFreeMap Positron instead of Esri Canvas
 
 **What:** The basemap is the OpenFreeMap Positron vector style (OSM data).

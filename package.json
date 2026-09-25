@@ -22,7 +22,8 @@
     "data:bocsar": "node scripts/fetch-bocsar-safety.mjs",
     "data:polygons": "node scripts/fetch-sal-polygons.mjs",
     "data:census": "node scripts/fetch-census-2021.mjs",
-    "data:housing": "node scripts/fetch-dcj-housing.mjs"
+    "data:housing": "node scripts/fetch-dcj-housing.mjs",
+    "data:sitemap": "node scripts/build-sitemap.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",

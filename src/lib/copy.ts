@@ -33,7 +33,7 @@ export const SAFETY_VISITOR_NOTE =
   "Most people here on a given day are workers or visitors, not residents. Incidents involving them still count, so the per-resident rate overstates it.";
 
 export const SAFETY_TOO_FEW =
-  "No map colour: fewer than 1,000 Census 2021 residents, too few for a stable rate. Counts are below.";
+  "No map colour: fewer than 1,000 Census 2021 residents, too few for a stable rate.";
 
 export const HOUSING_DCJ_NOTE =
   "Median weekly rent of new bonds (DCJ), by postcode. A neighbour may share this figure.";

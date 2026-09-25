@@ -7,7 +7,8 @@ Map of Greater Sydney suburbs. No account. Safety is BOCSAR recorded incidents. 
 - Full-screen map (MapLibre on the OpenFreeMap Positron basemap, © OpenStreetMap contributors)
 - Real suburb shapes (ABS SAL 2021)
 - Layers: Safety, Housing, Transit, Backgrounds
-- Shareable URL for suburb, layer, and safety metric
+- Shareable URL for suburb, layer, and safety metric, plus a Share button
+- A text page per suburb at `/suburb/<id>` for search engines and links
 - Hover for a snapshot (mouse); tap or click for the profile
 
 ## Run
@@ -31,6 +32,7 @@ npm run data:bocsar
 npm run data:bocsar -- --fresh
 npm run data:census
 npm run data:housing
+npm run data:sitemap
 ```
 
 Zips and xlsx are cached under `data/cache/` (gitignored). `unzip` is required for BOCSAR, Census DataPack and the SAL–POA correspondence. The app never downloads source tables in the browser.
