@@ -1,12 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ABOUT_INTRO, APP_DESCRIPTION, APP_NAME, CONTACT_BLURB, CONTACT_EMAIL, CONTACT_HEADING, SOURCE_LINES, TAGLINE } from "@/lib/copy";
+import {
+  ABOUT_INTRO,
+  APP_DESCRIPTION,
+  APP_NAME,
+  CONTACT_BLURB,
+  CONTACT_EMAIL,
+  CONTACT_HEADING,
+  SITE_URL,
+  SOURCE_LINES,
+  TAGLINE,
+} from "@/lib/copy";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: `About · ${APP_NAME}` },
       { name: "description", content: APP_DESCRIPTION },
+      { property: "og:title", content: `About · ${APP_NAME}` },
+      { property: "og:url", content: `${SITE_URL}/about` },
+      { property: "og:image", content: `${SITE_URL}/og.jpg` },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
   }),
   component: About,
 });

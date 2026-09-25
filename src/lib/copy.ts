@@ -1,5 +1,8 @@
 export const APP_NAME = "Uvicus";
 
+/** Production origin, for canonical links and absolute share-card URLs. */
+export const SITE_URL = "https://uvicus.com";
+
 export const PLACE_LINE = "Greater Sydney";
 
 export const TAGLINE =

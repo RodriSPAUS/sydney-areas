@@ -8,7 +8,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, PLACE_LINE } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, PLACE_LINE, SITE_URL } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -22,15 +22,22 @@ export const Route = createFileRoute("/")({
   validateSearch: validateMapSearch,
   head: ({ match }) => {
     const title = shareTitle(match.search.s, layerFromSearch(match.search));
+    // A shared suburb link keeps its own card URL; search engines get one canonical map.
+    const query = new URLSearchParams(
+      Object.entries(match.search).filter((e): e is [string, string] => typeof e[1] === "string"),
+    ).toString();
     return {
       meta: [
         { title },
         { property: "og:title", content: title },
         { property: "og:description", content: APP_DESCRIPTION },
-        { property: "og:image", content: "/og.jpg" },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: `${SITE_URL}/${query ? `?${query}` : ""}` },
+        { property: "og:image", content: `${SITE_URL}/og.jpg` },
         { name: "twitter:title", content: title },
         { name: "twitter:card", content: "summary_large_image" },
       ],
+      links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     };
   },
   component: Home,
