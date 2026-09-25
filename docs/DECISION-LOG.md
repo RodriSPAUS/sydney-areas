@@ -5,6 +5,25 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — Hover vs selection, update emails, automatic data refresh
+
+**What:**
+- The selected suburb has its own thick outline layer; hover only lifts
+  the fill and draws a medium grey edge. Re-selecting the open suburb no
+  longer re-runs `fitBounds`.
+- A per-suburb “email me when figures update” form on the sheet and the
+  suburb page, posting to Buttondown with a `suburb:<id>` tag. Hidden until
+  `VITE_SIGNUP_ENDPOINT` is set. /about has a privacy note.
+- A monthly GitHub Action re-runs BOCSAR and DCJ and opens a PR. The DCJ
+  script now finds the newest quarter on the DCJ report page instead of a
+  hardcoded file name. `npm run data:check` blocks the PR if row counts,
+  periods or the rent range look wrong.
+
+**Why:** Two suburbs looked selected with the sheet open. Email is the
+Phase 1 retention hook without login. Data dated “Jun 2026” a year later
+would cost more trust than any bug; and a failed DCJ download writes an
+empty file by design, which must never be merged unnoticed.
+
 ## 2026-09-25 — A text page per suburb
 
 **What:** `/suburb/<id>` is a server-rendered page for each of the 663

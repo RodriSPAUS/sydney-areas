@@ -23,7 +23,8 @@
     "data:polygons": "node scripts/fetch-sal-polygons.mjs",
     "data:census": "node scripts/fetch-census-2021.mjs",
     "data:housing": "node scripts/fetch-dcj-housing.mjs",
-    "data:sitemap": "node scripts/build-sitemap.mjs"
+    "data:sitemap": "node scripts/build-sitemap.mjs",
+    "data:check": "node scripts/check-data.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",

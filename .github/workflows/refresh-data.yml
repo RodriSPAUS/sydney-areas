@@ -1,0 +1,81 @@
+name: Refresh data
+
+# BOCSAR and DCJ both publish quarterly, on no fixed day. Checking monthly
+# catches a new cut within a few weeks; a month with nothing new opens no PR.
+on:
+  schedule:
+    - cron: "17 21 20 * *" # 20th of each month, 21:17 UTC (morning of the 21st in Sydney)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      # Only the sources that change. Census 2021 and ABS boundaries are fixed.
+      - name: BOCSAR recorded incidents
+        run: npm run data:bocsar -- --fresh
+
+      - name: DCJ rent and sales
+        run: npm run data:housing -- --fresh
+
+      - name: Sitemap
+        run: npm run data:sitemap
+
+      # A failed download can leave an empty or partial file. Stop here so it
+      # never becomes a PR.
+      - name: Sanity-check the new data
+        run: npm run data:check
+
+      - run: npm run typecheck
+      - run: npm run test:app
+
+      - name: Summarise what changed
+        id: summary
+        run: |
+          {
+            echo 'body<<EOF'
+            echo 'Automated monthly refresh from BOCSAR and NSW DCJ.'
+            echo
+            echo '```'
+            npm run -s data:check 2>&1
+            echo '```'
+            echo
+            echo '```'
+            git diff --stat -- src/data public/sitemap.xml
+            echo '```'
+            echo
+            echo 'Before merging: open a few suburbs and check the Safety period and the Housing quarter on the sheet.'
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open or update the PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: data/refresh
+          delete-branch: true
+          add-paths: |
+            src/data/bocsar-safety.json
+            src/data/dcj-housing.json
+            public/sitemap.xml
+          commit-message: "Refresh BOCSAR and DCJ data"
+          title: "Refresh BOCSAR and DCJ data"
+          body: ${{ steps.summary.outputs.body }}
+          labels: data

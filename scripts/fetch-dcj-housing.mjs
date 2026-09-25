@@ -12,7 +12,7 @@
 import { spawnSync } from "node:child_process";
 import { createWriteStream, readFileSync } from "node:fs";
 import { mkdir, rename, rm, stat, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
@@ -20,6 +20,8 @@ import ExcelJS from "exceljs";
 
 const REPORT_URL =
   "https://dcj.nsw.gov.au/about-us/families-and-communities-statistics/housing-rent-and-sales/rent-and-sales-report.html";
+// Last known files. main() looks for newer ones on REPORT_URL first, so a new
+// quarter is picked up without editing this script.
 const RENT_URL =
   "https://dcj.nsw.gov.au/content/dam/dcj/dcj-website/documents/about-us/families-and-communities-statistics/housing-and-rent-sales/rent-tables-june-2026-quarter.xlsx";
 const SALES_URL =
@@ -33,8 +35,6 @@ const MISSING = new Set(["", "null", "na", "n.a.", "n/a", "..", "...", "-", "*",
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cacheDir = join(root, "data", "cache");
-const rentPath = join(cacheDir, "rent-tables-june-2026-quarter.xlsx");
-const salesPath = join(cacheDir, "sales-tables-march-2026-quarter.xlsx");
 const corrZipPath = join(cacheDir, "asgs2021correspondences.zip");
 const corrXlsxPath = join(cacheDir, "CG_SAL_2021_POA_2021.xlsx");
 const polygonsPath = join(root, "src", "data", "suburb-polygons.json");
@@ -435,6 +435,39 @@ async function writeEmpty(reason) {
   console.error(`Wrote empty ${outPath} (${reason}). Census 2021 housing stays.`);
 }
 
+const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+
+/**
+ * Newest `<kind>-tables-<month>-<year>-quarter.xlsx` linked from the DCJ report
+ * page, or `fallback` when the page cannot be read or lists none.
+ */
+async function latestTableUrl(kind, fallback) {
+  let html;
+  try {
+    const res = await fetch(REPORT_URL, { headers: UA });
+    if (!res.ok) throw new Error(String(res.status));
+    html = await res.text();
+  } catch (err) {
+    console.error(`Could not read ${REPORT_URL} (${err instanceof Error ? err.message : err}); using ${fallback}`);
+    return fallback;
+  }
+  const re = new RegExp(`[^"'\\s>]*${kind}-tables-([a-z]+)-(\\d{4})-quarter\\.xlsx`, "gi");
+  let best = null;
+  for (const m of html.matchAll(re)) {
+    const month = MONTHS.indexOf(m[1].toLowerCase());
+    if (month < 0) continue;
+    const key = Number(m[2]) * 12 + month;
+    if (!best || key > best.key) best = { key, href: m[0] };
+  }
+  if (!best) {
+    console.error(`No ${kind} tables linked on ${REPORT_URL}; using ${fallback}`);
+    return fallback;
+  }
+  const url = new URL(best.href, REPORT_URL).href;
+  console.error(`Latest ${kind} tables: ${url}`);
+  return url;
+}
+
 async function main() {
   const fresh = process.argv.includes("--fresh");
   await mkdir(cacheDir, { recursive: true });
@@ -443,12 +476,17 @@ async function main() {
   const census = JSON.parse(readFileSync(censusPath, "utf8"));
   const censusById = new Map(census.suburbs.map((row) => [row.id, row]));
 
-  const gotRent = await downloadFile(RENT_URL, rentPath, fresh);
+  const rentUrl = await latestTableUrl("rent", RENT_URL);
+  const salesUrl = await latestTableUrl("sales", SALES_URL);
+  const rentPath = join(cacheDir, basename(new URL(rentUrl).pathname));
+  const salesPath = join(cacheDir, basename(new URL(salesUrl).pathname));
+
+  const gotRent = await downloadFile(rentUrl, rentPath, fresh);
   if (!gotRent) {
     await writeEmpty("Could not download DCJ rent tables");
     return;
   }
-  const gotSales = await downloadFile(SALES_URL, salesPath, fresh);
+  const gotSales = await downloadFile(salesUrl, salesPath, fresh);
 
   let rent;
   try {

@@ -33,7 +33,10 @@ npm run data:bocsar -- --fresh
 npm run data:census
 npm run data:housing
 npm run data:sitemap
+npm run data:check   # sanity gate: row counts, periods, rent range
 ```
+
+`.github/workflows/refresh-data.yml` runs BOCSAR + DCJ on the 20th of each month and opens a `data/refresh` PR only when something changed and `data:check` passes. The DCJ script finds the newest quarter's tables on the DCJ report page.
 
 Zips and xlsx are cached under `data/cache/` (gitignored). `unzip` is required for BOCSAR, Census DataPack and the SAL–POA correspondence. The app never downloads source tables in the browser.
 

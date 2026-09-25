@@ -86,7 +86,7 @@ Acquisition before compare-UI. Per-suburb pages beat a 2–4 suburb comparator.
 - [ ] Relocate slot on the sheet: movers + NBN/ISP (one partner or a comparison link)
 - [ ] Written ad policy: no ads on Safety; no “this area is dangerous, buy an alarm”
 - [ ] Search Console + ~20 suburb pages indexed (robots.txt, 665-URL sitemap and canonical are in — submit the sitemap)
-- [ ] Calendar reminder: refresh DCJ quarterly, BOCSAR when a new cut lands
+- [x] Refresh DCJ and BOCSAR automatically: monthly GitHub Action opens a `data/refresh` PR when a new cut lands
 
 Exit to paid ads: ~1,000 visits/month or ~200 Domain clicks/month.
 
