@@ -89,19 +89,24 @@ export function layerRank(id: string, layer: Choropleth, metric: SafetyMetric): 
   return bornAuRanks.get(id);
 }
 
-export function rankCaption(layer: Choropleth, metric: SafetyMetric): string {
-  if (layer === "safety") {
-    const what =
-      metric === "violence"
-        ? "recorded violent incidents"
-        : metric === "property"
-          ? "recorded property incidents"
-          : metric === "domestic"
-            ? "domestic assault"
-            : "violence + property incidents";
-    return `1 = fewest ${what} per 1,000`;
-  }
-  if (layer === "housing") return "1 = lowest weekly rent";
-  if (layer === "transit") return "1 = lowest short-walk coverage";
-  return "1 = lowest share born in Australia";
+const MORE_LESS: Record<Choropleth, [string, string]> = {
+  safety: ["More recorded incidents", "Fewer recorded incidents"],
+  housing: ["Higher rent", "Lower rent"],
+  transit: ["More of the suburb near a stop", "Less of the suburb near a stop"],
+  backgrounds: ["Higher share born in Australia", "Lower share born in Australia"],
+};
+
+/**
+ * One direction for every layer: say which side of the pack this suburb is on,
+ * as a share of the suburbs ranked on this map. Rank 1 is always the lowest
+ * value, so `rank - 1` suburbs sit below and `of - rank` sit above.
+ */
+export function rankSentence(layer: Choropleth, rank: Rank): string {
+  const below = rank.rank - 1;
+  const above = rank.of - rank.rank;
+  const [more, less] = MORE_LESS[layer];
+  const pct = (n: number) => Math.round((n / rank.of) * 100);
+  const tail = `of ${rank.of.toLocaleString("en-AU")} suburbs on this map`;
+  if (below >= above) return `${more} than ${pct(below)}% ${tail}`;
+  return `${less} than ${pct(above)}% ${tail}`;
 }

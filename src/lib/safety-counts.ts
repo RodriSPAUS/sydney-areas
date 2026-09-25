@@ -40,3 +40,16 @@ export function metricCount(c: SafetyCounts, metric: SafetyMetric): number {
   if (metric === "domestic") return domesticCount(c);
   return allCount(c);
 }
+
+/**
+ * City-centre SALs where daytime population dwarfs usual residents. Kept to the
+ * CBD core on purpose: a longer list would be our opinion, not the data's.
+ */
+export const VISITOR_HUB_IDS: ReadonlySet<string> = new Set([
+  "sydney",
+  "haymarket",
+  "the-rocks-sydney-nsw",
+  "barangaroo",
+  "millers-point",
+  "dawes-point",
+]);

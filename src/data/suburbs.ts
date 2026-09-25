@@ -72,7 +72,12 @@ function clampPersonPct(value: number | null | undefined): number | null {
   return value;
 }
 
-const MIN_POP = 100;
+/**
+ * Below this many Census 2021 usual residents a per-1,000 rate swings on a
+ * handful of incidents (Barangaroo, Eastern Creek), so it is shown as counts
+ * only and never ranked or coloured.
+ */
+export const MIN_POP = 1000;
 
 function per1000(count: number, population: number | null | undefined): number | null {
   if (population == null || population < MIN_POP) return null;

@@ -175,21 +175,6 @@ export function fillColorExpression(
   return discreteFill("bornBand", BORN_AU_FILL);
 }
 
-export function safetyBandLabel(band: SafetyBand): string {
-  switch (band) {
-    case 5:
-      return "Fewer recorded incidents per 1,000 among Greater Sydney suburbs on this map";
-    case 4:
-      return "Below the middle among Greater Sydney suburbs on this map";
-    case 3:
-      return "Near the middle among Greater Sydney suburbs on this map";
-    case 2:
-      return "Above the middle among Greater Sydney suburbs on this map";
-    case 1:
-      return "More recorded incidents per 1,000 among Greater Sydney suburbs on this map";
-  }
-}
-
 export function activeSafetyBand(suburb: Suburb, metric: SafetyMetric): SafetyBand | undefined {
   return SAFETY_BANDS[metric].get(suburb.id);
 }

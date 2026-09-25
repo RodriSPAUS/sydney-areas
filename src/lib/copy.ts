@@ -14,15 +14,18 @@ export const FOOTER_LINE =
   "Sources (open data, unofficial): Boundaries ABS SAL 2021 · Safety BOCSAR · Households and ancestry Census 2021 · Rent DCJ or Census 2021.";
 
 export const SAFETY_DISCLAIMER =
-  "Recorded incidents per 1,000 residents on this map. Not an official BOCSAR score.";
+  "Ranked on this map by recorded incidents per 1,000 residents. Not an official BOCSAR score and not a live risk score.";
 
 export const SAFETY_WINDOW = "Last 12 months";
 
-export const SAFETY_WINDOW_NOTE =
-  "Map colour and the rates use the last 12 months. Not a live risk score.";
+export const SAFETY_DENOMINATOR_NOTE =
+  "Rates divide by Census 2021 residents. Suburbs that have grown since 2021, or that draw many visitors or workers, read higher than a resident would feel.";
 
-export const SAFETY_RANK_NOTE =
-  "Ranked among Greater Sydney suburbs. Darker = more incidents in the selected category. Not a live risk score.";
+export const SAFETY_VISITOR_NOTE =
+  "Most people here on a given day are workers or visitors, not residents. Incidents involving them still count, so the per-resident rate overstates it.";
+
+export const SAFETY_TOO_FEW =
+  "No map colour: fewer than 1,000 Census 2021 residents, too few for a stable rate. Counts are below.";
 
 export const HOUSING_DCJ_NOTE =
   "Median weekly rent of new bonds (DCJ), by postcode. A neighbour may share this figure.";
@@ -64,7 +67,7 @@ export const SOURCE_LINES = [
   {
     name: "Safety",
     detail:
-      "NSW Bureau of Crime Statistics and Research (BOCSAR) recorded incidents, last 12 months, per 1,000 Census 2021 residents. Violence: homicide, sexual offences, non-DV assault, assault on police, robbery, theft from person. Property: break-and-enter dwelling, theft from home / vehicle, stolen vehicles, malicious damage. All: violence + property. Not domestic. Not retail. Domestic: DV assault only, and it only colours the Domestic chip. Ranked on this map. Not an official BOCSAR score. Not a live risk score.",
+      "NSW Bureau of Crime Statistics and Research (BOCSAR) recorded incidents, last 12 months, per 1,000 Census 2021 residents. Violence: homicide, sexual offences, non-DV assault, assault on police, robbery, theft from person. Property: break-and-enter dwelling, theft from home / vehicle, stolen vehicles, malicious damage. All: violence + property. Not domestic. Not retail. Domestic: DV assault only, and it only colours the Domestic chip. Suburbs with fewer than 1,000 Census 2021 residents are listed but not ranked or coloured. Rates use 2021 residents, so fast-growing suburbs and the CBD, where most people are visitors or workers, read higher. Ranked on this map. Not an official BOCSAR score. Not a live risk score.",
   },
   {
     name: "Housing",

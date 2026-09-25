@@ -1,4 +1,5 @@
-import { activeSafetyBand, formatAud, safetyBandLabel } from "@/lib/choropleth";
+import { formatAud } from "@/lib/choropleth";
+import { rankSentence, safetyRank } from "@/lib/ranks";
 import { TRANSIT_MODE_LABEL } from "@/lib/access";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import type { Suburb } from "@/lib/suburb-types";
@@ -16,7 +17,7 @@ export function SuburbTooltip({
   x: number;
   y: number;
 }) {
-  const safetyBand = activeSafetyBand(suburb, metric);
+  const sRank = safetyRank(suburb.id, metric);
   const transitLine = (suburb: Suburb) => {
     const modes = suburb.transit.modesNearby.map((mode) => TRANSIT_MODE_LABEL[mode]);
     if (modes.length === 0) return "No rail, metro, light rail or ferry within a short walk";
@@ -25,8 +26,8 @@ export function SuburbTooltip({
 
   const primary =
     layer === "safety"
-      ? safetyBand
-        ? `Band ${safetyBand} of 5`
+      ? sRank
+        ? `${sRank.value} / 1,000 residents`
         : suburb.safety?.last12Months
           ? "Counts only · no stable rate"
           : "No BOCSAR extract"
@@ -44,10 +45,10 @@ export function SuburbTooltip({
 
   const secondary =
     layer === "safety"
-      ? safetyBand
-        ? safetyBandLabel(safetyBand)
+      ? sRank
+        ? rankSentence("safety", sRank)
         : suburb.safety?.population
-          ? "Census population too small for a rate"
+          ? "Fewer than 1,000 residents: too few for a stable rate"
           : "Boundary only"
       : layer === "housing"
         ? suburb.housing?.medianPurchase != null

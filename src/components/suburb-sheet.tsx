@@ -9,15 +9,17 @@ import {
   HOUSING_CENSUS_NOTE,
   HOUSING_DCJ_NOTE,
   NO_DATA_LABEL,
+  SAFETY_DENOMINATOR_NOTE,
   SAFETY_DISCLAIMER,
-  SAFETY_RANK_NOTE,
+  SAFETY_TOO_FEW,
+  SAFETY_VISITOR_NOTE,
   SAFETY_WINDOW,
-  SAFETY_WINDOW_NOTE,
 } from "@/lib/copy";
 import { TRANSIT_MODE_LABEL } from "@/lib/access";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
-import { layerRank, rankCaption, safetyRank } from "@/lib/ranks";
+import { layerRank, rankSentence, safetyRank } from "@/lib/ranks";
+import { metricCount, VISITOR_HUB_IDS } from "@/lib/safety-counts";
 import type { SafetyBand, SafetyCounts, Suburb } from "@/lib/suburb-types";
 import { cn } from "@/lib/utils";
 
@@ -143,38 +145,33 @@ function SafetyBody({ suburb }: { suburb: Suburb }) {
     );
   }
 
+  const incidents = counts ? metricCount(counts, safetyMetric) : null;
+  const population = suburb.safety.population;
+
   return (
     <>
       <div className="space-y-2">
         <p className="text-2xl font-semibold tracking-tight tabular-nums">
           {rateLabel(metricRate(suburb, safetyMetric))}
-          <span className="ml-1 text-sm font-medium text-muted">/ 1,000</span>
+          <span className="ml-1 text-sm font-medium text-muted">/ 1,000 residents</span>
         </p>
         <p className="text-xs text-muted">
-          {SAFETY_WINDOW}
-          {suburb.safety?.period12 ? ` · ${suburb.safety.period12}` : ""}. Colour uses this rate.
+          {incidents != null ? `${incidents.toLocaleString("en-AU")} recorded incidents` : SAFETY_WINDOW}
+          {suburb.safety.period12 ? ` · ${suburb.safety.period12}` : ""}
+          {population ? ` · ${population.toLocaleString("en-AU")} residents (Census 2021)` : ""}
         </p>
-        <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
         {metricBand ? (
           <>
             <BandBar band={metricBand} />
-            <p className="font-medium">
-              Band {metricBand} of 5
-              {sRank ? (
-                <span className="text-muted">
-                  {" "}
-                  · #{sRank.rank} of {sRank.of} on this map
-                </span>
-              ) : null}
-            </p>
-            <p className="text-xs text-muted">{rankCaption("safety", safetyMetric)}</p>
-            <p className="text-xs text-muted">{SAFETY_RANK_NOTE}</p>
+            {sRank ? <p className="font-medium">{rankSentence("safety", sRank)}</p> : null}
           </>
         ) : (
-          <p className="font-medium">
-            No map colour — too few Census 2021 residents for a stable rate
-          </p>
+          <p className="font-medium">{SAFETY_TOO_FEW}</p>
         )}
+        {VISITOR_HUB_IDS.has(suburb.id) ? (
+          <p className="rounded-xl bg-bg px-3 py-2 text-xs text-fg">{SAFETY_VISITOR_NOTE}</p>
+        ) : null}
+        <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
       </div>
       <div className="mt-2 hidden grid-cols-2 gap-2 md:grid">
         <Stat label="All / 1,000" value={rateLabel(suburb.safety.allPer1000)} />
@@ -182,11 +179,6 @@ function SafetyBody({ suburb }: { suburb: Suburb }) {
         <Stat label="Property / 1,000" value={rateLabel(suburb.safety.propertyPer1000)} />
         <Stat label="Domestic / 1,000" value={rateLabel(suburb.safety.domesticPer1000)} />
       </div>
-      {suburb.safety.population ? (
-        <p className="text-xs text-muted">
-          Census 2021 usual residents {suburb.safety.population.toLocaleString("en-AU")}
-        </p>
-      ) : null}
       <details className="group mt-2">
         <summary className="flex h-11 cursor-pointer list-none items-center justify-between text-sm font-medium text-fg">
           Recorded incidents
@@ -206,7 +198,7 @@ function SafetyBody({ suburb }: { suburb: Suburb }) {
             ))}
           </ul>
         ) : null}
-        <p className="mt-2 text-xs text-muted">{SAFETY_WINDOW_NOTE}</p>
+        <p className="mt-2 text-xs text-muted">{SAFETY_DENOMINATOR_NOTE}</p>
         <p className="mt-2 text-xs text-muted">
           All is violence + property. Retail theft and domestic assault are not in All. The list is
           the last 12 months. NSW Bureau of Crime Statistics and Research (BOCSAR). CC-BY 3.0 AU.
@@ -251,7 +243,7 @@ function HousingBody({ suburb }: { suburb: Suburb }) {
       {h ? <p className="text-xs text-muted">{dcj ? HOUSING_DCJ_NOTE : HOUSING_CENSUS_NOTE}</p> : null}
       {hRank ? (
         <p className="text-xs text-muted">
-          #{hRank.rank} of {hRank.of} · {rankCaption("housing", "all")}
+          {rankSentence("housing", hRank)}
         </p>
       ) : null}
       {hh ? (
@@ -338,7 +330,7 @@ function TransitBody({ suburb }: { suburb: Suburb }) {
       {modes.length ? <p className="text-sm text-muted">{modes.join(" · ")}</p> : null}
       {rank ? (
         <p className="text-xs text-muted">
-          #{rank.rank} of {rank.of} · {rankCaption("transit", "all")}
+          {rankSentence("transit", rank)}
         </p>
       ) : null}
       {groups.map((group) => (
@@ -374,7 +366,7 @@ function BackgroundsBody({ suburb }: { suburb: Suburb }) {
       )}
       {rank ? (
         <p className="text-xs text-muted">
-          #{rank.rank} of {rank.of} · {rankCaption("backgrounds", "all")}
+          {rankSentence("backgrounds", rank)}
         </p>
       ) : null}
       <p>{suburb.backgrounds.topAncestries.map((a) => `${a.name} ${a.pct}%`).join(" · ")}</p>
