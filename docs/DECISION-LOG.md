@@ -5,6 +5,19 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — Share button; template auth and database removed
+
+**What:** A Share button in the header and on the suburb sheet. Touch
+devices get the native share sheet, others copy the link. Plausible gets
+a `share` event. Removed the app-builder template's unused auth
+(better-auth), PGLite database, migrations, multiplayer, connector client,
+their scripts and tests, and 38 unused packages. The Grok PWA and preview
+plumbing stays.
+
+**Why:** The URL could already be shared but nothing said so. The product
+has no login (see Rules), and the template code added weight, a lint error
+and failing tests without doing anything for the map.
+
 ## 2026-09-25 — Safety ranks only 1,000+ residents, in one direction
 
 **What:** A per-1,000 rate needs at least 1,000 Census 2021 usual residents

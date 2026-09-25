@@ -6,7 +6,8 @@
  */
 
 import { z } from "zod";
-import { CONNECTOR_TOKEN_READY_EVENT } from "./app-data/types";
+/** Was shared with the removed app-data connector client; the bridge still relays it. */
+const CONNECTOR_TOKEN_READY_EVENT = "grok:connector-token-ready";
 import { resolveParentEmbedderOrigin } from "./preview-embedder-origin";
 
 export {
