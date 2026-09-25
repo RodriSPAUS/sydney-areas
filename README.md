@@ -4,7 +4,7 @@ Map of Greater Sydney suburbs. No account. Safety is BOCSAR recorded incidents. 
 
 ## What it does
 
-- Full-screen map (MapLibre)
+- Full-screen map (MapLibre on the OpenFreeMap Positron basemap, © OpenStreetMap contributors)
 - Real suburb shapes (ABS SAL 2021)
 - Layers: Safety, Housing, Transit, Backgrounds
 - Shareable URL for suburb, layer, and safety metric

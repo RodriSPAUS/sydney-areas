@@ -5,6 +5,17 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — Basemap: OpenFreeMap Positron instead of Esri Canvas
+
+**What:** The basemap is the OpenFreeMap Positron vector style (OSM data).
+The style JSON is fetched with a 5 s timeout; if it fails, the map uses a
+plain background so suburbs still draw. Attribution keeps OSM/OpenMapTiles
+from the style and adds ABS, BOCSAR and DCJ.
+
+**Why:** Esri's `server.arcgisonline.com` Canvas tiles are for ArcGIS
+account holders; a site that plans outbound partner links should not rely
+on them. OpenFreeMap is free for commercial use and needs no key.
+
 ## 2026-09-25 — Share button; template auth and database removed
 
 **What:** A Share button in the header and on the suburb sheet. Touch

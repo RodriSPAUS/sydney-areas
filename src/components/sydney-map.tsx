@@ -31,49 +31,34 @@ const ZONE_BOUNDS: [[number, number], [number, number]] = [
   [151.32, -33.7],
 ];
 
-const BASEMAP: StyleSpecification = {
+/**
+ * OpenFreeMap Positron: vector OSM basemap, free for commercial use, no key.
+ * The Esri Canvas tiles this replaces are licensed for ArcGIS accounts only.
+ */
+const BASEMAP_URL = "https://tiles.openfreemap.org/styles/positron";
+
+/** If the basemap style cannot be fetched, suburbs still draw on a plain ground. */
+const FALLBACK_STYLE: StyleSpecification = {
   version: 8,
-  name: "esri-light-gray",
-  glyphs: "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-  sources: {
-    esri: {
-      type: "raster",
-      tiles: [
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-      ],
-      tileSize: 256,
-      attribution: "Tiles © Esri · Boundaries ABS · Safety BOCSAR",
-      maxzoom: 16,
-    },
-    esriRef: {
-      type: "raster",
-      tiles: [
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-      ],
-      tileSize: 256,
-      maxzoom: 16,
-    },
-  },
-  layers: [
-    {
-      id: "background",
-      type: "background",
-      paint: { "background-color": "#e8e4dc" },
-    },
-    {
-      id: "esri-base",
-      type: "raster",
-      source: "esri",
-      paint: { "raster-opacity": 0.94 },
-    },
-    {
-      id: "esri-ref",
-      type: "raster",
-      source: "esriRef",
-      paint: { "raster-opacity": 0.88 },
-    },
-  ],
+  name: "plain",
+  glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  sources: {},
+  layers: [{ id: "background", type: "background", paint: { "background-color": "#e8e4dc" } }],
 };
+
+async function loadBasemap(): Promise<StyleSpecification> {
+  const ctrl = new AbortController();
+  const timer = window.setTimeout(() => ctrl.abort(), 5000);
+  try {
+    const res = await fetch(BASEMAP_URL, { signal: ctrl.signal });
+    if (!res.ok) throw new Error(String(res.status));
+    return (await res.json()) as StyleSpecification;
+  } catch {
+    return FALLBACK_STYLE;
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
 
 function fillOpacity(selectedId: string): ExpressionSpecification {
   return [
@@ -310,20 +295,24 @@ export function SydneyMap() {
 
     const ready = Promise.all([
       import("maplibre-gl"),
+      loadBasemap(),
       import("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url"),
     ])
-      .then(([maplibregl, worker]) => {
+      .then(([maplibregl, basemap, worker]) => {
         if (cancelled || !containerRef.current) return;
         maplibregl.setWorkerUrl(worker.default);
         const instance = new maplibregl.Map({
           container: containerRef.current,
-          style: BASEMAP,
+          style: basemap,
           center: SYDNEY,
           zoom: DEFAULT_ZOOM,
           minZoom: 8.5,
           maxZoom: 16,
           maxBounds: MAX_BOUNDS,
-          attributionControl: { compact: true },
+          attributionControl: {
+            compact: true,
+            customAttribution: "Boundaries ABS · Safety BOCSAR · Rent DCJ",
+          },
           dragRotate: false,
           pitchWithRotate: false,
           touchPitch: false,
