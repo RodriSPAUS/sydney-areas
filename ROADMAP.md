@@ -61,13 +61,13 @@ Original beta plus the review items that are product, not taste.
 - [x] Events: search, layer, suburb open, outbound click
 - [ ] 10–20 testers (Moving to Sydney groups, internationals)
 - [x] Mobile: layer chips in the sheet header so a layer change does not require closing the sheet
-- [ ] Hover ≠ selected (no polygon scale). Sheet open + hover on another suburb must not look like two selections
+- [x] Hover ≠ selected (no polygon scale). Sheet open + hover on another suburb must not look like two selections
 - [x] Clear search query on deselect; do not serialise `metric=` when `layer !== safety`
-- [ ] One `fitBounds` per select (no double-fit camera shake)
+- [x] One `fitBounds` per select (no double-fit camera shake)
 - [x] Spinner / skeleton before the map load (2.3 MB cold start)
 - [ ] Backgrounds: one ethical line — ancestry is multi-response Census 2021, not a character judgement
 - [ ] Fix the worst data bugs testers find (after the Phase 0 clamp)
-- [ ] Email capture: “Ping me when rents / crime update for suburbs I follow”
+- [x] Email capture: “Ping me when rents / crime update for suburbs I follow” (Buttondown, off until `VITE_SIGNUP_ENDPOINT` is set)
 - [ ] Payload later if testers on 4G name it: simplify / gzip GeoJSON. PMTiles only if that is still not enough
 
 Exit: ~200 visits/week or 50 distinct suburb opens, and no “this calls X a slum” complaint.

@@ -39,6 +39,12 @@ Zips and xlsx are cached under `data/cache/` (gitignored). `unzip` is required f
 
 - Polygons: `src/data/suburb-polygons.json`
 
+## Update emails (optional)
+
+Set `VITE_SIGNUP_ENDPOINT` in `.env.production` to your Buttondown embed URL,
+`https://buttondown.com/api/emails/embed-subscribe/<username>`. Each signup is
+tagged `suburb:<id>`. Without the variable the form is not shown.
+
 ## Deploy (Cloudflare Pages)
 
 The app defaults to a Vercel Nitro build (`.vercel/output`). Cloudflare Pages

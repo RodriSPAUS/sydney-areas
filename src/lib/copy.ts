@@ -64,6 +64,11 @@ export const FIRST_VISIT_CTA = "Show the map";
 
 export const NO_DATA_LABEL = "No data";
 
+export const SIGNUP_BLURB = "Get an email when rent or crime figures for {suburb} update.";
+
+export const SIGNUP_PRIVACY =
+  "A few emails a year at most. Your address is kept by Buttondown for these notices only. Unsubscribe from any email.";
+
 export const CONTACT_EMAIL = "c8labs@agentmail.to";
 
 export const CONTACT_HEADING = "Contact";

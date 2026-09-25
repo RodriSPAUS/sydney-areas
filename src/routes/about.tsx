@@ -55,6 +55,15 @@ function About() {
         </p>
 
         <h2 className="mt-8 text-[11px] font-semibold tracking-wide text-primary uppercase">
+          Privacy
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          No account and no cookies. Visits are counted with Plausible, which stores no personal
+          data. If you ask for update emails, your address and the suburbs you follow are kept by
+          Buttondown for those notices only.
+        </p>
+
+        <h2 className="mt-8 text-[11px] font-semibold tracking-wide text-primary uppercase">
           {CONTACT_HEADING}
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-muted">{CONTACT_BLURB}</p>

@@ -3,6 +3,7 @@ import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
 import { suburbsById } from "@/data/suburbs";
 import { LAYERS } from "@/components/layer-bar";
+import { EmailSignup } from "@/components/email-signup";
 import { ShareButton } from "@/components/share-button";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
@@ -492,6 +493,7 @@ export function SuburbSheet() {
                 Full page for {suburb.name} →
               </Link>
             </p>
+            <EmailSignup suburbId={suburb.id} suburbName={suburb.name} />
           </div>
         </div>
       ) : null}

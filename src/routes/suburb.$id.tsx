@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { EmailSignup } from "@/components/email-signup";
 import { suburbsById } from "@/data/suburbs";
 import { TRANSIT_MODE_LABEL } from "@/lib/access";
 import { formatAud } from "@/lib/choropleth";
@@ -261,6 +262,12 @@ function SuburbPage() {
         <Section title="Backgrounds">
           <BackgroundsSection suburb={suburb} />
         </Section>
+
+        <EmailSignup
+          suburbId={suburb.id}
+          suburbName={suburb.name}
+          className="mt-10 bg-surface shadow-[var(--shadow-border)]"
+        />
 
         <p className="mt-10 text-xs text-muted">
           Independent map, not affiliated with ABS, BOCSAR, DCJ or TfNSW.{" "}
