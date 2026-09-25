@@ -29,10 +29,6 @@ const POP_SOURCE_URL =
   "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/ABS_Socio_Economic_Indexes_for_Areas_SEIFA_by_2021_SAL/FeatureServer/0/query";
 const POP_ATTRIBUTION =
   "Australian Bureau of Statistics, Census of Population and Housing 2021, usual resident population by SAL";
-const MIN_POP = 100;
-const BAND_NOTE =
-  "Rank among Greater Sydney suburbs on this map, incidents per 1,000 Census 2021 residents. Combined = street + home offences. Retail theft is never used. Domestic assault only colours the Domestic metric.";
-
 const GROUPS = {
   homicide: "Homicide (murder, manslaughter, attempted murder)",
   sexualAssault: "Sexual offences / Sexual assault",
@@ -263,11 +259,6 @@ function matchUrp(mapSuburbs, nswRows) {
   return popById;
 }
 
-function per1000(count, pop) {
-  if (!pop || pop < MIN_POP) return null;
-  return Math.round((count / pop) * 10000) / 10;
-}
-
 /** @param {Record<string, number>} counts */
 function harmScore(counts) {
   let total = 0;
@@ -405,41 +396,6 @@ function periodLabel(months) {
   return `${a}–${b}`;
 }
 
-function quintiles(scores) {
-  const n = scores.length;
-  const order = scores.map((v, i) => ({ v, i })).sort((a, b) => a.v - b.v || a.i - b.i);
-  const first = new Map();
-  for (let pos = 0; pos < n; pos++) {
-    if (!first.has(order[pos].v)) first.set(order[pos].v, pos);
-  }
-  return scores.map((v) => 5 - Math.min(4, Math.floor((first.get(v) * 5) / n)));
-}
-
-function median(values) {
-  const s = [...values].sort((a, b) => a - b);
-  const m = Math.floor(s.length / 2);
-  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
-}
-
-function vsMedian(score, med) {
-  if (med === 0) return score === 0 ? "near the median" : "above the median";
-  const r = score / med;
-  if (r <= 0.6) return "well below the median";
-  if (r < 0.9) return "below the median";
-  if (r <= 1.1) return "near the median";
-  if (r < 1.5) return "above the median";
-  return "well above the median";
-}
-
-function summarise(combinedRate, combinedMed, period12) {
-  const h = vsMedian(combinedRate, combinedMed);
-  return `Combined street and home incidents per 1,000 residents sit ${h} of Greater Sydney suburbs on this map. BOCSAR recorded incidents, ${period12}.`;
-}
-
-function clampBand(n) {
-  return Math.min(5, Math.max(1, n));
-}
-
 async function parseSuburbRows(mapSuburbs, lookup) {
   const entry = zipCsvName();
   console.error(`Streaming ${entry} from zip`);
@@ -553,79 +509,24 @@ async function main() {
   if (!haveZip || fresh) await downloadZip();
   else console.error(`Using cached ${zipPath}`);
 
-  const { byId, period12, period6, latestMonthInFile } = await parseSuburbRows(mapSuburbs, lookup);
+  const { byId, period12, latestMonthInFile } = await parseSuburbRows(mapSuburbs, lookup);
   const nswUrp = await loadNswUrp(fresh);
   const popById = matchUrp(mapSuburbs, nswUrp);
 
-  const rows = mapSuburbs
-    .map(({ id, name }) => {
-      const rec = byId[id];
-      if (!rec.seen) return null;
-      const c = rec.last12Months;
-      const population = popById.get(id) ?? null;
-      const streetScore = c.assaultNonDv + c.robbery + c.stealFromVehicle + c.motorVehicleTheft;
-      const dwellingScore = c.breakEnterDwelling + c.stealFromDwelling;
-      const combinedScore = streetScore + dwellingScore;
-      const domesticScore = c.assaultDv;
-      return {
-        id,
-        name,
-        population,
-        streetPer1000: per1000(streetScore, population),
-        dwellingPer1000: per1000(dwellingScore, population),
-        combinedPer1000: per1000(combinedScore, population),
-        domesticPer1000: per1000(domesticScore, population),
-        last12Months: rec.last12Months,
-        last6Months: rec.last6Months,
-      };
-    })
-    .filter(Boolean);
-
-  const ranked = rows.filter((r) => r.combinedPer1000 != null);
-  if (!ranked.length) fail("No suburbs had both BOCSAR counts and Census 2021 population. Do not invent numbers.");
-
-  function bandsFor(key) {
-    const eligible = ranked.filter((r) => r[key] != null);
-    const q = quintiles(eligible.map((r) => r[key]));
-    return new Map(eligible.map((r, i) => [r.id, clampBand(q[i])]));
-  }
-
-  const streetBands = bandsFor("streetPer1000");
-  const dwellingBands = bandsFor("dwellingPer1000");
-  const combinedBands = bandsFor("combinedPer1000");
-  const domesticBands = bandsFor("domesticPer1000");
-  const combinedMed = median(ranked.map((r) => r.combinedPer1000));
-
-  const suburbs = rows.map((r) => {
-    const bandCombined = combinedBands.get(r.id);
-    const bandStreet = streetBands.get(r.id);
-    const bandDwelling = dwellingBands.get(r.id);
-    const bandDomestic = domesticBands.get(r.id);
-    const summary =
-      bandCombined != null
-        ? summarise(r.combinedPer1000, combinedMed, period12)
-        : `Census 2021 usual residents are too few for a stable rate. Counts are still listed. BOCSAR recorded incidents, ${period12}.`;
-    return {
-      id: r.id,
-      name: r.name,
+  // Only what the app reads. Rates, bands and ranks are derived in
+  // src/data/suburbs.ts and src/lib/choropleth.ts so there is one definition.
+  const suburbs = mapSuburbs
+    .filter(({ id }) => byId[id].seen)
+    .map(({ id, name }) => ({
+      id,
+      name,
       period12,
-      period6,
-      ...(bandCombined != null ? { band: bandCombined, bandCombined } : {}),
-      ...(bandStreet != null ? { bandStreet } : {}),
-      ...(bandDwelling != null ? { bandDwelling } : {}),
-      ...(bandDomestic != null ? { bandDomestic } : {}),
-      bandNote: BAND_NOTE,
-      population: r.population,
+      population: popById.get(id) ?? null,
       populationYear: "2021",
-      streetPer1000: r.streetPer1000,
-      dwellingPer1000: r.dwellingPer1000,
-      combinedPer1000: r.combinedPer1000,
-      domesticPer1000: r.domesticPer1000,
-      last12Months: r.last12Months,
-      last6Months: r.last6Months,
-      summary,
-    };
-  });
+      last12Months: byId[id].last12Months,
+    }));
+  const withPop = suburbs.filter((r) => r.population != null);
+  if (!withPop.length) fail("No suburbs had both BOCSAR counts and Census 2021 population. Do not invent numbers.");
 
   const payload = {
     source: "BOCSAR SuburbData.csv",
@@ -642,7 +543,7 @@ async function main() {
 
   await writeFile(outPath, `${JSON.stringify(payload, null, 2)}\n`);
   console.error(
-    `Wrote ${outPath} (${suburbs.length} suburbs, ${ranked.length} with Greater Sydney combined bands, period ${period12})`,
+    `Wrote ${outPath} (${suburbs.length} suburbs, ${withPop.length} with Census 2021 population, period ${period12})`,
   );
 }
 

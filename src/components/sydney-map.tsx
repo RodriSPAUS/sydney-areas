@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { SuburbShapes } from "@/components/suburb-shapes";
 import { SuburbTooltip } from "@/components/suburb-tooltip";
 import { suburbsById } from "@/data/suburbs";
-import { TRANSIT_MODE_COLOR, transitLinesGeoJSON, transitPointsGeoJSON } from "@/lib/access";
+import { loadTransitLines, TRANSIT_MODE_COLOR, transitPointsGeoJSON } from "@/lib/access";
 import { fillColorExpression } from "@/lib/choropleth";
 import {
   bboxCorners,
@@ -162,6 +162,47 @@ function transitPaint(): ExpressionSpecification {
   ];
 }
 
+const TRANSIT_LAYER_IDS = ["transit-stops", "transit-lines", "transit-lines-casing"];
+
+/** Adds the GTFS line layers under the stop dots once their chunk has loaded. */
+function ensureTransitLines(map: MapLibreMap) {
+  void loadTransitLines().then((lines) => {
+    if (!lines || map.getSource("transit-lines") || !map.getLayer("transit-stops")) return;
+    const visibility = useMapStore.getState().choropleth === "transit" ? "visible" : "none";
+    map.addSource("transit-lines", { type: "geojson", data: lines });
+    map.addLayer(
+      {
+        id: "transit-lines-casing",
+        type: "line",
+        source: "transit-lines",
+        minzoom: 9,
+        layout: { visibility, "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": "#FFFCFF",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 3.5, 14, 7],
+          "line-opacity": 0.85,
+        },
+      },
+      "transit-stops",
+    );
+    map.addLayer(
+      {
+        id: "transit-lines",
+        type: "line",
+        source: "transit-lines",
+        minzoom: 9,
+        layout: { visibility, "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": transitPaint(),
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 14, 3.4],
+          "line-opacity": 0.92,
+        },
+      },
+      "transit-stops",
+    );
+  });
+}
+
 function addLayers(map: MapLibreMap) {
   if (map.getSource("suburbs")) return;
   map.addSource("suburbs", {
@@ -223,49 +264,6 @@ function addLayers(map: MapLibreMap) {
   });
 
   const showTransit = st.choropleth === "transit" ? "visible" : "none";
-  const lines = transitLinesGeoJSON();
-  if (lines) {
-    map.addSource("transit-lines", { type: "geojson", data: lines });
-    map.addLayer(
-      {
-        id: "transit-lines-casing",
-        type: "line",
-        source: "transit-lines",
-        minzoom: 9,
-        layout: {
-          visibility: showTransit,
-          "line-cap": "round",
-          "line-join": "round",
-        },
-        paint: {
-          "line-color": "#FFFCFF",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 3.5, 14, 7],
-          "line-opacity": 0.85,
-        },
-      },
-      "suburb-labels",
-    );
-    map.addLayer(
-      {
-        id: "transit-lines",
-        type: "line",
-        source: "transit-lines",
-        minzoom: 9,
-        layout: {
-          visibility: showTransit,
-          "line-cap": "round",
-          "line-join": "round",
-        },
-        paint: {
-          "line-color": transitPaint(),
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 14, 3.4],
-          "line-opacity": 0.92,
-        },
-      },
-      "suburb-labels",
-    );
-  }
-
   map.addSource("transit-stops", {
     type: "geojson",
     data: transitPointsGeoJSON(),
@@ -287,6 +285,7 @@ function addLayers(map: MapLibreMap) {
     },
     "suburb-labels",
   );
+  if (st.choropleth === "transit") ensureTransitLines(map);
 }
 
 export function SydneyMap() {
@@ -296,6 +295,7 @@ export function SydneyMap() {
   const hoveredRef = useRef<string | null>(null);
   const [mapObj, setMapObj] = useState<MapLibreMap | null>(null);
   const [svgOnly, setSvgOnly] = useState(false);
+  const [ready, setReady] = useState(false);
   const [hoverId, setHoverId] = useState<string | null>(null);
   const [cursor, setCursor] = useState({ x: 24, y: 24 });
 
@@ -338,9 +338,16 @@ export function SydneyMap() {
           instance.resize();
         };
 
+        // Suburbs are our own GeoJSON: draw them as soon as the style is parsed,
+        // not on "load", which waits for every Esri basemap tile. A slow or
+        // blocked tile host must not leave the map empty.
+        let styled = false;
         const onStyleReady = () => {
+          if (styled) return;
+          styled = true;
           onResize?.();
           addLayers(instance);
+          setReady(true);
           const selected = useMapStore.getState().selectedId;
           if (selected) {
             fittedFor.current = `${selected}:${useMapStore.getState().focusSeq}`;
@@ -358,8 +365,9 @@ export function SydneyMap() {
           }
         };
 
+        instance.on("style.load", onStyleReady);
         instance.on("load", onStyleReady);
-        if (instance.loaded()) onStyleReady();
+        if (instance.isStyleLoaded()) onStyleReady();
 
         instance.on("click", (e) => {
           let id: string | undefined;
@@ -437,9 +445,10 @@ export function SydneyMap() {
     if (!map?.getLayer("suburbs-fill")) return;
     map.setPaintProperty("suburbs-fill", "fill-color", fillColorExpression(choropleth, safetyMetric));
     const visibility = choropleth === "transit" ? "visible" : "none";
-    for (const id of ["transit-stops", "transit-lines", "transit-lines-casing"]) {
+    for (const id of TRANSIT_LAYER_IDS) {
       if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
     }
+    if (choropleth === "transit") ensureTransitLines(map);
   }, [choropleth, safetyMetric]);
 
   useEffect(() => {
@@ -481,6 +490,20 @@ export function SydneyMap() {
         aria-label="Map of Greater Sydney suburbs"
         data-suburb-count={suburbPolygonCount}
       />
+      {!ready && !svgOnly ? (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+          <p
+            role="status"
+            className="flex items-center gap-2 rounded-full bg-surface/90 px-4 py-2 text-sm text-muted shadow-[var(--shadow-border)]"
+          >
+            <span
+              className="size-4 animate-spin rounded-full border-2 border-border border-t-fg motion-reduce:animate-none"
+              aria-hidden
+            />
+            Loading suburbs…
+          </p>
+        </div>
+      ) : null}
       {svgOnly ? <SuburbShapes map={mapObj} /> : null}
       {!svgOnly && hovered ? (
         <SuburbTooltip suburb={hovered} layer={choropleth} metric={safetyMetric} x={cursor.x} y={cursor.y} />

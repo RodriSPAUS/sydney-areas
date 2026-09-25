@@ -147,16 +147,26 @@ function SafetyBody({ suburb }: { suburb: Suburb }) {
 
   const incidents = counts ? metricCount(counts, safetyMetric) : null;
   const population = suburb.safety.population;
+  const rate = metricRate(suburb, safetyMetric);
 
   return (
     <>
       <div className="space-y-2">
-        <p className="text-2xl font-semibold tracking-tight tabular-nums">
-          {rateLabel(metricRate(suburb, safetyMetric))}
-          <span className="ml-1 text-sm font-medium text-muted">/ 1,000 residents</span>
-        </p>
+        {rate != null ? (
+          <p className="text-2xl font-semibold tracking-tight tabular-nums">
+            {rateLabel(rate)}
+            <span className="ml-1 text-sm font-medium text-muted">/ 1,000 residents</span>
+          </p>
+        ) : incidents != null ? (
+          <p className="text-2xl font-semibold tracking-tight tabular-nums">
+            {incidents.toLocaleString("en-AU")}
+            <span className="ml-1 text-sm font-medium text-muted">recorded incidents</span>
+          </p>
+        ) : null}
         <p className="text-xs text-muted">
-          {incidents != null ? `${incidents.toLocaleString("en-AU")} recorded incidents` : SAFETY_WINDOW}
+          {rate != null && incidents != null
+            ? `${incidents.toLocaleString("en-AU")} recorded incidents`
+            : SAFETY_WINDOW}
           {suburb.safety.period12 ? ` · ${suburb.safety.period12}` : ""}
           {population ? ` · ${population.toLocaleString("en-AU")} residents (Census 2021)` : ""}
         </p>
@@ -173,7 +183,7 @@ function SafetyBody({ suburb }: { suburb: Suburb }) {
         ) : null}
         <p className="text-xs text-muted">{SAFETY_DISCLAIMER}</p>
       </div>
-      <div className="mt-2 hidden grid-cols-2 gap-2 md:grid">
+      <div className={cn("mt-2 hidden grid-cols-2 gap-2", rate != null && "md:grid")}>
         <Stat label="All / 1,000" value={rateLabel(suburb.safety.allPer1000)} />
         <Stat label="Violence / 1,000" value={rateLabel(suburb.safety.violencePer1000)} />
         <Stat label="Property / 1,000" value={rateLabel(suburb.safety.propertyPer1000)} />

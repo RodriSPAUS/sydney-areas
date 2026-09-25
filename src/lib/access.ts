@@ -346,13 +346,25 @@ export function transitPointsGeoJSON(): FeatureCollection<Point> {
 }
 
 const lineModules = import.meta.glob("../data/transit-lines.json", {
-  eager: true,
   import: "default",
-}) as Record<string, FeatureCollection<LineString>>;
+}) as Record<string, () => Promise<FeatureCollection<LineString>>>;
 
-/** Simplified GTFS shapes when src/data/transit-lines.json is present. */
-export function transitLinesGeoJSON(): FeatureCollection<LineString> | null {
-  const data = Object.values(lineModules)[0];
-  if (!data || data.type !== "FeatureCollection" || !data.features?.length) return null;
-  return data;
+let linesPromise: Promise<FeatureCollection<LineString> | null> | undefined;
+
+/**
+ * Simplified GTFS shapes when src/data/transit-lines.json is present. ~1 MB,
+ * so it is its own chunk and only fetched the first time Transit is shown.
+ */
+export function loadTransitLines(): Promise<FeatureCollection<LineString> | null> {
+  const load = Object.values(lineModules)[0];
+  if (!load) return Promise.resolve(null);
+  linesPromise ??= load()
+    .then((data) =>
+      data && data.type === "FeatureCollection" && data.features?.length ? data : null,
+    )
+    .catch(() => {
+      linesPromise = undefined;
+      return null;
+    });
+  return linesPromise;
 }

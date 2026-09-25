@@ -17,22 +17,10 @@ type PolygonFeature = {
 
 type BocsarRow = {
   id: string;
-  summary: string;
   period12?: string;
-  period6?: string;
-  band?: number;
-  bandStreet?: number;
-  bandDwelling?: number;
-  bandCombined?: number;
-  bandDomestic?: number;
   last12Months?: SafetyCounts;
-  last6Months?: SafetyCounts;
   population?: number | null;
   populationYear?: string;
-  streetPer1000?: number | null;
-  dwellingPer1000?: number | null;
-  combinedPer1000?: number | null;
-  domesticPer1000?: number | null;
 };
 
 type CensusRow = {
@@ -104,11 +92,8 @@ export const suburbs: Suburb[] = (
     const counts = safetyRow.last12Months;
     const population = safetyRow.population;
     next.safety = {
-      summary: safetyRow.summary,
       period12: safetyRow.period12,
-      period6: safetyRow.period6,
       last12Months: counts,
-      last6Months: safetyRow.last6Months,
       population,
       populationYear: safetyRow.populationYear,
       violencePer1000: counts ? per1000(violenceCount(counts), population) : null,

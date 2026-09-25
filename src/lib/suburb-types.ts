@@ -30,11 +30,8 @@ export type Suburb = {
   name: string;
   bbox: BBox;
   safety?: {
-    summary: string;
     period12?: string;
-    period6?: string;
     last12Months?: SafetyCounts;
-    last6Months?: SafetyCounts;
     population?: number | null;
     populationYear?: string;
     violencePer1000?: number | null;
