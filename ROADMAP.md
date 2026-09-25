@@ -1,11 +1,13 @@
-# Sydney Areas — roadmap
+# Uvicus — roadmap
+
+(Formerly “Sydney Areas”; repo name unchanged.)
 
 Map-first suburb explorer for Greater Sydney (crime, rent, who lives there).
 Independent map on ABS / BOCSAR / DCJ open data — not affiliated with those
 agencies. No account. Monetisation later via contextual ads / outbound links
 (Domain, realestate.com.au, movers, ISPs) — never on the Safety choropleth.
 
-Live: https://sydney-areas.pages.dev
+Live: https://uvicus.com (also https://sydney-areas.pages.dev)
 Job: before you open Domain, see how this suburb sits on incidents, rent, and
 who lives there versus the rest of Greater Sydney — no account, no paid report.
 
@@ -62,7 +64,7 @@ Original beta plus the review items that are product, not taste.
 - [ ] Hover ≠ selected (no polygon scale). Sheet open + hover on another suburb must not look like two selections
 - [x] Clear search query on deselect; do not serialise `metric=` when `layer !== safety`
 - [ ] One `fitBounds` per select (no double-fit camera shake)
-- [ ] Spinner / skeleton before the map load (2.3 MB cold start)
+- [x] Spinner / skeleton before the map load (2.3 MB cold start)
 - [ ] Backgrounds: one ethical line — ancestry is multi-response Census 2021, not a character judgement
 - [ ] Fix the worst data bugs testers find (after the Phase 0 clamp)
 - [ ] Email capture: “Ping me when rents / crime update for suburbs I follow”
@@ -83,7 +85,7 @@ Acquisition before compare-UI. Per-suburb pages beat a 2–4 suburb comparator.
 - [ ] Apply to Domain / REA partner or affiliate if it exists; otherwise measure raw clicks
 - [ ] Relocate slot on the sheet: movers + NBN/ISP (one partner or a comparison link)
 - [ ] Written ad policy: no ads on Safety; no “this area is dangerous, buy an alarm”
-- [ ] Search Console + ~20 suburb pages indexed
+- [ ] Search Console + ~20 suburb pages indexed (robots.txt, sitemap and canonical are in)
 - [ ] Calendar reminder: refresh DCJ quarterly, BOCSAR when a new cut lands
 
 Exit to paid ads: ~1,000 visits/month or ~200 Domain clicks/month.

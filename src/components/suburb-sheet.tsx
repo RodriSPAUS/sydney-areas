@@ -4,6 +4,7 @@ import { suburbsById } from "@/data/suburbs";
 import { LAYERS } from "@/components/layer-bar";
 import { activeSafetyBand, formatAud, SAFETY_FILL } from "@/lib/choropleth";
 import {
+  TRANSIT_NO_BUS,
   TRANSIT_NOTE,
   BACKGROUNDS_NOTE,
   HOUSING_CENSUS_NOTE,
@@ -355,6 +356,7 @@ function TransitBody({ suburb }: { suburb: Suburb }) {
       ))}
       {extra > 0 ? <p className="text-xs text-muted">+{extra} more</p> : null}
       <p className="text-xs text-muted">{TRANSIT_NOTE}</p>
+      <p className="text-xs text-muted">{TRANSIT_NO_BUS}</p>
     </>
   );
 }

@@ -12,7 +12,7 @@ import {
   rentRange,
 } from "@/lib/choropleth";
 import { TRANSIT_MODE_COLOR, TRANSIT_MODE_LABEL, type TransitMode } from "@/lib/access";
-import { NO_DATA_LABEL, SAFETY_WINDOW } from "@/lib/copy";
+import { NO_DATA_LABEL, SAFETY_WINDOW, TRANSIT_NO_BUS } from "@/lib/copy";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
 import { useMapStore } from "@/lib/map-store";
 import type { SafetyBand } from "@/lib/suburb-types";
@@ -124,6 +124,7 @@ function LegendBody({ layer, metric }: { layer: Choropleth; metric: SafetyMetric
           Darker = more of the suburb is a short walk. Two or more modes within a short walk sit one
           step darker. Lines from zoom 9, dots from zoom 10. Simplified TfNSW GTFS shapes, CC-BY.
         </p>
+        <p className="mt-1 text-[10px] leading-snug font-medium text-fg">{TRANSIT_NO_BUS}</p>
         <NoDataSwatch text="No rail, metro, light rail or ferry within a short walk" />
       </div>
     );

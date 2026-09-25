@@ -1,10 +1,10 @@
 # Paste this into a Grok Project
 
-Grok cannot create a Project from chat. Create one in the Grok UI (Projects → New), name it **Sydney Areas**, attach repo `RodriSPAUS/sydney-areas`, and paste the block below as custom instructions.
+Grok cannot create a Project from chat. Create one in the Grok UI (Projects → New), name it **Uvicus**, attach repo `RodriSPAUS/sydney-areas`, and paste the block below as custom instructions.
 
 ---
 
-## Project: Sydney Areas
+## Project: Uvicus
 
 You are helping ship a map-first Greater Sydney suburb explorer.
 Repo: https://github.com/RodriSPAUS/sydney-areas
@@ -12,9 +12,9 @@ Roadmap: ROADMAP.md. Work items: issues #1–#5.
 
 ### Product
 - Interactive MapLibre map. No login. No Google Maps.
-- Layers: Safety (BOCSAR), Housing (DCJ rents / Census fallback), Households + Backgrounds (ABS Census 2021).
+- Layers: Safety (BOCSAR), Housing (DCJ rents / Census fallback, plus Census household stats on the sheet), Transit (TfNSW GTFS, no bus), Backgrounds (ABS Census 2021).
 - UX: map first, suburb sheet, layer bar, search. Zero-friction.
-- Colours are rankings among mapped suburbs, not a live risk score.
+- Colours are rankings among mapped suburbs, not a live risk score. Safety ranks only suburbs with 1,000+ Census 2021 residents.
 
 ### How we work
 - Prefer prompts the user can paste into Grok Build rather than rewriting the whole app.

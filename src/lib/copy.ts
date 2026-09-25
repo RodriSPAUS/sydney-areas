@@ -13,6 +13,11 @@ export const APP_DESCRIPTION =
 
 export const AFFILIATION_LINE = "Independent map · not affiliated with ABS, BOCSAR or DCJ";
 
+export const FOOTER_LINE_SHORT = "Open data, unofficial ·";
+
+export const TRANSIT_NO_BUS =
+  "Bus is not included. Areas served mainly by bus, such as the Northern Beaches, read lighter than they ride.";
+
 export const FOOTER_LINE =
   "Sources (open data, unofficial): Boundaries ABS SAL 2021 · Safety BOCSAR · Households and ancestry Census 2021 · Rent DCJ or Census 2021.";
 

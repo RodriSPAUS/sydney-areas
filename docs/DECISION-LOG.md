@@ -5,6 +5,38 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-25 — Safety ranks only 1,000+ residents, in one direction
+
+**What:** A per-1,000 rate needs at least 1,000 Census 2021 usual residents
+(was 100). Below that the sheet leads with the incident count and says why
+there is no colour. Every layer now states its rank as one sentence, e.g.
+“More recorded incidents than 70% of 581 suburbs on this map”, and at the
+ends “The most / fewest …”. “Band n of 5” and “#rank of N” are gone from
+the sheet and tooltip. Under the rate: incident count, period, residents.
+The CBD core (Sydney, Haymarket, The Rocks, Barangaroo, Millers Point, Dawes
+Point) carries a visitor/worker note. One disclaimer instead of three.
+
+**Why:** The top of the ranking was Eastern Creek (874 residents),
+Barangaroo (220), The Rocks and Menangle Park: tiny or industrial resident
+bases, not places a resident would feel as least safe. And the sheet showed
+two opposite scales side by side (band 1 = most, rank 1 = fewest).
+
+---
+
+## 2026-09-25 — Suburbs draw before basemap tiles; lighter bundle
+
+**What:** Suburb layers are added on `style.load`, not `load`, with a
+“Loading suburbs…” status until then. `transit-lines.json` is a lazy chunk
+fetched the first time Transit is shown. `bocsar-safety.json` keeps counts,
+population and period only (1.1 MB → 0.4 MB); the generator matches.
+Canonical links, absolute `og:image` / `og:url`, `robots.txt`, `sitemap.xml`.
+Transit legend and sheet say bus is not included. Mobile footer is one line.
+The first-visit card does not cover a shared `?s=` link.
+
+**Why:** With Esri tiles slow or blocked the map stayed empty, because
+`load` waits for every tile. The main JS chunk was 3.3 MB, most of it data
+the app never read or only needs on one layer.
+
 ## 2026-09-25 — Contact is a mailto, not a form
 
 **What:** About, after Licences, and the map footer link to c8labs@agentmail.to.

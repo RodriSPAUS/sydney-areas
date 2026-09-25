@@ -12,6 +12,9 @@ export function FirstVisitCard() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    // Someone opening a shared suburb link came for that suburb: let the sheet
+    // speak first. The card still shows on their next plain visit.
+    if (new URLSearchParams(window.location.search).has("s")) return;
     try {
       if (window.localStorage.getItem(FIRST_VISIT_KEY) !== "1") setOpen(true);
     } catch {

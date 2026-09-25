@@ -8,7 +8,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, PLACE_LINE, SITE_URL } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, FOOTER_LINE_SHORT, PLACE_LINE, SITE_URL } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -157,7 +157,8 @@ function Home() {
       </div>
 
       <p className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-bg/90 px-3 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] text-center text-[10px] leading-tight text-muted md:bg-transparent md:text-left">
-        {FOOTER_LINE}{" "}
+        <span className="md:hidden">{FOOTER_LINE_SHORT}</span>
+        <span className="hidden md:inline">{FOOTER_LINE}</span>{" "}
         <Link
           to="/about"
           className="pointer-events-auto font-medium underline-offset-2 hover:text-fg hover:underline"
