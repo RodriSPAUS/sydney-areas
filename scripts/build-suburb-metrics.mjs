@@ -266,7 +266,8 @@ async function buildMetrics({ polygons, bocsar, census, dcj, access }) {
       lga: {
         source: lgaMethod ? "ABS ASGS 2021" : null,
         method: lgaMethod,
-        carriedForwardFrom: salToLga ? null : (prev?.sources?.lga?.carriedForwardFrom ?? prev?.generatedAt ?? null),
+        carriedForwardFrom:
+          salToLga || !lgaMethod ? null : (prev?.sources?.lga?.carriedForwardFrom ?? prev?.generatedAt ?? null),
       },
     },
     percentileDirection: {
@@ -500,6 +501,20 @@ function communityJson(body) {
   return `${top},\n  "suburbs": [\n${lines.join(",\n")}\n  ]\n}\n`;
 }
 
+/**
+ * Keep the previous generatedAt when nothing else changed, so the monthly
+ * refresh does not open a PR for a timestamp alone.
+ */
+function stableText(path, text) {
+  if (!existsSync(path)) return text;
+  const old = readFileSync(path, "utf8");
+  const stamp = /"generatedAt": "[^"]*"/;
+  const prev = old.match(stamp);
+  if (!prev) return text;
+  const reused = text.replace(stamp, prev[0]);
+  return reused === old ? old : text;
+}
+
 async function main() {
   const inspect = process.argv.includes("--inspect");
   const polygons = read("suburb-polygons.json");
@@ -512,7 +527,7 @@ async function main() {
   };
   const community = await buildCommunity({ polygons, census: inputs.census, inspect });
   const metrics = await buildMetrics(inputs);
-  await writeFile(metricsPath, `${JSON.stringify(metrics, null, 2)}\n`);
+  await writeFile(metricsPath, stableText(metricsPath, `${JSON.stringify(metrics, null, 2)}\n`));
   const s = metrics.suburbs;
   const count = (fn) => s.filter(fn).length;
   console.error(
@@ -521,7 +536,7 @@ async function main() {
       `census-sal-mismatch ${count((r) => r.flags.includes("census-sal-mismatch"))})`,
   );
   if (community) {
-    await writeFile(communityPath, communityJson(community));
+    await writeFile(communityPath, stableText(communityPath, communityJson(community)));
     console.error(`Wrote ${communityPath}`);
   }
 }
