@@ -109,17 +109,42 @@ short headers (`data/cache/2021_GCP_SAL_for_NSW_short-header.zip`, the zip
 | `ancestry` | G08 | `<ancestry>_Tot_resp` | Total responses for that ancestry | G01 `Tot_P_P`: usual residents. **Each person can give up to two ancestries, so shares can add up to more than 100%.** |
 | `countryOfBirth` | G09 (A–H) | `P_<country>_Tot` | Persons born there | G09 `P_Tot_Tot`: all usual residents, including not stated |
 
-- **Categories.** For each table, the 40 largest across all mapped suburbs.
-  Excluded: totals and subtotals (any `Tot` token, e.g. a language-group
-  total), not stated (`NS`), inadequately described / not further defined,
-  and residual catch-alls (`Other`, `Oth`, `Elsewhere`, the
-  "uses other language and speaks English" umbrella columns). English only is
-  not a G13 `POL_` column, so it is not a category.
-- **Classification comes from the DataPack's own headers.** The build fails
-  if fewer than 40 categories are found. It also fails if a single-response
-  table's categories add up to more than 102% of residents, because that
-  means a subtotal is being double counted.
-- **Shape.** `tables.<key>.categories` is `[{ key, label, absLabel,
+- **Categories kept.** Each table keeps up to 40 of its largest named
+  categories across all mapped suburbs, or all of them when it has fewer. G08
+  and G13 have fewer than 40 named categories.
+  - The number kept is recorded per table in the file as
+    `tables.<key>.kept`, next to `namedCategories` (how many the table has).
+  - The build fails only if a table has fewer than 15 named categories, which
+    would mean the headers were misread.
+  - Actual counts per table: see the PR, and `data:check` prints them as
+    "kept per table".
+- **Excluded categories.**
+  - Totals and subtotals: any `Tot` token, e.g. a language-group total.
+  - Not stated (`NS`).
+  - Inadequately described / not further defined.
+  - Residual catch-alls: `Other`, `Oth`, `Elsewhere`, and the "uses other
+    language and speaks English" umbrella columns.
+
+  English only is not a G13 `POL_` column, so it is not a category.
+- **Labels.** Labels come from the DataPack's cell-descriptor metadata, which
+  maps each short header to an ABS long name.
+  - The build opens every `.xlsx` in the zip and uses the sheets with `Short`
+    and `Long` columns. The geography workbook
+    (`2021Census_geog_desc_1st_2nd_3rd_release.xlsx`) has none, so it
+    contributes nothing.
+  - `label` is the long name with structural words removed (Persons, Total,
+    responses, the language-group prefix), e.g. "Mandarin", "Colombia",
+    "Australian".
+  - `absLabel` keeps the untouched ABS long name.
+  - The build fails if no workbook maps the table columns.
+  - `data:check` fails if any label still looks like a short header code: an
+    underscore, an all-caps code, or abbreviations like `Aust`, `Sth`, `Tot`.
+- **Checks on the headers.** Classification comes from the DataPack's own
+  headers. The build also fails if a single-response table's categories add up
+  to more than 102% of residents, because that means a subtotal is being
+  double counted.
+- **Shape.** `tables.<key>` has `table`, `denominator`, `namedCategories`,
+  `kept` and `categories`. `categories` is `[{ key, label, absLabel,
   greaterSydney }]`. `key` is the DataPack short key. `absLabel` is the ABS
   long column name from the DataPack metadata. Each suburb has
   `<table>: { <key>: { count, pct } }`, with `pct` to 1 dp.

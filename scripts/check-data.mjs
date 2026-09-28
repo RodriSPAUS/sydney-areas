@@ -7,6 +7,7 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
+import { looksLikeShortCode } from "../src/lib/community-derive.ts";
 import { SAFETY_METRICS, safetyBandsByMetric, safetyRates } from "../src/lib/safety-metrics.ts";
 import { allCount, domesticCount, propertyCount, violenceCount } from "../src/lib/safety-counts.ts";
 
@@ -122,6 +123,17 @@ if (!existsSync(communityPath)) {
     for (const r of rows) for (const v of Object.values(r[name] ?? {})) if (!inRange(v?.pct)) bad += 1;
   }
   check("Community percentages", bad === 0, `${bad} shares outside 0–100 across ${cats} categories`);
+  const codeLabels = Object.values(community.tables ?? {}).flatMap((t) =>
+    (t.categories ?? []).filter((c) => looksLikeShortCode(c.label)).map((c) => `${t.table} ${c.key}="${c.label}"`),
+  );
+  check(
+    "Community labels",
+    codeLabels.length === 0,
+    codeLabels.length ? `short-code labels: ${codeLabels.slice(0, 8).join(", ")}` : `${cats} readable labels`,
+  );
+  const kept = Object.entries(community.tables ?? {}).map(([k, t]) => `${k} ${t.kept ?? t.categories?.length}`);
+  const thin = Object.values(community.tables ?? {}).filter((t) => (t.categories?.length ?? 0) < 15).length;
+  check("Community categories", thin === 0, `kept per table: ${kept.join(", ")}`);
   sizes("suburb-community.json", communityPath);
 }
 
