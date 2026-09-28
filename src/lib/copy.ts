@@ -3,6 +3,12 @@ export const APP_NAME = "Uvicus";
 /** Production origin, for canonical links and absolute share-card URLs. */
 export const SITE_URL = "https://uvicus.com";
 
+/**
+ * Share card. Bump `v` whenever public/og.jpg changes: Teams, Slack and
+ * WhatsApp cache previews by image URL and have no public re-scrape tool.
+ */
+export const OG_IMAGE = `${SITE_URL}/og.jpg?v=2`;
+
 export const PLACE_LINE = "Greater Sydney";
 
 export const TAGLINE =

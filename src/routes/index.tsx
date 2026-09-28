@@ -9,7 +9,7 @@ import { SuburbSearch } from "@/components/suburb-search";
 import { SuburbSheet } from "@/components/suburb-sheet";
 import { SydneyMap } from "@/components/sydney-map";
 import { suburbsById } from "@/data/suburbs";
-import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, FOOTER_LINE_SHORT, PLACE_LINE, SITE_URL } from "@/lib/copy";
+import { APP_DESCRIPTION, APP_NAME, CONTACT_EMAIL, FOOTER_LINE, FOOTER_LINE_SHORT, OG_IMAGE, PLACE_LINE, SITE_URL } from "@/lib/copy";
 import { useMapStore } from "@/lib/map-store";
 import {
   layerFromSearch,
@@ -34,7 +34,10 @@ export const Route = createFileRoute("/")({
         { property: "og:description", content: APP_DESCRIPTION },
         { property: "og:type", content: "website" },
         { property: "og:url", content: `${SITE_URL}/${query ? `?${query}` : ""}` },
-        { property: "og:image", content: `${SITE_URL}/og.jpg` },
+        { property: "og:image", content: OG_IMAGE },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:site_name", content: APP_NAME },
         { name: "twitter:title", content: title },
         { name: "twitter:card", content: "summary_large_image" },
       ],

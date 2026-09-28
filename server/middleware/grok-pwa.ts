@@ -8,17 +8,11 @@
  *   static output on Vercel and not readable from the function).
  * - `/__grok/manifest.webmanifest` → per-app-named manifest (kept out of
  *   public/ so this dynamic response is the only one).
- * - Other HTML documents → stream-inject PWA + OG head tags at `</head>`.
- *   OG identity is baked via `virtual:grok-og-identity` at `vite build`
- *   (this function cannot read `src/lib/og/site.json` or `public/og.jpg`).
- *   This must be a middleware transforming `next()`: h3 discards the `response`
- *   runtime hook's return value, and `render:html` does not exist in Nitro v3.
+ * - Other HTML documents pass through untouched: the app sets its own head.
  */
 import installPageTemplate from "../../scripts/install-page.html?raw";
-import { grokOgIdentity } from "virtual:grok-og-identity";
 import {
   acceptsHtml,
-  createHeadInjector,
   isDocumentPath,
   isInstallQuery,
   renderInstallPageHtml,
@@ -34,30 +28,6 @@ function requestHost(event: GrokPwaEvent): string {
   return (
     event.req.headers.get("x-forwarded-host") ?? event.req.headers.get("host") ?? event.url.host
   );
-}
-
-function injectHeadStreaming(response: Response, host: string): Response {
-  const injector = createHeadInjector({
-    host,
-    site: grokOgIdentity.site,
-  });
-  const transformed = response.body!.pipeThrough(
-    new TransformStream<Uint8Array, Uint8Array>({
-      transform(chunk, controller) {
-        for (const out of injector.push(chunk)) controller.enqueue(out);
-      },
-      flush(controller) {
-        for (const out of injector.flush()) controller.enqueue(out);
-      },
-    }),
-  );
-  const headers = new Headers(response.headers);
-  headers.delete("content-length");
-  return new Response(transformed, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
 }
 
 export default async function grokPwaMiddleware(
@@ -96,16 +66,10 @@ export default async function grokPwaMiddleware(
     });
   }
 
-  if (!isDocumentPath(path)) return next();
-
-  const result = await next();
-  if (
-    result instanceof Response &&
-    result.body &&
-    String(result.headers.get("content-type") ?? "").includes("text/html") &&
-    !result.headers.get("content-encoding")
-  ) {
-    return injectHeadStreaming(result, requestHost(event));
-  }
-  return result;
+  // The app's own <head> already carries the manifest, touch icon and
+  // per-page share tags (title, description, og:image, og:url, canonical).
+  // The template used to strip and replace those here, so every link
+  // preview read "Uvicus" with no description, and it injected a Grok
+  // script. HTML now passes through untouched.
+  return next();
 }

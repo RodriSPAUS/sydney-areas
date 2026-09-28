@@ -5,6 +5,18 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-28 — The server stops rewriting share tags
+
+**What:** `server/middleware/grok-pwa.ts` no longer rewrites HTML. It still
+serves the web manifest and the iOS install page. The share card URL is
+`OG_IMAGE` (`/og.jpg?v=2`) with width, height and `og:site_name`.
+
+**Why:** In production the template middleware stripped every page's
+`og:*` tags and injected its own: title always “Uvicus”, no description,
+image `/og.jpg`, plus a Grok script. Per-suburb titles and descriptions
+never reached WhatsApp, Teams or search engines, and Teams kept showing
+the old card because the image URL never changed.
+
 ## 2026-09-25 — Hover vs selection, update emails, automatic data refresh
 
 **What:**
