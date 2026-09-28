@@ -102,3 +102,35 @@ export function share(count: number | null, denominator: number | null | undefin
   if (denominator == null || !(denominator > 0)) return { count, pct: null };
   return { count, pct: Math.round((count / denominator) * 1000) / 10 };
 }
+
+/** Words that describe a DataPack cell's structure, not the category itself. */
+const STRUCTURE =
+  /\b(persons?|males?|females?|total|tot|responses?|count of|number of|language used at home|language spoken at home|uses other language and speaks english|speaks other language|speaks english|proficiency in english|country of birth( of person)?|birthplace|ancestry|born in)\b/gi;
+
+/**
+ * A readable category name from an ABS long column name, e.g.
+ * "Persons_Chinese_languages_Mandarin_Total" → "Mandarin",
+ * "Australian_Aboriginal_Total_responses" → "Australian Aboriginal".
+ * Null when nothing readable is left.
+ */
+export function labelFromLong(long: string | null | undefined): string | null {
+  if (!long) return null;
+  let text = long.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  // Group-prefixed languages: "Chinese languages Mandarin" → "Mandarin".
+  const grouped = text.match(/\blanguages\s+(.+)$/i);
+  if (grouped && !/\blanguages$/i.test(text)) text = grouped[1];
+  text = text.replace(STRUCTURE, " ").replace(/\s+/g, " ").replace(/^[\s,:-]+|[\s,:-]+$/g, "");
+  if (!text || /\d/.test(text)) return null;
+  return text;
+}
+
+/**
+ * True when a label still reads like a DataPack short header ("CL_Mandarin",
+ * "Sth_Africa", "Aust", "POL_Spanish_Tot") rather than a name a person uses.
+ */
+export function looksLikeShortCode(label: string | null | undefined): boolean {
+  if (!label || !label.trim()) return true;
+  if (/_/.test(label)) return true;
+  if (/^[A-Z]{2,5}$/.test(label)) return true;
+  return /\b(Tot|NS|nfd|resp|POL|SOL|Aust|Sth|Nth|Oth|Eng|Lang|Cntry|Abor|Stat|Ch|Ctry)\b/.test(label);
+}

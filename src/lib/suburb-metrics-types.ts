@@ -87,6 +87,7 @@ export type CommunityTableName = "language" | "ancestry" | "countryOfBirth";
 export type CommunityCategory = {
   /** DataPack short-header key, e.g. "CL_Mandarin". */
   key: string;
+  /** Human-readable name derived from the ABS long column name, e.g. "Mandarin". */
   label: string;
   /** ABS long column name from the DataPack metadata, when present. */
   absLabel: string | null;
@@ -103,7 +104,15 @@ export type SuburbCommunityFile = {
   topN: number;
   tables: Record<
     CommunityTableName,
-    { table: string; denominator: string; categories: CommunityCategory[] }
+    {
+      table: string;
+      denominator: string;
+      /** Named categories found in the table (after exclusions). */
+      namedCategories: number;
+      /** Categories kept: min(topN, namedCategories). */
+      kept: number;
+      categories: CommunityCategory[];
+    }
   >;
   suburbs: ({ id: string } & Record<CommunityTableName, Record<string, CommunityShare>>)[];
 };

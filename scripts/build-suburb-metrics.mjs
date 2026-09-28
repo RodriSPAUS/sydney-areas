@@ -26,6 +26,7 @@ import ExcelJS from "exceljs";
 import { listZip, labelAncestry, labelLang, parseNum, readCsvByCode, readCsvHeader } from "./census-datapack.mjs";
 import {
   isExcludedKey,
+  labelFromLong,
   languageColumns,
   share,
   simpleColumns,
@@ -39,6 +40,8 @@ import { computeSuburbTransit, WALK_M } from "../src/lib/transit-coverage.ts";
 
 const SCHEMA_VERSION = 1;
 const TOP_N = 40;
+/** Fewer named categories than this in a table means the headers were misread. */
+const MIN_CATEGORIES = 15;
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = join(root, "src", "data");
@@ -284,34 +287,54 @@ async function buildMetrics({ polygons, bocsar, census, dcj, access }) {
 // ---------------------------------------------------------------------------
 // Community
 
-function extractMetadataLabels(files) {
-  const meta = files.find((n) => /metadata.*\.xlsx$/i.test(n));
-  if (!meta) return Promise.resolve(new Map());
-  const res = spawnSync("unzip", ["-j", "-o", datapackZip, meta, "-d", cacheDir], { encoding: "utf8" });
-  if (res.status !== 0) return Promise.resolve(new Map());
-  const path = join(cacheDir, meta.split("/").pop());
-  const wb = new ExcelJS.Workbook();
-  return wb.xlsx.readFile(path).then(() => {
-    const out = new Map();
+/** Short → long column names from one sheet with "Short" and "Long" header cells. */
+function sheetShortToLong(ws) {
+  const out = new Map();
+  for (let r = 1; r <= Math.min(ws.rowCount, 60); r++) {
+    const cells = [];
+    for (let c = 1; c <= Math.min(ws.columnCount, 20); c++) cells.push(cellText(ws.getRow(r).getCell(c).value).trim());
+    const shortCol = cells.findIndex((h) => /^short$/i.test(h));
+    const longCol = cells.findIndex((h) => /^long$/i.test(h));
+    if (shortCol < 0 || longCol < 0) continue;
+    for (let rr = r + 1; rr <= ws.rowCount; rr++) {
+      const row = ws.getRow(rr);
+      const short = cellText(row.getCell(shortCol + 1).value).trim();
+      const long = cellText(row.getCell(longCol + 1).value).trim();
+      if (short && long && !out.has(short)) out.set(short, long);
+    }
+    break;
+  }
+  return out;
+}
+
+/**
+ * The DataPack ships several metadata workbooks; only the cell-descriptor one
+ * maps short headers to long names (the geography one does not). Open every
+ * .xlsx in the zip and keep whichever sheets have Short/Long columns.
+ */
+async function extractMetadataLabels(files) {
+  const out = new Map();
+  for (const name of files.filter((n) => /\.xlsx$/i.test(n))) {
+    const res = spawnSync("unzip", ["-j", "-o", datapackZip, name, "-d", cacheDir], { encoding: "utf8" });
+    if (res.status !== 0) continue;
+    const wb = new ExcelJS.Workbook();
+    try {
+      await wb.xlsx.readFile(join(cacheDir, name.split("/").pop()));
+    } catch {
+      continue;
+    }
+    let found = 0;
     for (const ws of wb.worksheets) {
-      for (let r = 1; r <= Math.min(ws.rowCount, 30); r++) {
-        const cells = [];
-        for (let c = 1; c <= Math.min(ws.columnCount, 12); c++) cells.push(cellText(ws.getRow(r).getCell(c).value));
-        const shortCol = cells.findIndex((h) => /^short$/i.test(h.trim()));
-        const longCol = cells.findIndex((h) => /^long$/i.test(h.trim()));
-        if (shortCol < 0 || longCol < 0) continue;
-        for (let rr = r + 1; rr <= ws.rowCount; rr++) {
-          const row = ws.getRow(rr);
-          const short = cellText(row.getCell(shortCol + 1).value).trim();
-          const long = cellText(row.getCell(longCol + 1).value).trim();
-          if (short && long && !out.has(short)) out.set(short, long);
+      for (const [short, long] of sheetShortToLong(ws)) {
+        if (!out.has(short)) {
+          out.set(short, long);
+          found += 1;
         }
-        break;
       }
     }
-    console.error(`DataPack metadata: ${out.size} short → long column names from ${meta}`);
-    return out;
-  });
+    console.error(`DataPack metadata: ${found} short → long column names from ${name}`);
+  }
+  return out;
 }
 
 const humanise = (key) => key.replace(/_/g, " ").trim();
@@ -374,11 +397,17 @@ async function buildCommunity({ polygons, census, inspect }) {
     await writeFile(path, `${JSON.stringify(dump, null, 2)}\n`);
     console.error(`Wrote ${path}`);
   }
-  if (lang.parts.size < TOP_N || cob.size < TOP_N || anc.size < TOP_N) {
+  if (lang.parts.size < MIN_CATEGORIES || cob.size < MIN_CATEGORIES || anc.size < MIN_CATEGORIES) {
     fail(
-      `Too few categories found (G13 ${lang.parts.size}, G09 ${cob.size}, G08 ${anc.size}; need ${TOP_N} each). ` +
+      `Too few categories found (G13 ${lang.parts.size}, G09 ${cob.size}, G08 ${anc.size}; ` +
+        `expected at least ${MIN_CATEGORIES} each, which suggests a parsing bug). ` +
         "Run with --inspect and check data/cache/community-columns.json.",
     );
+  }
+  const shortCols = [...[...lang.totals.values()], ...cob.values(), ...anc.values()];
+  const withLong = shortCols.filter((c) => longs.has(c)).length;
+  if (withLong === 0) {
+    fail("No DataPack metadata workbook maps these columns to long names, so categories would be labelled with short codes.");
   }
   if (!h13.includes(TOTAL) || !h09.includes(TOTAL)) fail(`${TOTAL} missing from G13 or G09 headers.`);
 
@@ -399,7 +428,7 @@ async function buildCommunity({ polygons, census, inspect }) {
       rows: t13,
       denominator: (code) => t13.get(code)?.[TOTAL] ?? null,
       denominatorNote: "All usual residents in G13 (P_Tot_Tot), including language not stated.",
-      label: labelLang,
+      fallbackLabel: labelLang,
       column: (key) => lang.totals.get(key),
       exclusive: true,
     },
@@ -411,7 +440,7 @@ async function buildCommunity({ polygons, census, inspect }) {
       denominator: (code) => t01.get(code)?.Tot_P_P ?? null,
       denominatorNote:
         "Usual residents (G01 Tot_P_P). Each person can give up to two ancestries, so shares can sum to more than 100%.",
-      label: labelAncestry,
+      fallbackLabel: labelAncestry,
       column: (key) => anc.get(key),
       exclusive: false,
     },
@@ -422,7 +451,7 @@ async function buildCommunity({ polygons, census, inspect }) {
       rows: t09,
       denominator: (code) => t09.get(code)?.[TOTAL] ?? null,
       denominatorNote: "All usual residents in G09 (P_Tot_Tot), including country of birth not stated.",
-      label: humanise,
+      fallbackLabel: humanise,
       column: (key) => cob.get(key),
       exclusive: true,
     },
@@ -449,17 +478,24 @@ async function buildCommunity({ polygons, census, inspect }) {
     if (t.exclusive && ratio > 1.02) {
       fail(`${t.table} categories add up to ${(ratio * 100).toFixed(1)}% of residents: a subtotal is being double counted.`);
     }
+    // Up to TOP_N of the largest named categories, or all of them when the table has fewer.
     const keys = topKeys(sydney, TOP_N);
     out.tables[name] = {
       table: t.table,
       denominator: t.denominatorNote,
-      categories: keys.map((key) => ({
-        key,
-        label: t.label(key),
-        absLabel: longs.get(t.column(key)) ?? null,
-        greaterSydney: sydney.get(key) ?? 0,
-      })),
+      namedCategories: t.keys.length,
+      kept: keys.length,
+      categories: keys.map((key) => {
+        const absLabel = longs.get(t.column(key)) ?? null;
+        return {
+          key,
+          label: labelFromLong(absLabel) ?? t.fallbackLabel(key),
+          absLabel,
+          greaterSydney: sydney.get(key) ?? 0,
+        };
+      }),
     };
+    console.error(`${t.table}: kept ${keys.length} of ${t.keys.length} named categories`);
     for (const s of out.suburbs) {
       const code = codeById.get(s.id);
       const row = code ? t.rows.get(code) : null;

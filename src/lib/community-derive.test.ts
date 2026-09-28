@@ -1,6 +1,15 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { isExcludedKey, languageColumns, share, simpleColumns, sumParts, topKeys } from "./community-derive.ts";
+import {
+  isExcludedKey,
+  labelFromLong,
+  languageColumns,
+  looksLikeShortCode,
+  share,
+  simpleColumns,
+  sumParts,
+  topKeys,
+} from "./community-derive.ts";
 
 // Illustrative headers in the families the existing census script reads.
 // The proficiency suffixes are made up on purpose: the code must not care.
@@ -78,4 +87,22 @@ test("share: pct to one decimal; null semantics", () => {
   assert.deepEqual(share(37, 1200), { count: 37, pct: 3.1 });
   assert.deepEqual(share(null, 1200), { count: null, pct: null });
   assert.deepEqual(share(4, 0), { count: 4, pct: null });
+});
+
+test("labels from ABS long column names", () => {
+  assert.equal(labelFromLong("Persons_Chinese_languages_Mandarin_Total"), "Mandarin");
+  assert.equal(labelFromLong("Australian_Aboriginal_Total_responses"), "Australian Aboriginal");
+  assert.equal(labelFromLong("Persons_Colombia_Total"), "Colombia");
+  assert.equal(labelFromLong("Spanish_Persons_Total"), "Spanish");
+  assert.equal(labelFromLong("Persons_Total"), null);
+  assert.equal(labelFromLong(null), null);
+});
+
+test("short-code labels are caught, real names pass", () => {
+  for (const bad of ["CL_Mandarin", "Aust", "Sth Africa", "POL Spanish Tot", "NZ", "", null]) {
+    assert.equal(looksLikeShortCode(bad), true, String(bad));
+  }
+  for (const ok of ["Spanish", "Colombia", "Vietnamese", "New Zealand", "Australian Aboriginal", "Thai", "Fiji"]) {
+    assert.equal(looksLikeShortCode(ok), false, ok);
+  }
 });
