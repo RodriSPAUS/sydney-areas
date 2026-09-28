@@ -24,6 +24,7 @@
     "data:census": "node scripts/fetch-census-2021.mjs",
     "data:housing": "node scripts/fetch-dcj-housing.mjs",
     "data:sitemap": "node scripts/build-sitemap.mjs",
+    "data:metrics": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build-suburb-metrics.mjs",
     "data:check": "node scripts/check-data.mjs"
   },
   "dependencies": {
