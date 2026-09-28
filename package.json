@@ -25,7 +25,7 @@
     "data:housing": "node scripts/fetch-dcj-housing.mjs",
     "data:sitemap": "node scripts/build-sitemap.mjs",
     "data:metrics": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build-suburb-metrics.mjs",
-    "data:check": "node scripts/check-data.mjs"
+    "data:check": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-data.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
