@@ -39,6 +39,12 @@ jobs:
       - name: Sitemap
         run: npm run data:sitemap
 
+      # Derived, filter-ready file. Reads the JSON above only; no downloads.
+      # CI has no Census cache, so suburb-community.json is left as committed
+      # and LGA fields carry forward from the committed suburb-metrics.json.
+      - name: Suburb metrics
+        run: npm run data:metrics
+
       # A failed download can leave an empty or partial file. Stop here so it
       # never becomes a PR.
       - name: Sanity-check the new data
@@ -52,7 +58,7 @@ jobs:
         run: |
           {
             echo 'body<<EOF'
-            echo 'Automated monthly refresh from BOCSAR and NSW DCJ.'
+            echo 'Automated monthly refresh from BOCSAR and NSW DCJ, plus the derived suburb-metrics.json.'
             echo
             echo '```'
             npm run -s data:check 2>&1
@@ -74,6 +80,7 @@ jobs:
           add-paths: |
             src/data/bocsar-safety.json
             src/data/dcj-housing.json
+            src/data/suburb-metrics.json
             public/sitemap.xml
           commit-message: "Refresh BOCSAR and DCJ data"
           title: "Refresh BOCSAR and DCJ data"
