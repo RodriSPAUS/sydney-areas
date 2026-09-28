@@ -16,7 +16,7 @@
     "preview:stop": "node scripts/preview.mjs stop",
     "typecheck": "tsc --noEmit",
     "test": "npm run test:app && node --test 'scripts/**/*.test.mjs'",
-    "test:app": "node --experimental-strip-types --test src/lib/rank-sentence.test.ts src/lib/map-url.test.ts",
+    "test:app": "node --experimental-strip-types --test src/lib/rank-sentence.test.ts src/lib/map-url.test.ts src/lib/safety-metrics.test.ts src/lib/metrics-derive.test.ts src/lib/community-derive.test.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "data:bocsar": "node scripts/fetch-bocsar-safety.mjs",
@@ -24,7 +24,8 @@
     "data:census": "node scripts/fetch-census-2021.mjs",
     "data:housing": "node scripts/fetch-dcj-housing.mjs",
     "data:sitemap": "node scripts/build-sitemap.mjs",
-    "data:check": "node scripts/check-data.mjs"
+    "data:metrics": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build-suburb-metrics.mjs",
+    "data:check": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-data.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",

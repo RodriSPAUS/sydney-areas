@@ -5,6 +5,20 @@ Whoever continues (human or agent) reads this; chat is not enough.
 
 ---
 
+## 2026-09-28 — Derived metrics for filters (data only)
+
+**What:** `npm run data:metrics` writes `src/data/suburb-metrics.json` (one
+filter-ready record per suburb: rent, safety, transit, profile, GPO distance,
+LGA, percentiles) and, when the Census DataPack is cached,
+`src/data/suburb-community.json` (top 40 languages, ancestries, countries of
+birth). Safety rates/bands and transit coverage moved into
+`src/lib/safety-metrics.ts` and `src/lib/transit-coverage.ts`, which both the
+app and the script use. The monthly refresh runs it. Field reference:
+`docs/data-metrics.md`.
+
+**Why:** A filter screen needs one precomputed table. Deriving it with the
+app's own code means a filter can never disagree with the sheet.
+
 ## 2026-09-28 — The server stops rewriting share tags
 
 **What:** `server/middleware/grok-pwa.ts` no longer rewrites HTML. It still
