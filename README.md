@@ -33,7 +33,8 @@ npm run data:bocsar -- --fresh
 npm run data:census
 npm run data:housing
 npm run data:sitemap
-npm run data:check   # sanity gate: row counts, periods, rent range
+npm run data:metrics # derived suburb-metrics.json (+ suburb-community.json when the DataPack is cached)
+npm run data:check   # sanity gate: row counts, periods, rent range, derived files
 ```
 
 `.github/workflows/refresh-data.yml` runs BOCSAR + DCJ on the 20th of each month and opens a `data/refresh` PR only when something changed and `data:check` passes. The DCJ script finds the newest quarter's tables on the DCJ report page.
@@ -41,6 +42,7 @@ npm run data:check   # sanity gate: row counts, periods, rent range
 Zips and xlsx are cached under `data/cache/` (gitignored). `unzip` is required for BOCSAR, Census DataPack and the SAL–POA correspondence. The app never downloads source tables in the browser.
 
 - Polygons: `src/data/suburb-polygons.json`
+- Derived, filter-ready: `src/data/suburb-metrics.json` and `src/data/suburb-community.json`. Fields, sources and caveats: `docs/data-metrics.md`.
 
 ## Update emails (optional)
 
