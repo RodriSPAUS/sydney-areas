@@ -8,7 +8,7 @@ import dcjHousing from "@/data/dcj-housing.json";
 import polygonFc from "@/data/suburb-polygons.json";
 import type { AncestryShare, BBox, SafetyCounts, Suburb } from "@/lib/suburb-types";
 import { transitFor } from "@/lib/access";
-import { allCount, domesticCount, propertyCount, violenceCount } from "@/lib/safety-counts";
+import { MIN_POP, safetyRates } from "@/lib/safety-metrics";
 
 type PolygonFeature = {
   properties: { id: string; name: string };
@@ -60,17 +60,7 @@ function clampPersonPct(value: number | null | undefined): number | null {
   return value;
 }
 
-/**
- * Below this many Census 2021 usual residents a per-1,000 rate swings on a
- * handful of incidents (Barangaroo, Eastern Creek), so it is shown as counts
- * only and never ranked or coloured.
- */
-export const MIN_POP = 1000;
-
-function per1000(count: number, population: number | null | undefined): number | null {
-  if (population == null || population < MIN_POP) return null;
-  return Math.round((count / population) * 10000) / 10;
-}
+export { MIN_POP };
 
 export const suburbs: Suburb[] = (
   polygonFc as unknown as { features: PolygonFeature[] }
@@ -91,15 +81,16 @@ export const suburbs: Suburb[] = (
   if (safetyRow) {
     const counts = safetyRow.last12Months;
     const population = safetyRow.population;
+    const rates = safetyRates(counts, population);
     next.safety = {
       period12: safetyRow.period12,
       last12Months: counts,
       population,
       populationYear: safetyRow.populationYear,
-      violencePer1000: counts ? per1000(violenceCount(counts), population) : null,
-      propertyPer1000: counts ? per1000(propertyCount(counts), population) : null,
-      allPer1000: counts ? per1000(allCount(counts), population) : null,
-      domesticPer1000: counts ? per1000(domesticCount(counts), population) : null,
+      violencePer1000: rates.violence,
+      propertyPer1000: rates.property,
+      allPer1000: rates.all,
+      domesticPer1000: rates.domestic,
     };
   }
 

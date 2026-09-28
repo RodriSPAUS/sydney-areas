@@ -1,6 +1,7 @@
 import type { ExpressionSpecification } from "maplibre-gl";
 import { suburbs } from "@/data/suburbs";
 import type { Choropleth, SafetyMetric } from "@/lib/map-store";
+import { safetyQuintileBands } from "@/lib/safety-metrics";
 import type { SafetyBand, Suburb } from "@/lib/suburb-types";
 
 /**
@@ -62,18 +63,6 @@ export const NEUTRAL_FILL = "#B0A89C";
 
 function quintileBands(rows: { id: string; value: number }[]): Map<string, SafetyBand> {
   const sorted = [...rows].sort((a, b) => a.value - b.value || a.id.localeCompare(b.id));
-  const n = sorted.length;
-  const map = new Map<string, SafetyBand>();
-  sorted.forEach((row, i) => {
-    const band = Math.min(5, Math.floor((i / Math.max(n, 1)) * 5) + 1) as SafetyBand;
-    map.set(row.id, band);
-  });
-  return map;
-}
-
-/** Band 1 = most incidents (darkest). Band 5 = fewest. */
-function safetyQuintileBands(rows: { id: string; value: number }[]): Map<string, SafetyBand> {
-  const sorted = [...rows].sort((a, b) => b.value - a.value || a.id.localeCompare(b.id));
   const n = sorted.length;
   const map = new Map<string, SafetyBand>();
   sorted.forEach((row, i) => {
